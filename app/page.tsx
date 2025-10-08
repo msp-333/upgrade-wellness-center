@@ -15,7 +15,7 @@ export default function HomePage() {
   // Prefix assets for GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
 
-  // ⇩ Put your image under /public/images
+  // ⇩ Put your hero image under /public/images
   const HERO_BG = '/images/hero.jpg';
 
   return (
@@ -26,12 +26,18 @@ export default function HomePage() {
         <div
           className="absolute inset-0 -z-30 bg-cover bg-center"
           style={{ backgroundImage: `url(${asset(HERO_BG)})` }}
-          aria-hidden="true"
+          aria-hidden
         />
 
         {/* Color wash + readability veil */}
-        <div className="absolute inset-0 -z-20 bg-hero-radial" aria-hidden="true" />
-        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-white/90 via-white/78 to-surface/92" aria-hidden="true" />
+        <div className="absolute inset-0 -z-20 bg-hero-radial" aria-hidden />
+        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-white/90 via-white/78 to-surface/92" aria-hidden />
+
+        {/* >>> Darkening tint (behind the card only, so card pops) */}
+        <div
+          className="absolute inset-0 -z-10 bg-brand-500/18 mix-blend-multiply"
+          aria-hidden
+        />
 
         {/* Subtle animated blobs */}
         <div className="pointer-events-none absolute -top-28 -left-20 h-96 w-96 rounded-full bg-lavender-500/28 blur-3xl animate-float-slow" />
@@ -39,20 +45,10 @@ export default function HomePage() {
         <div className="pointer-events-none absolute top-8 right-1/3 h-48 w-48 rounded-full bg-mint-500/18 blur-2xl animate-drift-1" />
         <div className="pointer-events-none absolute bottom-20 left-1/3 h-40 w-40 rounded-full bg-lavender-500/18 blur-2xl animate-drift-2" />
 
-        {/* Soft spotlight to “anchor” the hero content */}
-        <div
-          className="absolute inset-0 -z-10 opacity-70"
-          style={{
-            background:
-              'radial-gradient(700px 300px at 20% 25%, rgba(210,215,255,0.35), transparent 60%), radial-gradient(900px 350px at 95% 70%, rgba(147,190,164,0.28), transparent 60%)',
-          }}
-          aria-hidden="true"
-        />
-
         <Container className="relative pt-20 pb-20 md:pt-28 md:pb-28">
-          {/* Gradient border wrapper (gives the “finished” look) */}
+          {/* Gradient border wrapper */}
           <div className="mx-auto max-w-6xl rounded-[1.25rem] p-[1px] bg-gradient-to-br from-lavender-400/50 via-white/30 to-brand-500/40">
-            {/* Glass panel */}
+            {/* Glass panel (kept transparent) */}
             <div className="rounded-[1.2rem] bg-white/22 backdrop-blur-xl ring-1 ring-white/40 shadow-soft px-6 py-10 md:px-16 md:py-16">
               {/* Title */}
               <h1 className="text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
@@ -70,7 +66,7 @@ export default function HomePage() {
                 with holistic care that blends nature, innovation, and the chemistry of well-being.
               </p>
 
-              {/* Trust points (kept to two for focus) */}
+              {/* Trust points (2 items) */}
               <ul className="mt-6 flex flex-wrap gap-x-10 gap-y-3 text-sm text-slate-700">
                 {['Family-friendly environment', 'Evidence-informed practices'].map((b) => (
                   <li key={b} className="inline-flex items-center gap-2">
@@ -103,14 +99,7 @@ export default function HomePage() {
       </section>
       {/* ========================== /HERO =========================== */}
 
-      {/* ============================ TRUST STRIP ===================== */}
-      <section className="py-6">
-        <Container>
-          <div className="mx-auto max-w-6xl rounded-xl border border-slate-200/80 bg-white/70 px-4 py-3 text-center text-sm text-slate-600 shadow-soft">
-            Gentle methods. Thoughtful science. Care that meets you where you are.
-          </div>
-        </Container>
-      </section>
+      {/* (Removed the trust strip by your request) */}
 
       {/* ============================ STATS ============================ */}
       <section className="py-12">
@@ -157,7 +146,6 @@ export default function HomePage() {
                     alt=""
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/0 to-slate-900/0" />
                 </div>
                 <h3 className="mt-4 text-lg">{s.name}</h3>
                 <p className="mt-1 text-sm text-slate-600">{s.tagline}</p>
@@ -182,25 +170,33 @@ export default function HomePage() {
       {/* =============================== CTA =========================== */}
       <section className="py-14">
         <Container>
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-lavender-400/40 bg-white/80 shadow-soft">
+          {/* Brand (green) card with white text */}
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-brand-500/30 bg-brand-500 text-white shadow-soft">
             <div className="grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
               <div>
                 <h2 className="text-2xl md:text-3xl">Start your upgrade</h2>
-                <p className="mt-2 text-slate-600">
+                <p className="mt-2 text-white/90">
                   Join an event or reach out for a custom plan. We’ll help you choose the right first step.
                 </p>
               </div>
               <div className="flex items-center justify-start gap-3 md:justify-end">
-                <Link href="/contact/" className="btn btn-primary">
+                {/* Inverted buttons for contrast on green */}
+                <Link
+                  href="/contact/"
+                  className="inline-flex items-center justify-center rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white"
+                >
                   Book a time
                 </Link>
-                <Link href="/events/" className="btn btn-ghost">
+                <Link
+                  href="/events/"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/80 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70"
+                >
                   See events
                 </Link>
               </div>
             </div>
-            {/* subtle lavender bar for distinction */}
-            <div className="h-1 w-full bg-gradient-to-r from-lavender-400/50 via-mint-500/40 to-brand-500/40" />
+            {/* thin lavender bar for polish */}
+            <div className="h-1 w-full bg-gradient-to-r from-white/30 via-lavender-400/50 to-white/30" />
           </div>
         </Container>
       </section>
