@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]   # change to "master" if that's your default branch
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      # Set base path for images/assets on GitHub Pages (repo path)
+      - name: Set production env for build
+        run: echo "NEXT_PUBLIC_BASE_PATH=/upgradewellnesscenter" >> .env.production
+
+      - name: Build (static export to /out)
+        run: npm run build
+
+      # Prevent GitHub Pages/Jekyll from ignoring /_next and other underscored dirs
+      - name: Disable Jekyll
+        run: touch out/.nojekyll
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          force_orphan: true
