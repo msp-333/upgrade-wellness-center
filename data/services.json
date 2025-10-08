@@ -1,0 +1,46 @@
+[
+  {
+    "id": "svc-ees",
+    "name": "Energy Enhancement System",
+    "slug": "energy-enhancement-system",
+    "tagline": "Gentle, restorative sessions in a multi-scalar energy field.",
+    "summary": "A calm, reclined experience designed to support deep relaxation. Guests often report feeling more rested and centered. We combine a peaceful space with time away from notifications to help your nervous system downshift.",
+    "benefits": [
+      "Encourages a relaxed, restful state",
+      "Unplugs from day-to-day stressors",
+      "Gentle environment that supports recovery rhythms",
+      "Pairs well with sleep and mindfulness habits"
+    ],
+    "duration": "1\u20133 hours",
+    "image": "/images/ees.svg"
+  },
+  {
+    "id": "svc-red-light",
+    "name": "Red Light Therapy",
+    "slug": "red-light-therapy",
+    "tagline": "Low-level red & near\u2011infrared light exposure.",
+    "summary": "Targeted light exposure designed to support cellular energy and recovery. Sessions are short and comfortable, making it easy to add to your routine.",
+    "benefits": [
+      "Convenient, time\u2011boxed sessions",
+      "Aims to support recovery after daily strain",
+      "Non-invasive and contact\u2011free application",
+      "Complements movement and mobility work"
+    ],
+    "duration": "10\u201320 minutes",
+    "image": "/images/red-light.svg"
+  },
+  {
+    "id": "svc-h2o",
+    "name": "Hydrogen Water",
+    "slug": "hydrogen-water",
+    "tagline": "Infused water with dissolved molecular hydrogen.",
+    "summary": "A refreshing option prepared on site. Many people enjoy it pre- or post\u2011session as part of a general hydration routine.",
+    "benefits": [
+      "Pairs with daily hydration habits",
+      "Light, crisp taste",
+      "Easy add\u2011on before or after sessions",
+      "Served chilled in reusable cups"
+    ],
+    "image": "/images/hydrogen-water.svg"
+  }
+]

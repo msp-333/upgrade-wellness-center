@@ -1,0 +1,25 @@
+[
+  {
+    "id": "t-01",
+    "name": "Sam H.",
+    "role": "Teacher",
+    "quote": "Small habits, big impact. I sleep better and have more energy."
+  },
+  {
+    "id": "t-02",
+    "name": "Priya K.",
+    "role": "Project Manager",
+    "quote": "The workshops are practical, friendly, and effective."
+  },
+  {
+    "id": "t-03",
+    "name": "Marcus A.",
+    "role": "Designer",
+    "quote": "I finally built a morning routine I can keep."
+  },
+  {
+    "id": "t-04",
+    "name": "Ava L.",
+    "quote": "The community aspect kept me going. Highly recommend!"
+  }
+]

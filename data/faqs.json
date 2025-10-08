@@ -1,0 +1,27 @@
+[
+  {
+    "id": "faq-01",
+    "question": "Who are your programs for?",
+    "answer": "Anyone looking to build sustainable habits for better health and performance."
+  },
+  {
+    "id": "faq-02",
+    "question": "Do I need experience to join?",
+    "answer": "No. Our events are beginner-friendly with options for all levels."
+  },
+  {
+    "id": "faq-03",
+    "question": "Are sessions recorded?",
+    "answer": "Some online workshops are recorded. Check the event details for availability."
+  },
+  {
+    "id": "faq-04",
+    "question": "Do you offer team workshops?",
+    "answer": "Yes. We can design custom sessions for teams and organizations."
+  },
+  {
+    "id": "faq-05",
+    "question": "What is your refund policy?",
+    "answer": "For paid events, we offer refunds up to 48 hours before the start time."
+  }
+]
