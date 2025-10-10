@@ -2,10 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # change to "master" if that's your default branch
+    branches: [ main ]   # change if your default is different
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write   # needed by peaceiris/actions-gh-pages
 
 jobs:
   build-deploy:
@@ -19,28 +20,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
       - name: Install deps
         run: npm ci
 
-      # Set the correct base path so CSS/JS load from /upgrade-wellness-center/_next/...
-      - name: Configure base path
-        run: echo "NEXT_PUBLIC_BASE_PATH=/upgrade-wellness-center" >> .env.production
-
+      # Build + export with the correct base path for GH Pages
+      # (your script: sets NEXT_PUBLIC_BASE_PATH and runs next build && next export)
       - name: Build (Next.js static export to /out)
         env:
           CI: true
-        run: npm run build
+        run: npm run build:pages
 
-      # Ensure Pages serves underscored dirs (/_next). Next export usually adds this,
-      # but this is harmless if it already exists.
+      # Ensure Pages serves underscored dirs like /_next
       - name: Add .nojekyll
-        run: touch out/.nojekyll
+        run: |
+          mkdir -p out
+          touch out/.nojekyll
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./out
           force_orphan: true
+          commit_message: "Deploy: ${{ github.sha }}"
