@@ -2,37 +2,43 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]   # change to "master" if that's your default branch
+    branches: [ main ]  # change to "master" if that's your default branch
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
-      - run: npm ci
+      - name: Install deps
+        run: npm ci
 
-      # Set base path for images/assets on GitHub Pages (repo path)
-      - name: Set production env for build
-        run: echo "NEXT_PUBLIC_BASE_PATH=/upgradewellnesscenter" >> .env.production
+      # Set the correct base path so CSS/JS load from /upgrade-wellness-center/_next/...
+      - name: Configure base path
+        run: echo "NEXT_PUBLIC_BASE_PATH=/upgrade-wellness-center" >> .env.production
 
-      - name: Build (static export to /out)
+      - name: Build (Next.js static export to /out)
+        env:
+          CI: true
         run: npm run build
 
-      # Prevent GitHub Pages/Jekyll from ignoring /_next and other underscored dirs
-      - name: Disable Jekyll
+      # Ensure Pages serves underscored dirs (/_next). Next export usually adds this,
+      # but this is harmless if it already exists.
+      - name: Add .nojekyll
         run: touch out/.nojekyll
 
-      - name: Deploy
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
