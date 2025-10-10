@@ -1,31 +1,41 @@
 // next.config.mjs
 
-// Detect GitHub Actions (for automatic basePath when building in CI)
-const isCI = process.env.GITHUB_ACTIONS === 'true';
-const repo = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
+// Detect when we're in CI (GitHub Actions sets both of these)
+const isCI = process.env.GITHUB_ACTIONS === 'true' || process.env.CI === 'true';
+// Try to infer the repo name for GitHub Pages (owner/repo)
+const repoFromActions = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
 
 const basePath =
-  process.env.NEXT_PUBLIC_BASE_PATH || // e.g. "/upgrade-wellness-center" for GitHub Pages
-  (isCI && repo ? `/${repo}` : '');    // fallback when building in GitHub Actions
+  // Manual override (what your build:pages script uses for GH Pages)
+  process.env.NEXT_PUBLIC_BASE_PATH
+  // Auto when running in GitHub Actions (e.g., "/upgrade-wellness-center")
+  || (isCI && repoFromActions ? `/${repoFromActions}` : '')
+  // Local dev defaults to empty (no basePath)
+;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for GitHub Pages
+  // Required for GitHub Pages (static hosting)
   output: 'export',
 
-  // Better compatibility with static hosting
+  // Keep URLs consistent for static hosting
   trailingSlash: true,
 
-  // Disable server image optimization (required for static export)
+  // Required when exporting statically
   images: { unoptimized: true },
 
   reactStrictMode: true,
 
-  // Apply basePath & assetPrefix only when non-empty
+  // Apply only when basePath is non-empty
   ...(basePath && {
     basePath,
-    assetPrefix: `${basePath}/`, // IMPORTANT: trailing slash
+    // IMPORTANT: trailing slash so Next loads assets from "/<repo>/_next/..."
+    assetPrefix: `${basePath}/`,
   }),
+
+  // Optional: avoid builds failing on lint in CI exports
+  // eslint: { ignoreDuringBuilds: true },
+  // typescript: { ignoreBuildErrors: true },
 };
 
 export default nextConfig;
