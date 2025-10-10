@@ -1,36 +1,37 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}"
+  ],
   theme: {
     extend: {
       colors: {
-        brand: {                // primary button / highlights
-          500: "#93BEA4",       // sage
-          600: "#7EAB91",       // hover
+        brand: {
+          500: "#93BEA4",
+          600: "#7EAB91",
         },
         mint: { 500: "#B2D4AB" },
         lavender: {
-          400: "#DED7FA",       // light lavender
-          500: "#C2A0E8",       // main lavender
-          600: "#B792E4",       // hover
+          400: "#DED7FA",
+          500: "#C2A0E8",
+          600: "#B792E4",
         },
-        surface: { DEFAULT: "#EEF5E1" }, // page background
+        surface: { DEFAULT: "#EEF5E1" },
       },
       boxShadow: {
         soft: "0 1px 2px rgba(0,0,0,0.04), 0 10px 30px rgba(0,0,0,0.06)",
       },
       borderRadius: { xl2: "1.25rem" },
-
-      // Background images (both variants available)
       backgroundImage: {
         "hero-gradient":
           "radial-gradient(900px 400px at 0% -10%, rgba(147,190,164,0.18), transparent 60%), radial-gradient(700px 300px at 100% -10%, rgba(194,160,232,0.20), transparent 60%)",
         "hero-radial":
           "radial-gradient(1200px 520px at 0% -20%, rgba(147,190,164,0.18), transparent 60%), radial-gradient(900px 400px at 100% -20%, rgba(194,160,232,0.30), transparent 60%)",
       },
-
-      // Animations
       keyframes: {
         float: {
           "0%,100%": { transform: "translateY(0)" },
@@ -54,7 +55,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/typography')],
+};
 
-export default config
+export default config;
