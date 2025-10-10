@@ -1,4 +1,4 @@
-// File: C:\Users\Lara Sy\Downloads\upgrade-wellness-next-v2\app\faqs\page.tsx
+// File: /workspaces/upgrade-wellness-center/app/faqs/page.tsx
 import * as entry from '../../../../app/faqs/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
