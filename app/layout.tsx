@@ -4,6 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import Providers from '@/components/Providers';
 
+
 const siteName = 'Upgrade Wellness Center';
 const siteDescription = 'Calm spaces, caring guidance, and practical options to recharge your wellness.';
 
