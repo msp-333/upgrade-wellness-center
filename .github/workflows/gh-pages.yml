@@ -25,19 +25,12 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install deps
-        run: npm ci
+      - run: npm ci
 
-      - name: Set base path for GitHub Pages
-        run: echo 'NEXT_PUBLIC_BASE_PATH="/upgrade-wellness-center"' >> .env.production
+      # Optional: auto-set base path to /<repo>
+      - run: NEXT_PUBLIC_BASE_PATH=/${{ github.event.repository.name }} npm run build
 
-      - name: Build (next export to /out)
-        env:
-          CI: true
-        run: npm run build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
@@ -48,6 +41,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4

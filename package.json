@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build && next export",
+    "build": "next build",
     "build:pages": "cross-env NEXT_PUBLIC_BASE_PATH=/upgrade-wellness-center next build && next export && node -e \"require('fs').mkdirSync('out',{recursive:true}); require('fs').writeFileSync('out/.nojekyll','')\"",
     "predeploy": "npm run build:pages",
     "deploy": "gh-pages -d out -b gh-pages",
