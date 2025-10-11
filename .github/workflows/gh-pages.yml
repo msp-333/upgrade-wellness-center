@@ -17,6 +17,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Makes asset() and Next links point to /<repo>/...
+      NEXT_PUBLIC_BASE_PATH: "/${{ github.event.repository.name }}"
+      NODE_ENV: production
+      CI: "true"
     steps:
       - uses: actions/checkout@v4
 
@@ -27,8 +32,15 @@ jobs:
 
       - run: npm ci
 
-      # Optional: auto-set base path to /<repo>
-      - run: NEXT_PUBLIC_BASE_PATH=/${{ github.event.repository.name }} npm run build
+      # Build only — output:'export' in next.config creates ./out
+      - name: Build static site
+        run: npm run build
+
+      # Ensure Pages serves folders starting with `_`
+      - name: Add .nojekyll
+        run: |
+          mkdir -p out
+          touch out/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -36,10 +48,10 @@ jobs:
 
   deploy:
     needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
