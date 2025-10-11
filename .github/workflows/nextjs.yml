@@ -18,8 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Make assets load from /<repo>/_next/... on GitHub Pages
+      # matches your asset() helper and GH Pages subpath
       NEXT_PUBLIC_BASE_PATH: "/${{ github.event.repository.name }}"
+      NODE_ENV: production
       CI: "true"
     steps:
       - name: Checkout
@@ -34,22 +35,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build & Export static site
+      - name: Build (static export via next.config output:'export')
+        run: npm run build   # ⬅️ no "next export" here
+
+      - name: Ensure _next works on Pages
         run: |
-          npx next build
-          npx next export
-          # Ensure Pages serves the _next/ folder
           mkdir -p out
           touch out/.nojekyll
-
-      # --- Optional debug to verify correct paths & files ---
-      - name: Debug base path + asset list
-        run: |
-          echo "NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH"
-          echo "CSS refs found in out/index.html:"
-          grep -o '/.*_next/static/[^\" ]*\.css' -h out/index.html || true
-          echo "Files under out/_next/static:"
-          find out/_next/static -maxdepth 3 -type f -print || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
