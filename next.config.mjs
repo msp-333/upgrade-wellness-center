@@ -1,10 +1,16 @@
-const repo = 'upgrade-wellness-center'
-const isProd = process.env.NODE_ENV === 'production'
-export default {
-  output: 'export',
-  trailingSlash: true,
+// next.config.mjs
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''; // e.g. "/upgrade-wellness-center"
+
+const nextConfig = {
+  output: 'export',          // required for static export
+  trailingSlash: true,       // ensures /path/index.html
   images: { unoptimized: true },
-  reactStrictMode: true,
-  basePath: isProd ? `/${repo}` : '',
-  assetPrefix: isProd ? `/${repo}/` : undefined,
-}
+
+  // Only set when non-empty (GitHub Pages subpath)
+  ...(basePath && {
+    basePath,
+    assetPrefix: `${basePath}/`, // critical for loading /_next assets on Pages
+  }),
+};
+
+export default nextConfig;
