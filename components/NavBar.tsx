@@ -19,10 +19,10 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
 
-  // close drawer on route change
+  // Close drawer on route change
   useEffect(() => setOpen(false), [pathname]);
 
-  // header elevation on scroll
+  // Header elevation on scroll
   useEffect(() => {
     const onScroll = () => setElevated(window.scrollY > 8);
     onScroll();
@@ -30,7 +30,7 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // close on Esc
+  // Close on Esc
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
@@ -74,13 +74,13 @@ export default function NavBar() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={clsx(
+                  // base
                   'relative rounded-full px-3 py-2 text-sm font-medium transition-colors',
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
-                  // underline micro-interaction
-                  'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-lavender-500 after:transition-transform after:duration-200 after:content-[""]',
+                  // ✨ bubble highlight (no underline)
                   active
-                    ? 'text-slate-900 bg-lavender-400/30 after:scale-x-100'
-                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 hover:after:scale-x-100'
+                    ? 'text-slate-900 bg-lavender-500/15 ring-1 ring-lavender-500/30 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
                 )}
               >
                 {item.label}
@@ -129,7 +129,7 @@ export default function NavBar() {
       <div
         id="mobile-menu"
         className={clsx(
-          'md:hidden border-t border-lavender-400/30 bg-white/95 transition-all duration-200 overflow-hidden',
+          'md:hidden border-top border-lavender-400/30 bg-white/95 transition-all duration-200 overflow-hidden',
           open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         )}
       >
@@ -144,10 +144,10 @@ export default function NavBar() {
                   className={clsx(
                     'relative rounded-lg px-3 py-2 text-base transition-colors',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
-                    'after:absolute after:left-3 after:right-3 after:-bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-lavender-500 after:transition-transform after:duration-200 after:content-[""]',
+                    // ✨ bubble highlight (no underline)
                     active
-                      ? 'bg-lavender-400/30 text-slate-900 after:scale-x-100'
-                      : 'text-slate-700 hover:bg-slate-100 hover:after:scale-x-100'
+                      ? 'bg-lavender-500/15 text-slate-900 ring-1 ring-lavender-500/30'
+                      : 'text-slate-700 hover:bg-slate-100'
                   )}
                 >
                   {item.label}
