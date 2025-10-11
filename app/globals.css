@@ -2,25 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light theme */
+/* Base */
 html, body { height: 100%; }
-body { @apply bg-surface text-slate-900 antialiased; }
-a { @apply text-brand-600 hover:text-brand-500 underline-offset-4; }
+body { @apply bg-surface text-text-primary antialiased; }
+a { @apply text-brand-600 hover:text-brand-700 underline-offset-4; }
 
 /* Cards */
-.card { @apply bg-white border border-slate-200 rounded-xl shadow-soft; }
+.card { @apply bg-white/90 backdrop-blur-sm border border-sage-300 rounded-xl shadow-soft; }
 .card-hover { @apply transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-xl; }
 
 /* Typography */
 h1 { @apply text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight; }
 h2 { @apply text-2xl sm:text-3xl font-semibold tracking-tight; }
 h3 { @apply text-xl sm:text-2xl font-semibold; }
+.muted { @apply text-text-secondary; }
 
-/* Buttons */
+/* Buttons (base) */
 .btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium; }
-.btn-primary { @apply bg-brand-500 text-white hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600; }
-.btn-accent  { @apply bg-lavender-500 text-white hover:bg-lavender-600 focus:outline-none focus:ring-2 focus:ring-lavender-600; }
-.btn-ghost   { @apply bg-transparent border border-slate-300 hover:bg-slate-50; }
+
+/* Primary (solid) */
+.btn-primary {
+  @apply text-white bg-brand-600 hover:bg-brand-700
+         focus:outline-none focus:ring-2 focus:ring-brand-600/30;
+}
+
+/* Primary (emerald→teal gradient) */
+.btn-primary-gradient {
+  @apply text-white bg-brand-gradient bg-[length:100%_100%]
+         focus:outline-none focus:ring-2 focus:ring-brand-600/30;
+}
+
+/* Lavender / purple CTA */
+.btn-lavender {
+  @apply text-white bg-lavender-500 hover:bg-lavender-600
+         focus:outline-none focus:ring-2 focus:ring-lavender-600/30;
+}
+
+/* Softer pastel lavender (like the screenshot) */
+.btn-lavender-soft {
+  @apply bg-lavender-400/40 text-text-primary
+         border border-lavender-500/30 backdrop-blur-sm shadow-soft
+         hover:bg-lavender-400/50;
+}
+
+/* Accent (Sage) */
+.btn-accent {
+  @apply bg-sage-400 text-text-primary hover:brightness-95
+         focus:outline-none focus:ring-2 focus:ring-brand-600/20;
+}
+
+/* Ghost */
+.btn-ghost {
+  @apply bg-transparent border border-sage-300 text-text-secondary hover:bg-sage-50;
+}
+
+/* Badges / chips */
+.badge-gold {
+  @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium
+         bg-gold-mist text-text-primary/80 border border-sage-200;
+}
+.badge-lavender {
+  @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium
+         bg-lavender-400/25 text-text-primary border border-lavender-500/20;
+}
 
 /* Prose links */
-.prose :where(a):not(:where([class~="not-prose"] *)) { @apply text-brand-600 hover:text-brand-500; }
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  @apply text-brand-600 hover:text-brand-700;
+}
+
+/* Utilities */
+.section-muted { @apply bg-sage-50; }
+.kicker { @apply uppercase tracking-widest text-xs text-text-secondary; }

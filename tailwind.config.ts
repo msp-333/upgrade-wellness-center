@@ -10,36 +10,66 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // used across the site
-        surface: '#f8fafc', // light page bg
+        // Core surfaces & text
+        surface: '#F9FAF8', // Ivory Mist
+        text: {
+          primary: '#0F172A',   // Charcoal
+          secondary: '#475569', // Slate
+        },
+
+        // Brand emerald scale
         brand: {
-          50:  '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',   // used a lot
-          600: '#059669',   // used a lot
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+          50:  '#ECFDF5',
+          100: '#D1FAE5',
+          200: '#A7F3D0',
+          300: '#6EE7B7',
+          400: '#34D399',
+          500: '#10B981',
+          600: '#0EA47A', // Primary
+          700: '#0C8D69', // Gradient start
+          800: '#065F46',
+          900: '#064E3B',
         },
+
+        // Gradient endpoints
+        gradient: {
+          start: '#0C8D69', // Emerald 700
+          end:   '#19B6AE', // Teal 500
+        },
+
+        // Accents
+        sage: {
+          50:  '#F2F7F4',
+          100: '#E7EFEA',
+          200: '#D7E5DC',
+          300: '#C9DBCF',
+          400: '#B7D0C0',
+          500: '#9DB7A7',
+          600: '#86A190',
+        },
+        gold: {
+          mist: '#E9E2CF',
+        },
+
+        // Lavender / purple accent
         lavender: {
-          400: '#c7b9ff',
-          500: '#b8a8ff',
-          600: '#a28dff',
-        },
-        mint: {
-          500: '#93BEA4',
+          400: '#C7B9FF',
+          500: '#B8A8FF',
+          600: '#A28DFF',
         },
       },
+
       boxShadow: {
-        soft: '0 8px 24px rgba(16, 24, 40, 0.06)',
+        soft: '0 8px 24px rgba(15, 23, 42, 0.06)',
       },
+
       backgroundImage: {
         'hero-radial':
-          'radial-gradient(60% 50% at 50% 0%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 35%, rgba(255,255,255,0) 100%)',
+          'radial-gradient(60% 50% at 50% 0%, rgba(249,250,248,0.95) 0%, rgba(249,250,248,0.6) 35%, rgba(249,250,248,0) 100%)',
+        'brand-gradient':    'linear-gradient(90deg, #0C8D69 0%, #19B6AE 100%)',
+        'lavender-gradient': 'linear-gradient(90deg, #B8A8FF 0%, #A28DFF 100%)',
       },
+
       keyframes: {
         float: {
           '0%,100%': { transform: 'translateY(0)' },
@@ -64,4 +94,5 @@ const config: Config = {
   },
   plugins: [],
 }
+
 export default config
