@@ -29,7 +29,7 @@ Open http://localhost:3000 — all pages render statically.
 npm run build
 ```
 
-This runs `next build && next export`. The `next.config.mjs` is preconfigured with:
+This runs `next build`. The `next.config.mjs` is preconfigured with:
 
 - `output: 'export'`
 - `trailingSlash: true` (so files export as `/path/index.html` which GitHub Pages serves nicely)
