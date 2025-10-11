@@ -1,1 +1,1 @@
-{"/_not-found/page":"/_not-found","/about/page":"/about","/contact/page":"/contact","/events/page":"/events","/faqs/page":"/faqs","/services/page":"/services","/success-stories/page":"/success-stories","/privacy-policy/page":"/privacy-policy","/page":"/"}
+{"/_not-found/page":"/_not-found","/about/page":"/about","/events/page":"/events","/page":"/","/faqs/page":"/faqs","/contact/page":"/contact","/services/[slug]/page":"/services/[slug]","/success-stories/page":"/success-stories","/services/page":"/services","/privacy-policy/page":"/privacy-policy"}
