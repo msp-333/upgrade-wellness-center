@@ -474,9 +474,6 @@ export default function HomePage() {
               <span className="inline-block h-8 w-8 rounded-full bg-emerald-600" aria-hidden />
               <span className="font-semibold text-slate-900">Upgrade Wellness</span>
             </div>
-            <p className="mt-3 text-sm text-slate-600">
-              Calm, evidence-informed care for everyday life.
-            </p>
           </div>
 
           <nav aria-label="Quick links" className="text-sm">
@@ -551,12 +548,6 @@ export default function HomePage() {
               </button>
             </div>
           </form>
-        </Container>
-
-        <Container>
-          <p className="mt-10 text-xs text-slate-500">
-            © {new Date().getFullYear()} Upgrade Wellness Center. All rights reserved.
-          </p>
         </Container>
       </footer>
     </>
