@@ -74,3 +74,13 @@ h3 { @apply text-xl sm:text-2xl font-semibold; }
 /* Utilities */
 .section-muted { @apply bg-sage-50; }
 .kicker { @apply uppercase tracking-widest text-xs text-text-secondary; }
+
+:root{
+  --surface:#F9FAF8;        /* Ivory Mist */
+}
+.chip{
+  display:inline-flex;align-items:center;gap:.375rem;
+  padding:.375rem .625rem;border-radius:999px;
+  background:#F3F4F6;color:#334155;border:1px solid #E5E7EB;
+  font-size:.8125rem;line-height:1rem;font-weight:500;
+}

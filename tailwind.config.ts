@@ -1,3 +1,4 @@
+// /tailwind.config.ts
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -9,6 +10,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'Manrope', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+
+      // Radii + shadow tokens
+      borderRadius: {
+        card: '20px',
+        pill: '999px',
+      },
+      boxShadow: {
+        soft: '0 8px 24px rgba(15, 23, 42, 0.06)', // matches brief
+      },
+
+      // Brand palette & accents
       colors: {
         // Core surfaces & text
         surface: '#F9FAF8', // Ivory Mist
@@ -51,7 +66,7 @@ const config: Config = {
           mist: '#E9E2CF',
         },
 
-        // Lavender / purple accent
+        // Lavender / purple accent (per your request)
         lavender: {
           400: '#C7B9FF',
           500: '#B8A8FF',
@@ -59,10 +74,7 @@ const config: Config = {
         },
       },
 
-      boxShadow: {
-        soft: '0 8px 24px rgba(15, 23, 42, 0.06)',
-      },
-
+      // Reusable backgrounds
       backgroundImage: {
         'hero-radial':
           'radial-gradient(60% 50% at 50% 0%, rgba(249,250,248,0.95) 0%, rgba(249,250,248,0.6) 35%, rgba(249,250,248,0) 100%)',
@@ -70,6 +82,7 @@ const config: Config = {
         'lavender-gradient': 'linear-gradient(90deg, #B8A8FF 0%, #A28DFF 100%)',
       },
 
+      // Calm micro-motions
       keyframes: {
         float: {
           '0%,100%': { transform: 'translateY(0)' },
