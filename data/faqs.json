@@ -1,26 +1,216 @@
 [
   {
+    "id": "notice-disclaimer",
+    "section": "Notice",
+    "question": "Disclaimer",
+    "answer": "These services are wellness modalities and are not intended to diagnose, treat, cure, or prevent disease. Always consult your licensed healthcare provider for medical concerns."
+  },
+
+  {
+    "id": "studio-booking",
+    "section": "General Studio Policies",
+    "question": "How do I book?",
+    "answer": "Use our online scheduler or call/text us. Same-day bookings are subject to availability."
+  },
+  {
+    "id": "studio-cancel",
+    "section": "General Studio Policies",
+    "question": "What’s your cancellation policy?",
+    "answer": "Please cancel or reschedule \u226524 hours before your appointment to avoid a late-cancel fee. No-shows are charged the full session rate."
+  },
+  {
+    "id": "studio-walkins",
+    "section": "General Studio Policies",
+    "question": "Do you accept walk-ins?",
+    "answer": "Walk-ins are welcome if a room/device is free, but booking is strongly recommended."
+  },
+  {
+    "id": "studio-wear-bring",
+    "section": "General Studio Policies",
+    "question": "What should I wear/bring?",
+    "answer": "Comfortable clothing, a water bottle, and minimal fragrances. We provide sanitized eye masks/blankets upon request."
+  },
+  {
+    "id": "studio-payment",
+    "section": "General Studio Policies",
+    "question": "Payment methods & packages",
+    "answer": "We accept cash, major cards, and e-wallets. Multi-session packages and memberships offer the best value. Ask about current promos."
+  },
+  {
+    "id": "studio-minors",
+    "section": "General Studio Policies",
+    "question": "Minors",
+    "answer": "Guests under 18 must be accompanied by a parent/guardian who can give written consent."
+  },
+  {
+    "id": "studio-safety",
+    "section": "General Studio Policies",
+    "question": "Health & safety",
+    "answer": "Devices are disinfected after each use. Please postpone visits if you have fever, contagious illness, or open wounds at the treatment site."
+  },
+
+  {
+    "id": "ees-what",
+    "section": "Energy Enhancement System (EES)",
+    "question": "What is it?",
+    "answer": "A quiet room experience designed for deep rest/relaxation. Guests typically sit or recline in a calm environment."
+  },
+  {
+    "id": "ees-during",
+    "section": "Energy Enhancement System (EES)",
+    "question": "What happens during a session?",
+    "answer": "You rest, meditate, or nap. Many guests report feeling calm, warm, or lightly tingly; some feel sleepy."
+  },
+  {
+    "id": "ees-length",
+    "section": "Energy Enhancement System (EES)",
+    "question": "How long is a session?",
+    "answer": "Common options are 60–120 minutes. First-time guests often start with 60 minutes."
+  },
+  {
+    "id": "ees-frequency",
+    "section": "Energy Enhancement System (EES)",
+    "question": "How often should I come?",
+    "answer": "For general relaxation: 1–2\u00d7/week is common. Listen to your body and your schedule."
+  },
+  {
+    "id": "ees-prepare",
+    "section": "Energy Enhancement System (EES)",
+    "question": "How do I prepare/what to bring?",
+    "answer": "Hydrate well, arrive lightly fed, silence devices. Optional: socks, eye mask, journal."
+  },
+  {
+    "id": "ees-aftercare",
+    "section": "Energy Enhancement System (EES)",
+    "question": "Aftercare",
+    "answer": "Drink plenty of water, add light movement, and prioritize rest the remainder of the day."
+  },
+  {
+    "id": "ees-clearance",
+    "section": "Energy Enhancement System (EES)",
+    "question": "Who should consult a clinician first?",
+    "answer": "If you are pregnant, have implanted electronic devices (e.g., pacemaker), a history of seizures, or any condition you’re concerned about—please speak with your clinician before booking."
+  },
+
+  {
+    "id": "rlt-what",
+    "section": "Red Light Therapy (RLT)",
+    "question": "What is it?",
+    "answer": "A non-invasive light exposure using visible red and near-infrared wavelengths to support general wellness and recovery."
+  },
+  {
+    "id": "rlt-tanning",
+    "section": "Red Light Therapy (RLT)",
+    "question": "Is it a tanning bed?",
+    "answer": "No. There’s no UV and no tanning effect."
+  },
+  {
+    "id": "rlt-length",
+    "section": "Red Light Therapy (RLT)",
+    "question": "How long is a session?",
+    "answer": "Typically 10–20 minutes per area. Multi-area sessions can be stacked."
+  },
+  {
+    "id": "rlt-frequency",
+    "section": "Red Light Therapy (RLT)",
+    "question": "How often should I come?",
+    "answer": "For best results, many start at 2–5\u00d7/week for 4–6 weeks, then move to maintenance (1–2\u00d7/week). You can scale to your goals."
+  },
+  {
+    "id": "rlt-wear-bring",
+    "section": "Red Light Therapy (RLT)",
+    "question": "What should I wear/bring?",
+    "answer": "Expose the area you want to target. Come with clean, dry skin (no makeup, sunscreen, or heavy lotions). We provide eye protection if needed."
+  },
+  {
+    "id": "rlt-feel",
+    "section": "Red Light Therapy (RLT)",
+    "question": "What will I feel?",
+    "answer": "Gentle warmth at most. Skin may appear slightly flushed for a few minutes afterward."
+  },
+  {
+    "id": "rlt-clearance",
+    "section": "Red Light Therapy (RLT)",
+    "question": "Who should avoid or get medical clearance first?",
+    "answer": "Photosensitive conditions (e.g., lupus, porphyria); photosensitizing meds (certain antibiotics, isotretinoin, high-dose retinoids); active malignancy; pregnancy (especially direct abdominal exposure); recent eye surgery/retinal conditions (avoid direct eye exposure). If unsure, bring your clinician’s guidance."
+  },
+  {
+    "id": "rlt-tattoos",
+    "section": "Red Light Therapy (RLT)",
+    "question": "Tattoos & cosmetics",
+    "answer": "Tattoos can warm up; let us know so we can adjust time/distance. Remove reflective cosmetics on the area before treatment."
+  },
+
+  {
+    "id": "hrw-what",
+    "section": "Hydrogen Water",
+    "question": "What is it?",
+    "answer": "Purified water infused with dissolved molecular hydrogen (H\u2082). It’s different from alkaline or flavored waters."
+  },
+  {
+    "id": "hrw-served",
+    "section": "Hydrogen Water",
+    "question": "How is it served?",
+    "answer": "By-the-glass in the studio or in sealed take-home bottles. Please bring a clean, airtight bottle if you prefer refills."
+  },
+  {
+    "id": "hrw-when",
+    "section": "Hydrogen Water",
+    "question": "When should I drink it?",
+    "answer": "Hydrogen dissipates over time. For best experience, drink soon after dispensing or within the same day. Keep sealed and refrigerated if not consumed immediately."
+  },
+  {
+    "id": "hrw-how-much",
+    "section": "Hydrogen Water",
+    "question": "How much should I drink?",
+    "answer": "Commonly 250–500 mL per serving, 1–2\u00d7/day. Adjust to your preference and hydration needs (this is not medical advice)."
+  },
+  {
+    "id": "hrw-safety",
+    "section": "Hydrogen Water",
+    "question": "Taste & safety",
+    "answer": "Tastes like regular water. Generally well-tolerated; if you are pregnant, breastfeeding, have kidney issues, or complex medical conditions, consult your clinician."
+  },
+  {
+    "id": "hrw-meds",
+    "section": "Hydrogen Water",
+    "question": "Can I mix it with supplements/meds?",
+    "answer": "Separate from medications unless your clinician says otherwise. Avoid mixing with oxidizing agents."
+  },
+  {
+    "id": "hrw-quality",
+    "section": "Hydrogen Water",
+    "question": "Quality checks",
+    "answer": "We maintain our system per manufacturer guidance and perform routine checks. Ask staff about our latest maintenance log."
+  },
+
+  {
     "id": "faq-01",
+    "section": "General FAQs",
     "question": "Who are your programs for?",
     "answer": "Anyone looking to build sustainable habits for better health and performance."
   },
   {
     "id": "faq-02",
+    "section": "General FAQs",
     "question": "Do I need experience to join?",
     "answer": "No. Our events are beginner-friendly with options for all levels."
   },
   {
     "id": "faq-03",
+    "section": "General FAQs",
     "question": "Are sessions recorded?",
     "answer": "Some online workshops are recorded. Check the event details for availability."
   },
   {
     "id": "faq-04",
+    "section": "General FAQs",
     "question": "Do you offer team workshops?",
     "answer": "Yes. We can design custom sessions for teams and organizations."
   },
   {
     "id": "faq-05",
+    "section": "General FAQs",
     "question": "What is your refund policy?",
     "answer": "For paid events, we offer refunds up to 48 hours before the start time."
   }

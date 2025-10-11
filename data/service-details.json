@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "energy-enhancement-system",
+    "name": "Energy Enhancement System",
+    "badges": ["General Wellness", "Unplug & Relax"],
+    "heroImage": "/images/ees.svg",
+    "overview": "EES provides a quiet, restorative lounge experience. Many guests use it for deep rest, meditation, or reflective downtime.",
+    "whatItIs": "Screens are arranged to create a specific electromagnetic environment sometimes described as 'bio-scalar fields'. We frame EES as a relaxation modality—not a diagnosis or treatment.",
+    "benefits": [
+      "Encourages a relaxed, restful state",
+      "Time away from devices and notifications",
+      "Pairs well with sleep and mindfulness habits"
+    ],
+    "sessionFlow": [
+      "Arrive a few minutes early and settle in.",
+      "Set a simple intention (rest, breathwork, quiet).",
+      "Recline with optional eye mask and blanket.",
+      "Hydrate after the session and notice how you feel."
+    ],
+    "safety": {
+      "notes": [
+        "This is a general wellness session, not a medical therapy.",
+        "If you have implanted electronic devices or are pregnant, consult your clinician before trying new wellness practices."
+      ]
+    },
+    "sources": [
+      { "label": "FDA — General Wellness guidance", "href": "#" }
+    ]
+  },
+  {
+    "slug": "red-light-therapy",
+    "name": "Red Light Therapy (Photobiomodulation)",
+    "badges": ["630–850nm", "Condition-specific evidence"],
+    "heroImage": "/images/red-light.svg",
+    "overview": "Low-level red and near-infrared light aimed at supporting cellular energy processes and local circulation.",
+    "whatItIs": "PBM targets cellular photoacceptors (e.g., cytochrome-c oxidase) using non-ionizing light within the red/NIR optical window.",
+    "benefits": [
+      "Convenient, time-boxed sessions",
+      "Non-invasive and contact-free",
+      "Often paired with mobility or recovery work"
+    ],
+    "sessionFlow": [
+      "Choose a target area (skin, joints, scalp).",
+      "Clean skin; remove makeup/sunscreen on the target area.",
+      "10–20 minutes under the panel at a measured distance.",
+      "Hydrate and resume normal activity."
+    ],
+    "safety": {
+      "notes": [
+        "Avoid shining directly into eyes; protective goggles provided.",
+        "Photosensitive conditions/medications, active cancer treatment, pregnancy, or recent procedures: consult your clinician.",
+        "Devices can be FDA-cleared for specific indications; ask about our device’s labeling."
+      ]
+    },
+    "sources": [
+      { "label": "FDA — 510(k) device database", "href": "#" },
+      { "label": "Reviews on PBM mechanisms & optical window", "href": "#" }
+    ]
+  },
+  {
+    "slug": "hydrogen-water",
+    "name": "Hydrogen-Rich Water",
+    "badges": ["Emerging research", "Refresh & Hydrate"],
+    "heroImage": "/images/hydrogen-water.svg",
+    "overview": "Water with dissolved molecular hydrogen (H₂); many enjoy it pre- or post-session.",
+    "whatItIs": "Prepared on site and served chilled. Early clinical research explores impacts on fatigue, oxidative stress markers, and specific metabolic markers.",
+    "benefits": [
+      "Pairs with daily hydration habits",
+      "Light, crisp taste",
+      "Easy add-on before or after sessions"
+    ],
+    "sessionFlow": [
+      "Served in reusable cups (typical 250–500 mL).",
+      "Enjoy before or after a session, or on its own."
+    ],
+    "safety": {
+      "notes": [
+        "Generally well-tolerated in studies to date.",
+        "Not a treatment for medical conditions; consult your clinician for medical care."
+      ]
+    },
+    "sources": [
+      { "label": "Frontiers — HRW trials & reviews", "href": "#" }
+    ]
+  }
+]
