@@ -27,7 +27,7 @@ export default function HomePage() {
   // Prefix assets for GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets in /public/images/
+  // Assets
   const MAP = '/images/map-downtown.png'
   const ENTRANCE = '/images/entrance-thumb.jpg'
 
@@ -43,9 +43,8 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ===== Hero (gradient background; no photo) ======================== */}
+      {/* ===== Hero ====================================================== */}
       <section className="relative isolate overflow-hidden" aria-labelledby="home-hero-title">
-        {/* soft radial and brand gradient layers */}
         <div
           className="absolute inset-0 -z-20"
           aria-hidden
@@ -55,15 +54,12 @@ export default function HomePage() {
           }}
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-600/10 via-teal-400/10 to-transparent" aria-hidden />
-        {/* ambient aura */}
         <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-lavender-500/20 blur-3xl" aria-hidden />
 
         <Container className="relative py-20 md:py-28">
           <div className="mx-auto max-w-5xl rounded-[20px] p-[1px]">
             <div className="rounded-[20px] bg-white/70 p-8 shadow-[0_10px_24px_rgba(16,24,40,.08)] ring-1 ring-white/50 backdrop-blur md:p-14">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700/80">
-                Holistic • Human • Kind
-              </p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700/80">Holistic • Human • Kind</p>
               <h1 id="home-hero-title" className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
                 Time for a <span className="text-emerald-600">Recharge</span>
               </h1>
@@ -71,7 +67,6 @@ export default function HomePage() {
                 Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
               </p>
 
-              {/* Trust ticks */}
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
                 {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
                   <li key={t} className="inline-flex items-center gap-2">
@@ -80,7 +75,6 @@ export default function HomePage() {
                 ))}
               </ul>
 
-              {/* CTAs (Contact Us in lavender, matching nav CTA) */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact/"
@@ -100,7 +94,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Testimonials strip (reviews/stars removed) =================== */}
+      {/* ===== Quote strip (stars removed) =============================== */}
       <section className="bg-[var(--surface)] py-10" aria-labelledby="quotes">
         <Container className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
           <h2 id="quotes" className="sr-only">What clients say</h2>
@@ -110,7 +104,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Pillars / Benefits (enhanced) ================================ */}
+      {/* ===== Pillars ==================================================== */}
       <section className="py-16" aria-labelledby="pillars">
         <Container>
           <h2 id="pillars" className="sr-only">Why choose us</h2>
@@ -136,7 +130,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Featured Services (unchanged) ================================ */}
+      {/* ===== Featured Services ========================================= */}
       <section className="py-16" id="featured-services" aria-labelledby="featured">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
@@ -199,13 +193,12 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Visit Us (enhanced pills & CTA color) ======================= */}
+      {/* ===== Visit Us =================================================== */}
       <section className="bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
         <Container>
           <h2 id="visit" className="text-2xl font-semibold text-slate-900">Visit Us</h2>
 
           <div className="mt-6 grid gap-8 md:grid-cols-2">
-            {/* Map */}
             <div className="relative">
               <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm">
                 <img
@@ -217,7 +210,6 @@ export default function HomePage() {
                   loading="lazy"
                   decoding="async"
                 />
-                {/* Desktop overlay */}
                 <div className="absolute inset-0 hidden items-end justify-between gap-3 p-4 sm:flex">
                   <a className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
                     Open in Google Maps
@@ -228,7 +220,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Mobile buttons */}
               <div className="mt-3 flex items-center gap-3 sm:hidden">
                 <a className="flex-1 rounded-[999px] bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 shadow" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
                   Google Maps
@@ -239,7 +230,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Details */}
             <div>
               <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
               <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
@@ -285,7 +275,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Wide CTA (left as-is) ======================================= */}
+      {/* ===== CTA ======================================================== */}
       <section className="py-16" aria-labelledby="cta">
         <Container>
           <div className="relative overflow-hidden rounded-[20px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
@@ -308,47 +298,6 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
-
-      {/* ===== Footer ======================================================= */}
-      <footer className="border-t border-slate-200 bg-white py-12" aria-labelledby="footer">
-        <Container className="grid gap-10 md:grid-cols-4">
-          <h2 id="footer" className="sr-only">Site footer</h2>
-
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block h-8 w-8 rounded-full bg-emerald-600" aria-hidden />
-              <span className="font-semibold text-slate-900">Upgrade Wellness</span>
-            </div>
-          </div>
-
-          <nav aria-label="Quick links" className="text-sm">
-            <h3 className="mb-3 font-semibold text-slate-900">Quick links</h3>
-            <ul className="space-y-2">
-              <li><Link className="hover:underline" href="/services/">Services</Link></li>
-              <li><Link className="hover:underline" href="/events/">Events</Link></li>
-              <li><Link className="hover:underline" href="/about/">About</Link></li>
-              <li><Link className="hover:underline" href="/contact/">Contact</Link></li>
-              <li><Link className="hover:underline" href="/privacy/">Privacy</Link></li>
-            </ul>
-          </nav>
-
-          <div className="text-sm">
-            <h3 className="mb-3 font-semibold text-slate-900">Visit</h3>
-            <p className="text-slate-600">123 Oak Street, Suite 204<br />City, ST 12345</p>
-            <p className="mt-2 text-slate-600"><a className="hover:underline" href="tel:+11234567890">(123) 456-7890</a></p>
-            <p className="mt-1 text-slate-600"><a className="hover:underline" href="mailto:hello@upgradewellness.com">hello@upgradewellness.com</a></p>
-          </div>
-
-          <form className="text-sm" aria-label="Newsletter signup">
-            <h3 className="mb-3 font-semibold text-slate-900">Newsletter</h3>
-            <label htmlFor="email" className="sr-only">Email</label>
-            <div className="flex gap-2">
-              <input id="email" name="email" type="email" required placeholder="you@example.com" className="min-w-0 flex-1 rounded-[999px] border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30" />
-              <button type="submit" className="rounded-[999px] bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-500">Sign up</button>
-            </div>
-          </form>
-        </Container>
-      </footer>
     </>
   )
 }
@@ -384,7 +333,6 @@ function MailIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-/* extra icons for Visit Us pills */
 function CarIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
