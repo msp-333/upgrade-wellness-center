@@ -29,7 +29,7 @@ export default function HomePage() {
 
   // Assets in /public/images/
   const HERO = '/images/hero-spa-soft.jpg'
-  const MAP  = '/images/map-downtown.png'
+  const MAP = '/images/map-downtown.png'
   const ENTRANCE = '/images/entrance-thumb.jpg'
   const ASSOC1 = '/images/assoc-1.png'
   const ASSOC2 = '/images/assoc-2.png'
@@ -43,42 +43,69 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ===== Hero (kept) =================================================== */}
-      <section className="relative isolate overflow-hidden">
+      {/* ===== Hero ========================================================= */}
+      <section
+        className="relative isolate overflow-hidden"
+        aria-labelledby="home-hero-title"
+      >
+        {/* Background image + legibility gradient */}
         <div
           className="absolute inset-0 -z-20 bg-cover bg-center"
           style={{ backgroundImage: `url(${asset(HERO)})` }}
           aria-hidden
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/50 to-slate-900/60" aria-hidden />
-        <div className="pointer-events-none absolute -left-24 top-[-6rem] h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl" aria-hidden />
+        <div
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/65 via-slate-900/55 to-slate-900/65"
+          aria-hidden
+        />
+        {/* Soft brand aura */}
+        <div
+          className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl"
+          aria-hidden
+        />
+
         <Container className="relative py-20 md:py-28">
           <div className="mx-auto max-w-5xl rounded-[20px] p-[1px] backdrop-blur">
             <div className="rounded-[20px] bg-white/70 p-8 shadow-[0_10px_24px_rgba(16,24,40,.08)] ring-1 ring-white/50 md:p-14">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700/80">Holistic • Human • Kind</p>
-              <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700/80">
+                Holistic • Human • Kind
+              </p>
+              <h1
+                id="home-hero-title"
+                className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl"
+              >
                 Time for a <span className="text-emerald-600">Recharge</span>
               </h1>
               <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
-                Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
+                Hydration, healing, and the harmony of health—blending nature,
+                innovation, and evidence-informed care.
               </p>
-              <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
-                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
-                  <li key={t} className="inline-flex items-center gap-2">
-                    <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
-                  </li>
-                ))}
+
+              {/* Trust ticks */}
+              <ul
+                aria-label="Trust points"
+                className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700"
+              >
+                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map(
+                  (t) => (
+                    <li key={t} className="inline-flex items-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                    </li>
+                  )
+                )}
               </ul>
+
+              {/* CTAs */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact/"
-                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/40"
+                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-600/40"
                 >
                   Book a session
                 </Link>
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                 >
                   Explore services
                 </Link>
@@ -88,33 +115,73 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Social Proof (kept) ========================================== */}
-      <section className="bg-[var(--surface)] py-10">
+      {/* ===== Social Proof ================================================= */}
+      <section className="bg-[var(--surface)] py-10" aria-labelledby="social-proof">
         <Container className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
+          <h2 id="social-proof" className="sr-only">
+            Reviews & associations
+          </h2>
+
           <p className="text-center text-sm text-slate-700 md:text-left">
-            <span className="mr-2 text-emerald-700">★★★★★</span>
+            <span className="mr-2 text-emerald-700" aria-hidden>
+              ★★★★★
+            </span>
             <span className="font-medium text-slate-900">4.9</span> (320+ reviews)
           </p>
+
           <div className="flex flex-1 flex-col items-center gap-4 md:flex-row md:justify-center">
-            <blockquote className="text-center text-sm text-slate-600 md:text-left">“Calm, caring, and effective.”</blockquote>
+            <blockquote className="text-center text-sm text-slate-600 md:text-left">
+              “Calm, caring, and effective.”
+            </blockquote>
             <span className="hidden h-4 w-px bg-slate-300 md:block" aria-hidden />
-            <blockquote className="text-center text-sm text-slate-600 md:text-left">“I leave lighter every time.”</blockquote>
+            <blockquote className="text-center text-sm text-slate-600 md:text-left">
+              “I leave lighter every time.”
+            </blockquote>
           </div>
+
           <div className="flex items-center gap-6 opacity-70">
-            <img src={asset(ASSOC1)} alt="Member association logo 1" className="h-6 w-auto" />
-            <img src={asset(ASSOC2)} alt="Member association logo 2" className="h-6 w-auto" />
+            <img
+              src={asset(ASSOC1)}
+              width="96"
+              height="24"
+              loading="lazy"
+              decoding="async"
+              alt="Association logo"
+              className="h-6 w-auto"
+            />
+            <img
+              src={asset(ASSOC2)}
+              width="96"
+              height="24"
+              loading="lazy"
+              decoding="async"
+              alt="Association logo"
+              className="h-6 w-auto"
+            />
           </div>
         </Container>
       </section>
 
-      {/* ===== Pillars / Benefits (kept) ==================================== */}
-      <section className="py-16">
+      {/* ===== Pillars / Benefits ========================================== */}
+      <section className="py-16" aria-labelledby="pillars">
         <Container>
+          <h2 id="pillars" className="sr-only">
+            Why choose us
+          </h2>
           <div className="grid gap-6 md:grid-cols-3">
             {[
-              { title: 'Licensed & evidence-informed', body: 'Care grounded in research and real-world practice.' },
-              { title: 'Human-friendly & practical', body: 'Gentle, doable steps that fit your actual life.' },
-              { title: 'Supportive community', body: 'Events and groups that help you stay consistent.' },
+              {
+                title: 'Licensed & evidence-informed',
+                body: 'Care grounded in research and real-world practice.',
+              },
+              {
+                title: 'Human-friendly & practical',
+                body: 'Gentle, doable steps that fit your actual life.',
+              },
+              {
+                title: 'Supportive community',
+                body: 'Events and groups that help you stay consistent.',
+              },
             ].map((c) => (
               <div
                 key={c.title}
@@ -131,126 +198,207 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Featured Services (kept) ===================================== */}
-      <section className="py-16" id="featured-services">
+      {/* ===== Featured Services =========================================== */}
+      <section className="py-16" id="featured-services" aria-labelledby="featured">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-semibold text-slate-900">Featured Services</h2>
-            <p className="mt-2 text-slate-600">Three simple ways to support recovery and everyday energy.</p>
+            <h2 id="featured" className="text-2xl font-semibold text-slate-900">
+              Featured Services
+            </h2>
+            <p className="mt-2 text-slate-600">
+              Three simple ways to support recovery and everyday energy.
+            </p>
           </div>
 
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {list.map((s) => (
-              <article
-                key={s.id}
-                className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(16,24,40,.08)]"
-              >
-                <div className="relative h-44 w-full overflow-hidden rounded-[16px] ring-1 ring-inset ring-slate-200">
-                  <img
-                    src={asset(s.image ?? '/images/service-fallback.jpg')}
-                    alt={s.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent" aria-hidden />
-                </div>
+          <div
+            className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            role="list"
+            aria-label="Service cards"
+          >
+            {list.map((s) => {
+              const headingId = `svc-${s.slug}-title`
+              return (
+                <article
+                  key={s.id}
+                  aria-labelledby={headingId}
+                  className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(16,24,40,.08)]"
+                >
+                  <div className="relative h-44 w-full overflow-hidden rounded-[16px] ring-1 ring-inset ring-slate-200">
+                    <img
+                      src={asset(s.image ?? '/images/service-fallback.jpg')}
+                      alt={s.name}
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
+                      className="h-full w-full object-cover transition-transform duration-500 motion-reduce:transition-none group-hover:scale-[1.02]"
+                    />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent"
+                      aria-hidden
+                    />
+                  </div>
 
-                <h3 className="mt-4 text-lg font-semibold text-slate-900">{s.name}</h3>
-                <p className="mt-1 text-sm text-slate-600">{s.tagline ?? 'Support, recovery, and steady energy.'}</p>
+                  <h3 id={headingId} className="mt-4 text-lg font-semibold text-slate-900">
+                    {s.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-600">
+                    {s.tagline ?? 'Support, recovery, and steady energy.'}
+                  </p>
 
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {s.duration && <span className="chip">{s.duration}</span>}
-                  {s.intensity && <span className="chip">{s.intensity}</span>}
-                  {s.modality && <span className="chip">{s.modality}</span>}
-                </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {s.duration && <span className="chip">{s.duration}</span>}
+                    {s.intensity && <span className="chip">{s.intensity}</span>}
+                    {s.modality && <span className="chip">{s.modality}</span>}
+                  </div>
 
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-sm text-slate-700">
-                    {typeof s.priceFrom === 'number' ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></> : <>&nbsp;</>}
-                  </span>
-                  <Link
-                    href={`/services/#${s.slug}`}
-                    className="text-sm font-medium text-emerald-700 underline decoration-emerald-200 underline-offset-4 transition hover:text-emerald-800"
-                  >
-                    View details
-                  </Link>
-                </div>
-              </article>
-            ))}
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-sm text-slate-700">
+                      {typeof s.priceFrom === 'number' ? (
+                        <>
+                          From{' '}
+                          <strong className="text-slate-900">${s.priceFrom}</strong>
+                        </>
+                      ) : (
+                        <>&nbsp;</>
+                      )}
+                    </span>
+                    <Link
+                      href={`/services/#${s.slug}`}
+                      className="text-sm font-medium text-emerald-700 underline decoration-emerald-200 underline-offset-4 transition-colors hover:text-emerald-800"
+                    >
+                      View details
+                    </Link>
+                  </div>
+                </article>
+              )
+            })}
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-4">
-            <Link href="/services/" className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900">
+            <Link
+              href="/services/"
+              className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900"
+            >
               Compare services
             </Link>
-            <span className="text-slate-400">•</span>
-            <Link href="/services/" className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900">
+            <span className="text-slate-400" aria-hidden>
+              •
+            </span>
+            <Link
+              href="/services/"
+              className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900"
+            >
               View all services
             </Link>
           </div>
         </Container>
       </section>
 
-      {/* ===== Visit Us (kept, simplified — no hours table) ================== */}
-      <section className="bg-[var(--surface)] py-16" id="visit-us">
+      {/* ===== Visit Us (no hours table) =================================== */}
+      <section className="bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
         <Container>
-          <h2 className="text-2xl font-semibold text-slate-900">Visit Us</h2>
+          <h2 id="visit" className="text-2xl font-semibold text-slate-900">
+            Visit Us
+          </h2>
+
           <div className="mt-6 grid gap-8 md:grid-cols-2">
-            {/* Map card */}
+            {/* Map */}
             <div className="relative">
               <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm">
                 <img
                   src={asset(MAP)}
-                  alt="Muted static map of the Downtown location"
+                  width="960"
+                  height="640"
+                  alt="Map near 123 Oak Street Downtown"
                   className="h-80 w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
+                {/* Desktop hover overlay */}
                 <div className="absolute inset-0 hidden items-end justify-between gap-3 p-4 sm:flex">
                   <a
-                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow hover:bg-white"
+                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white"
                     href={googleMapsUrl}
-                    target="_blank" rel="noopener noreferrer"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Open in Google Maps
                   </a>
                   <a
-                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow hover:bg-white"
+                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white"
                     href={appleMapsUrl}
-                    target="_blank" rel="noopener noreferrer"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Open in Apple Maps
                   </a>
                 </div>
               </div>
+
+              {/* Mobile persistent buttons */}
               <div className="mt-3 flex items-center gap-3 sm:hidden">
-                <a className="flex-1 rounded-[999px] bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 shadow" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">Google Maps</a>
-                <a className="flex-1 rounded-[999px] border border-slate-200 bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 shadow" href={appleMapsUrl} target="_blank" rel="noopener noreferrer">Apple Maps</a>
+                <a
+                  className="flex-1 rounded-[999px] bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 shadow"
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Maps
+                </a>
+                <a
+                  className="flex-1 rounded-[999px] border border-slate-200 bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 shadow"
+                  href={appleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apple Maps
+                </a>
               </div>
             </div>
 
-            {/* Details — no open/closed chip and no hours table */}
+            {/* Details */}
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
+              <h3 className="text-lg font-semibold text-slate-900">
+                Upgrade Wellness Center – Downtown
+              </h3>
               <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="chip">Parking: Free on-site; street after 6 PM</span>
+                <span className="chip">
+                  Parking: Free on-site; street after 6 PM
+                </span>
                 <span className="chip">Transit: Green Line – Oak St (3-min walk)</span>
                 <span className="chip">Accessibility: Elevator, accessible restroom</span>
               </div>
 
               <div className="mt-5 flex items-center gap-6 text-sm">
-                <a className="inline-flex items-center gap-2 text-slate-800 hover:text-slate-900" href={`tel:+11234567890`}>
+                <a
+                  className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900"
+                  href={`tel:+11234567890`}
+                >
                   <PhoneIcon className="h-4 w-4 text-emerald-700" /> {phone}
                 </a>
-                <a className="inline-flex items-center gap-2 text-slate-800 hover:text-slate-900" href={`mailto:${email}`}>
+                <a
+                  className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900"
+                  href={`mailto:${email}`}
+                >
                   <MailIcon className="h-4 w-4 text-emerald-700" /> {email}
                 </a>
               </div>
 
               <div className="mt-5 flex items-center gap-3">
-                <Link href={googleMapsUrl} target="_blank" className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-500">
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500"
+                >
                   Get Directions
-                </Link>
-                <Link href="/contact/" className="rounded-[999px] border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50">
+                </a>
+                <Link
+                  href="/contact/"
+                  className="rounded-[999px] border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-50"
+                >
                   Book a Session
                 </Link>
               </div>
@@ -258,32 +406,54 @@ export default function HomePage() {
               <div className="mt-6 flex items-center gap-3">
                 <img
                   src={asset(ENTRANCE)}
+                  width="160"
+                  height="100"
+                  loading="lazy"
+                  decoding="async"
                   alt="Entrance of Upgrade Wellness Center"
-                  className="h-20 w-32 rounded-[12px] object-cover ring-1 ring-inset ring-slate-200"
+                  className="h-20 w-40 rounded-[12px] object-cover ring-1 ring-inset ring-slate-200"
                 />
-                <p className="text-xs text-slate-600">Entrance on Oak Street. Take the elevator to Suite 204.</p>
+                <p className="text-xs text-slate-600">
+                  Entrance on Oak Street. Take the elevator to Suite 204.
+                </p>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ===== Wide CTA (kept) ============================================== */}
-      <section className="py-16">
+      {/* ===== Wide CTA ===================================================== */}
+      <section className="py-16" aria-labelledby="cta">
         <Container>
           <div className="relative overflow-hidden rounded-[20px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
-            <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" aria-hidden />
-            <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" aria-hidden />
+            <div
+              className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl"
+              aria-hidden
+            />
             <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
               <div>
-                <h2 className="text-2xl md:text-3xl">Start your upgrade—personalized wellness, one step at a time.</h2>
-                <p className="mt-2 text-white/90">A calm, supportive place to recharge.</p>
+                <h2 id="cta" className="text-2xl md:text-3xl">
+                  Start your upgrade—personalized wellness, one step at a time.
+                </h2>
+                <p className="mt-2 text-white/90">
+                  A calm, supportive place to recharge.
+                </p>
               </div>
               <div className="flex items-center justify-start gap-3 md:justify-end">
-                <Link href="/contact/" className="rounded-[999px] bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white">
+                <Link
+                  href="/contact/"
+                  className="rounded-[999px] bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white"
+                >
                   Book a time
                 </Link>
-                <Link href="/events/" className="rounded-[999px] border border-white/80 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70">
+                <Link
+                  href="/events/"
+                  className="rounded-[999px] border border-white/80 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70"
+                >
                   See events
                 </Link>
               </div>
@@ -292,9 +462,13 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Footer (kept) ================================================ */}
-      <footer className="border-t border-slate-200 bg-white py-12">
+      {/* ===== Footer ======================================================= */}
+      <footer className="border-t border-slate-200 bg-white py-12" aria-labelledby="footer">
         <Container className="grid gap-10 md:grid-cols-4">
+          <h2 id="footer" className="sr-only">
+            Site footer
+          </h2>
+
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-block h-8 w-8 rounded-full bg-emerald-600" aria-hidden />
@@ -308,35 +482,81 @@ export default function HomePage() {
           <nav aria-label="Quick links" className="text-sm">
             <h3 className="mb-3 font-semibold text-slate-900">Quick links</h3>
             <ul className="space-y-2">
-              <li><Link className="hover:underline" href="/services/">Services</Link></li>
-              <li><Link className="hover:underline" href="/events/">Events</Link></li>
-              <li><Link className="hover:underline" href="/about/">About</Link></li>
-              <li><Link className="hover:underline" href="/contact/">Contact</Link></li>
-              <li><Link className="hover:underline" href="/privacy/">Privacy</Link></li>
+              <li>
+                <Link className="hover:underline" href="/services/">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link className="hover:underline" href="/events/">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link className="hover:underline" href="/about/">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link className="hover:underline" href="/contact/">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link className="hover:underline" href="/privacy/">
+                  Privacy
+                </Link>
+              </li>
             </ul>
           </nav>
 
           <div className="text-sm">
             <h3 className="mb-3 font-semibold text-slate-900">Visit</h3>
             <p className="text-slate-600">
-              123 Oak Street, Suite 204<br />City, ST 12345
+              123 Oak Street, Suite 204
+              <br />
+              City, ST 12345
             </p>
-            <p className="mt-2 text-slate-600"><a className="hover:underline" href="tel:+11234567890">(123) 456-7890</a></p>
-            <p className="mt-1 text-slate-600"><a className="hover:underline" href="mailto:hello@upgradewellness.com">hello@upgradewellness.com</a></p>
+            <p className="mt-2 text-slate-600">
+              <a className="hover:underline" href="tel:+11234567890">
+                (123) 456-7890
+              </a>
+            </p>
+            <p className="mt-1 text-slate-600">
+              <a className="hover:underline" href="mailto:hello@upgradewellness.com">
+                hello@upgradewellness.com
+              </a>
+            </p>
           </div>
 
-          <form className="text-sm">
+          <form className="text-sm" aria-label="Newsletter signup">
             <h3 className="mb-3 font-semibold text-slate-900">Newsletter</h3>
-            <label htmlFor="email" className="sr-only">Email</label>
+            <label htmlFor="email" className="sr-only">
+              Email
+            </label>
             <div className="flex gap-2">
-              <input id="email" name="email" type="email" required placeholder="you@example.com"
-                className="min-w-0 flex-1 rounded-[999px] border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30" />
-              <button type="submit" className="rounded-[999px] bg-emerald-600 px-4 py-2 font-semibold text-white hover:bg-emerald-500">Sign up</button>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="min-w-0 flex-1 rounded-[999px] border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
+              />
+              <button
+                type="submit"
+                className="rounded-[999px] bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-500"
+              >
+                Sign up
+              </button>
             </div>
           </form>
         </Container>
+
         <Container>
-          <p className="mt-10 text-xs text-slate-500">© {new Date().getFullYear()} Upgrade Wellness Center. All rights reserved.</p>
+          <p className="mt-10 text-xs text-slate-500">
+            © {new Date().getFullYear()} Upgrade Wellness Center. All rights reserved.
+          </p>
         </Container>
       </footer>
     </>
@@ -347,7 +567,13 @@ export default function HomePage() {
 function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 20 20" fill="none" aria-hidden {...props}>
-      <path d="M4 10l3 3 9-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M4 10l3 3 9-9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -362,14 +588,18 @@ function LeafIcon(props: React.SVGProps<SVGSVGElement>) {
 function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83.26 1.7.46 2.6.58A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.5"/>
+      <path
+        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83.26 1.7.46 2.6.58A2 2 0 0 1 22 16.92Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
     </svg>
   )
 }
 function MailIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.5" />
       <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.5" />
     </svg>
   )
