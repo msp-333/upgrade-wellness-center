@@ -28,7 +28,7 @@ export default function AboutPage() {
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets
-  const HERO = '/images/about-hero.jpg' // ← put your hero photo here
+  const HERO = '/images/about-hero.png' // ← put your hero photo here
   const MAP = '/images/map-downtown.png'
   const ENTRANCE = '/images/entrance-thumb.jpg'
 
