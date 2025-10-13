@@ -9,7 +9,8 @@ export type Item = {
   period?: string;          // e.g., "per year"
   badge?: string;           // e.g., "Best Value", "Premium", "Special", "Required"
   tone?: 'brand' | 'premium' | 'special';
-  description: string[];    // brief copy (first line shown)
+  description: string[];    // brief copy; first line is the summary
+  details?: string[];       // OPTIONAL per-card extra notes; falls back to description.slice(1)
   ctaHref?: string;
   ctaLabel?: string;
 };
@@ -28,15 +29,6 @@ const LABELS: Record<keyof PricingData, string> = {
   packages: 'Packages',
 };
 
-/* ---------------- General notes (shared across all cards) ---------------- */
-const GENERAL_NOTES: string[] = [
-  'We are a wellness center; services are not medical care and do not diagnose, treat, or cure disease.',
-  'A PMA Membership is required prior to your first appointment.',
-  'Please cancel or reschedule at least 24 hours in advance to avoid fees.',
-  'Minors must be accompanied by a parent or legal guardian.',
-  'Pricing and availability may change; taxes/fees may apply where required.',
-];
-
 /* ---------------- Sorting helpers ---------------- */
 const BADGE_ORDER = ['Best Value', 'Premium', 'Special', 'Required', 'New Customer'];
 
@@ -44,26 +36,18 @@ function badgeRank(b?: string) {
   const i = BADGE_ORDER.indexOf(b ?? '');
   return i === -1 ? 999 : i;
 }
-
 function parsePrice(p?: string): number {
   if (!p) return Number.POSITIVE_INFINITY;
-  const n = parseFloat(String(p).replace(/[^\d.]/g, '')); // "$120" -> 120
+  const n = parseFloat(String(p).replace(/[^\d.]/g, ''));
   return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
 }
-
 function sortFor(tab: keyof PricingData, arr: Item[]) {
-  // Keep membership order as authored
-  if (tab === 'membership') return arr;
-
-  // Others: badge priority → price (low→high) → title
+  if (tab === 'membership') return arr; // keep authored order
   return [...arr].sort((a, b) => {
     const br = badgeRank(a.badge) - badgeRank(b.badge);
     if (br !== 0) return br;
-
-    const pa = parsePrice(a.price);
-    const pb = parsePrice(b.price);
+    const pa = parsePrice(a.price), pb = parsePrice(b.price);
     if (pa !== pb) return pa - pb;
-
     return (a.title || '').localeCompare(b.title || '');
   });
 }
@@ -94,25 +78,21 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
   return (
     <div className="bg-surface text-text-primary">
-      {/* Header / Hero */}
-      <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl" />
-        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/40 opacity-40 blur-3xl" />
+      {/* Header — lighter, calm, on-brand */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-surface to-surface text-text-primary">
+        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
+        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Our Pricing</h1>
-            <p className="mx-auto mt-2 max-w-xl text-white/85">
-              Calm, clear options—book what fits your routine.
+            <p className="mx-auto mt-2 max-w-xl text-text-secondary">
+              Simple, transparent options—book what fits your routine.
             </p>
           </div>
 
-          {/* Tabs */}
-          <div
-            role="tablist"
-            aria-label="Pricing categories"
-            className="mt-6 flex flex-wrap justify-center gap-2"
-          >
+          {/* Tabs (with counts) */}
+          <div role="tablist" aria-label="Pricing categories" className="mt-6 flex flex-wrap justify-center gap-2">
             {tabs.map((key) => {
               const active = tab === key;
               return (
@@ -123,13 +103,13 @@ export default function PricingClient({ data }: { data: PricingData }) {
                   onClick={() => setTab(key)}
                   className={[
                     'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
-                    active ? 'bg-white text-brand-800 shadow-soft' : 'bg-white/10 text-white/90 hover:bg-white/15'
+                    active
+                      ? 'bg-white text-brand-800 shadow-soft ring-1 ring-brand-200'
+                      : 'bg-white/70 text-text-primary hover:bg-white shadow-soft'
                   ].join(' ')}
                 >
                   <span>{LABELS[key]}</span>
-                  <span className={active ? 'text-brand-700' : 'text-white/70'}>
-                    · {counts[key]}
-                  </span>
+                  <span className={active ? 'text-brand-700' : 'text-text-secondary'}>· {counts[key]}</span>
                 </button>
               );
             })}
@@ -137,7 +117,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Membership notice (aligned grid, no overlap) */}
+      {/* Membership notice (aligned; no overlap) */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-6">
         <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 md:p-6 shadow-soft">
           <div className="grid gap-4 md:grid-cols-[auto,1fr,auto] md:items-center">
@@ -147,8 +127,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
             <div>
               <h3 className="text-lg font-semibold text-brand-800">Membership Required</h3>
               <p className="mt-1 text-text-secondary">
-                Add the PMA Membership to your cart first. After accepting the agreement,
-                you’ll be able to book your first appointment.
+                Add the PMA Membership to your cart first. After accepting the agreement, you’ll be able to book.
               </p>
             </div>
             <div>
@@ -172,52 +151,63 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
         {/* Cards */}
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {sorted.map((it, idx) => (
-            <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
-              {it.badge && <span className={badgeClass(it.tone)}>{it.badge}</span>}
+          {sorted.map((it, idx) => {
+            const specifics = (it.details && it.details.length > 0)
+              ? it.details
+              : (it.description?.slice(1) ?? []);
 
-              <h3 className="text-lg font-semibold">{it.title}</h3>
+            return (
+              <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
+                {/* Header row with inline badge chip */}
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-semibold">{it.title}</h3>
+                  {it.badge && (
+                    <span className={chipClass(it.tone)}>
+                      {it.badge}
+                    </span>
+                  )}
+                </div>
 
-              <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold tracking-tight">{it.price}</span>
-                {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
-              </div>
+                {/* Price */}
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="text-3xl font-extrabold tracking-tight">{it.price}</span>
+                  {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
+                </div>
 
-              {/* Keep copy concise: show only first line */}
-              {it.description?.length > 0 && (
-                <p className="mt-4 text-text-secondary">{it.description[0]}</p>
-              )}
+                {/* Short summary */}
+                {it.description?.[0] && (
+                  <p className="mt-4 text-text-secondary">{it.description[0]}</p>
+                )}
 
-              {/* Shared general details for UWC */}
-              <details className="mt-3">
-                <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
-                  What to know
-                </summary>
-                <ul className="mt-2 space-y-2 text-sm text-text-secondary">
-                  {GENERAL_NOTES.map((n, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                        <CheckIcon />
-                      </span>
-                      <span>{n}</span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
+                {/* Per-card details (NOT shared) */}
+                {specifics.length > 0 && (
+                  <details className="mt-3 group">
+                    <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
+                      Details
+                    </summary>
+                    <ul className="mt-2 space-y-2 text-sm text-text-secondary">
+                      {specifics.map((d, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                            <DotIcon />
+                          </span>
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
 
-              <div className="mt-auto pt-6">
-                <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
-                  {it.ctaLabel ?? 'Book Appointment'}
-                </a>
-              </div>
-            </article>
-          ))}
+                {/* CTA pinned bottom */}
+                <div className="mt-auto pt-6">
+                  <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
+                    {it.ctaLabel ?? 'Book Appointment'}
+                  </a>
+                </div>
+              </article>
+            );
+          })}
         </div>
-
-        {/* Optional page-level fine print */}
-        <p className="mt-8 text-center text-xs text-text-secondary">
-          Questions about pricing or scheduling? <a href="/contact" className="underline">Contact us</a>.
-        </p>
       </section>
     </div>
   );
@@ -227,7 +217,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
 function cardClass(tone: Item['tone']) {
   const base =
-    'relative flex h-full flex-col rounded-card border p-6 shadow-soft bg-white';
+    'relative flex h-full flex-col rounded-card border p-6 shadow-soft bg-white hover:shadow-md transition';
   switch (tone) {
     case 'premium':
       return `${base} border-lavender-600/40 bg-lavender-600/5`;
@@ -238,16 +228,17 @@ function cardClass(tone: Item['tone']) {
   }
 }
 
-function badgeClass(tone: Item['tone']) {
-  const base =
-    'absolute right-4 top-0 translate-y-[-50%] rounded-pill px-3 py-1 text-xs font-semibold shadow-soft';
+/* Inline badge chip (inside card, like your screenshot) */
+function chipClass(tone: Item['tone']) {
+  const base = 'rounded-pill px-3 py-1 text-xs font-semibold';
   switch (tone) {
     case 'premium':
-      return `${base} bg-lavender-600 text-white`;
+      return `${base} bg-lavender-600/10 text-lavender-600 border border-lavender-600/30`;
     case 'special':
-      return `${base} bg-brand-50 text-text-primary border border-gold-mist`;
+      // soft mint chip for "Special"
+      return `${base} bg-brand-50 text-text-primary border border-brand-200`;
     default:
-      return `${base} bg-brand-600 text-white`;
+      return `${base} bg-brand-50 text-brand-800 border border-brand-200`;
   }
 }
 
@@ -272,10 +263,10 @@ function InfoIcon() {
     </svg>
   );
 }
-function CheckIcon() {
+function DotIcon() {
   return (
     <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
+      <circle cx="12" cy="12" r="4" fill="currentColor" />
     </svg>
   );
 }
