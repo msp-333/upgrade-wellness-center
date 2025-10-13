@@ -4,12 +4,12 @@ import { useMemo, useRef, useState } from 'react';
 /* ---------------- Types ---------------- */
 export type Item = {
   title: string;
-  price: string;            // e.g., "$120"
-  period?: string;          // e.g., "per year"
-  badge?: string;           // e.g., "Best Value", "Premium", "Special", "Required"
+  price: string;
+  period?: string;
+  badge?: string;
   tone?: 'brand' | 'premium' | 'special';
-  description: string[];    // first line is the summary
-  details?: string[];       // OPTIONAL per-card notes (else falls back to description.slice(1))
+  description: string[];
+  details?: string[];
   ctaHref?: string;
   ctaLabel?: string;
 };
@@ -41,7 +41,7 @@ function parsePrice(p?: string): number {
   return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
 }
 function sortFor(tab: keyof PricingData, arr: Item[]) {
-  if (tab === 'membership') return arr; // keep authored order
+  if (tab === 'membership') return arr;
   return [...arr].sort((a, b) => {
     const br = badgeRank(a.badge) - badgeRank(b.badge);
     if (br !== 0) return br;
@@ -76,13 +76,13 @@ export default function PricingClient({ data }: { data: PricingData }) {
   };
 
   return (
-    <div className="bg-surface text-text-primary">
+    <div className="bg-surface text-text-primary pt-16 md:pt-24 pb-20 md:pb-28">
       {/* Header — light, calm, brand-aligned */}
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-surface to-surface">
         <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
         <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">
               Our Pricing
@@ -119,7 +119,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
       </section>
 
       {/* Membership notice */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-6">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-10">
         <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 md:p-6 shadow-soft">
           <div className="grid gap-4 md:grid-cols-[auto,1fr,auto] md:items-center">
             <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
@@ -143,8 +143,11 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Results (no big heading) */}
-      <section ref={sectionRef} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+      {/* Results */}
+      <section
+        ref={sectionRef}
+        className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12 scroll-mt-24 md:scroll-mt-28"
+      >
         <h2 className="sr-only">{LABELS[tab]}</h2>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
@@ -192,7 +195,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
                   </details>
                 )}
 
-                {/* CTA pinned bottom */}
+                {/* CTA pinned bottom — forced lavender */}
                 <div className="mt-auto pt-6">
                   <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
                     {it.ctaLabel ?? 'Book Appointment'}
@@ -222,7 +225,7 @@ function cardClass(tone: Item['tone']) {
   }
 }
 
-/* Inline badge chip — crisp mint look, handles 2-line labels gracefully */
+/* Inline badge chip */
 function chipClass(tone: Item['tone']) {
   const base =
     'rounded-pill px-3 py-1 text-[11px] font-semibold leading-tight border shadow-[0_0_0_1px_rgba(16,185,129,0.15)] text-center';
@@ -232,21 +235,14 @@ function chipClass(tone: Item['tone']) {
     case 'special':
       return `${base} bg-brand-50 text-text-primary border-brand-200`;
     default:
-      // brand/misc -> fresh mint chip
       return `${base} bg-brand-50 text-brand-800 border-brand-200`;
   }
 }
 
-function ctaClass(tone: Item['tone']) {
-  const base = 'block w-full rounded-pill px-4 py-2 text-center font-medium transition';
-  switch (tone) {
-    case 'premium':
-      return `${base} bg-lavender-600 text-white hover:bg-lavender-500`;
-    case 'special':
-      return `${base} bg-brand-700 text-white hover:bg-brand-800`;
-    default:
-      return `${base} bg-brand-600 text-white hover:bg-brand-700`;
-  }
+/* CTA — now ALWAYS lavender */
+function ctaClass(_: Item['tone']) {
+  const base = 'block w-full rounded-pill px-4 py-2 text-center font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+  return `${base} bg-lavender-600 text-white hover:bg-lavender-500 focus-visible:ring-lavender-300`;
 }
 
 /* Icons */

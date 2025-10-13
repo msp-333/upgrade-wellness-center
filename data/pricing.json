@@ -8,7 +8,7 @@
       "tone": "brand",
       "description": [
         "Pay yearly membership fee.",
-        "*This is a required fee in order to become a member of Elevated Wellness and Rejuvenation.",
+        "*This is a required fee in order to become a member of Upgrade Wellness Center.",
         "You’ll receive an email about renewal every year on your anniversary date. To cancel, please call us."
       ],
       "ctaHref": "/contact",
@@ -21,7 +21,7 @@
       "price": "$120",
       "description": [
         "Children 12 & under are free to accompany their parent.",
-        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
       ]
     },
     {
@@ -29,7 +29,7 @@
       "price": "$180",
       "description": [
         "Children 12 & under are free to accompany their parent.",
-        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
       ]
     },
     {
@@ -37,7 +37,7 @@
       "price": "$240",
       "description": [
         "Children 12 & under are free to accompany their parent.",
-        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
       ]
     },
     {
@@ -55,7 +55,7 @@
       "price": "$45",
       "description": [
         "Dogs must be crated or leashed at all times. Cats must be crated.",
-        "Please keep animals off furniture and ensure they are well-behaved."
+        "Please ensure they are well-behaved."
       ]
     }
   ],

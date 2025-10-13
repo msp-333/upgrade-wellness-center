@@ -1,3 +1,4 @@
+// app/about/page.tsx
 import Link from 'next/link'
 import Container from '@/components/Container'
 import services from '@/data/services.json'
@@ -28,11 +29,10 @@ export default function AboutPage() {
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets
-  const HERO = 'public/images/about-hero.png' // ← put your hero photo here
+  const HERO = 'public/images/about-hero.jpg' // ← put your hero photo here
   const MAP = 'public/images/map-downtown.png'
-  const ENTRANCE = '/images/entrance-thumb.jpg'
 
-  const addressLine = '123 Oak Street, Suite 204, City, ST 12345'
+  const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
   const phone = '(123) 456-7890'
   const email = 'hello@upgradewellness.com'
   const mapsQuery = encodeURIComponent(addressLine)
@@ -73,15 +73,19 @@ export default function AboutPage() {
               <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
                 Holistic • Human • Kind
               </p>
+
               <h1
                 id="about-hero-title"
                 className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl"
               >
-                The <span className="text-emerald-600">Upgrade</span> Way
+                Time for a{' '}
+                <span className="bg-gradient-to-r from-[#0C8D69] via-emerald-500 to-[#19B6AE] bg-clip-text text-transparent">
+                  Recharge
+                </span>
               </h1>
+
               <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
-                We blend hydrogen-rich hydration, light therapy, and energy enhancement in a calm,
-                evidence-informed setting—so care feels doable, gentle, and real.
+                Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
               </p>
 
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
@@ -210,7 +214,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Visit Us =================================================== */}
+      {/* ===== Visit Us (chips + entrance image removed) ================== */}
       <section className="bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
         <Container>
           <h2 id="visit" className="text-2xl font-semibold text-slate-900">Visit Us</h2>
@@ -251,11 +255,7 @@ export default function AboutPage() {
               <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
               <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className={pill}><CarIcon className="h-4 w-4 text-emerald-700" /> Parking: Free on-site; street after 6 PM</span>
-                <span className={pill}><TrainIcon className="h-4 w-4 text-emerald-700" /> Transit: Green Line – Oak St (3-min walk)</span>
-                <span className={pill}><AccessIcon className="h-4 w-4 text-emerald-700" /> Accessibility: Elevator, accessible restroom</span>
-              </div>
+              {/* Removed: parking/transit/accessibility chips */}
 
               <div className="mt-5 flex items-center gap-6 text-sm">
                 <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`tel:+11234567890`}>
@@ -275,18 +275,7 @@ export default function AboutPage() {
                 </Link>
               </div>
 
-              <div className="mt-6 flex items-center gap-3">
-                <img
-                  src={asset(ENTRANCE)}
-                  width="160"
-                  height="100"
-                  loading="lazy"
-                  decoding="async"
-                  alt="Entrance of Upgrade Wellness Center"
-                  className="h-20 w-40 rounded-[12px] object-cover ring-1 ring-inset ring-slate-200"
-                />
-                <p className="text-xs text-slate-600">Entrance on Oak Street. Take the elevator to Suite 204.</p>
-              </div>
+              {/* Removed: entrance image + caption */}
             </div>
           </div>
         </Container>
@@ -347,30 +336,6 @@ function MailIcon(props: React.SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.5"/>
       <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  )
-}
-function CarIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M3 13l2-5a2 2 0 0 1 1.87-1.25h10.26A2 2 0 0 1 19 8l2 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M5 13h14v5a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H11a2 2 0 0 1-4 0H6a1 1 0 0 1-1-1v-5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-    </svg>
-  )
-}
-function TrainIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M7 3h10a3 3 0 0 1 3 3v7a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V6a3 3 0 0 1 3-3Z" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M7 17l-2 3m12-3 2 3M6 8h12M8 13h0m8 0h0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-    </svg>
-  )
-}
-function AccessIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <circle cx="12" cy="5" r="2" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M12 7v4m0 0-5 3m5-3 5 3m-8 4h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     </svg>
   )
 }
