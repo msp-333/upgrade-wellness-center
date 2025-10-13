@@ -29,21 +29,15 @@ export default function ServicesPage() {
     <>
       {/* Hero / Intro */}
       <section className="relative isolate">
-        <div
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white"
-          aria-hidden
-        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white" aria-hidden />
         <Container className="pt-14 md:pt-20 pb-6 md:pb-8">
           <div className="max-w-3xl">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-700/70">
-              Offerings
-            </p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-700/70">Offerings</p>
             <h1 className="mt-2 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-900">
               Our Services
             </h1>
             <p className="mt-3 max-w-2xl text-slate-600">
-              Gentle, straightforward options to help you recharge. Tap a card
-              to see details, safety notes, and what to expect.
+              Gentle, straightforward options to help you recharge. Tap a card to see details, safety notes, and what to expect.
             </p>
           </div>
         </Container>
@@ -54,11 +48,10 @@ export default function ServicesPage() {
         <Container>
           <h2 id="services-heading" className="sr-only">All services</h2>
 
-          {/* Equal-height cards, clean gaps, full stretch */}
-          <div className="mx-auto max-w-6xl grid grid-cols-1 items-stretch content-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-7">
+          {/* Equal-height grid: every child stretches */}
+          <div className="mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-7 items-stretch">
             {list.map((s) => (
               <div key={s.id} className="h-full">
-                {/* Ensure the card fills the grid track */}
                 <ServiceCard item={s} />
               </div>
             ))}
@@ -70,33 +63,18 @@ export default function ServicesPage() {
       <section className="pb-14 md:pb-20">
         <Container>
           <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-600 to-emerald-700 text-white shadow-xl">
-            <div
-              className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-emerald-300/20 blur-3xl"
-              aria-hidden
-            />
+            <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" aria-hidden />
+            <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-emerald-300/20 blur-3xl" aria-hidden />
             <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,auto] md:p-10 lg:gap-8">
               <div>
                 <h2 className="text-2xl md:text-3xl">Ready to get started?</h2>
-                <p className="mt-2 text-white/90">
-                  Send your preferred times and any questions—we’ll help you plan
-                  your first visit.
-                </p>
+                <p className="mt-2 text-white/90">Send your preferred times and any questions—we’ll help you plan your first visit.</p>
               </div>
               <div className="flex items-center gap-3 md:justify-end">
-                <Link
-                  href="/contact/"
-                  className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-medium text-slate-900 shadow hover:bg-white/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                >
+                <Link href="/contact/" className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-medium text-slate-900 shadow hover:bg-white/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                   Contact us
                 </Link>
-                <Link
-                  href="/events/"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/70 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                >
+                <Link href="/events/" className="inline-flex items-center justify-center rounded-xl border border-white/70 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70">
                   See events
                 </Link>
               </div>

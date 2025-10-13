@@ -5,17 +5,29 @@ import Container from '@/components/Container'
 export default function Footer() {
   const year = new Date().getFullYear()
 
+  // Helper so images work on GitHub Pages subpaths
+  const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
+  const LOGO = '/images/logo.png' // ← place your logo at public/images/logo.png
+
   return (
     <footer className="border-t border-slate-200 bg-white py-12" aria-labelledby="footer">
       <Container className="grid gap-10 md:grid-cols-4">
         <h2 id="footer" className="sr-only">Site footer</h2>
 
-        {/* Brand */}
+        {/* Brand (logo image + name) */}
         <div>
-          <div className="flex items-center gap-2">
-            <span className="inline-block h-8 w-8 rounded-full bg-emerald-600" aria-hidden />
+          <Link href="/" className="flex items-center gap-3">
+            <img
+              src={asset(LOGO)}
+              alt="Upgrade Wellness Center logo"
+              width={40}
+              height={40}
+              decoding="async"
+              loading="lazy"
+              className="h-10 w-10 object-contain"
+            />
             <span className="font-semibold text-slate-900">Upgrade Wellness</span>
-          </div>
+          </Link>
           <p className="mt-3 text-sm text-slate-600">
             Calm, evidence-informed care for everyday life.
           </p>
