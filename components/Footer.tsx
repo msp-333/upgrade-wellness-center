@@ -29,7 +29,7 @@ export default function Footer() {
             <li><Link className="hover:underline" href="/events/">Events</Link></li>
             <li><Link className="hover:underline" href="/about/">About</Link></li>
             <li><Link className="hover:underline" href="/contact/">Contact</Link></li>
-            <li><Link className="hover:underline" href="/privacy/">Privacy</Link></li>
+            <li><Link className="hover:underline" href="/privacy-policy/">Privacy</Link></li>
           </ul>
         </nav>
 
