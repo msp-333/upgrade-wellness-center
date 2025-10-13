@@ -12,46 +12,58 @@ type FAQ = {
 const CATEGORY_ORDER = ['General', 'Booking', 'Sessions', 'Payments', 'Policies'];
 
 export default function FAQsClient({ items }: { items: FAQ[] }) {
-  // Build categories (unique), ordered by CATEGORY_ORDER then A→Z
+  // Categories in preferred order with counts
   const categories = useMemo(() => {
-    const uniq = new Set<string>();
-    items.forEach((i) => uniq.add(i.category ?? 'General'));
-    const arr = Array.from(uniq);
-
-    const idx = (c: string) => {
-      const i = CATEGORY_ORDER.indexOf(c);
-      return i === -1 ? 999 : i;
-    };
-
-    return arr.sort((a, b) => {
-      const d = idx(a) - idx(b);
-      return d !== 0 ? d : a.localeCompare(b);
+    const counts = new Map<string, number>();
+    items.forEach((i) => {
+      const c = i.category ?? 'General';
+      counts.set(c, (counts.get(c) ?? 0) + 1);
     });
+
+    const ordered = Array.from(counts.keys()).sort((a, b) => {
+      const ai = CATEGORY_ORDER.indexOf(a);
+      const bi = CATEGORY_ORDER.indexOf(b);
+      const ar = ai === -1 ? 999 : ai;
+      const br = bi === -1 ? 999 : bi;
+      return ar - br || a.localeCompare(b);
+    });
+
+    return ordered.map((c) => ({ name: c, count: counts.get(c)! }));
   }, [items]);
 
-  // Default to first category so not everything shows at once
-  const [tab, setTab] = useState<string>(categories[0] ?? 'General');
+  // Default to first category (not "All") → reduces clutter
+  const [tab, setTab] = useState<string>(categories[0]?.name ?? 'General');
   useEffect(() => {
-    if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
+    if (!categories.find((c) => c.name === tab)) setTab(categories[0]?.name ?? 'General');
   }, [categories, tab]);
 
   const [query, setQuery] = useState('');
-
   const q = query.trim().toLowerCase();
 
-  const filtered = useMemo(() => {
-    const list = items.filter((i) => {
-      const inTab = (i.category ?? 'General') === tab;
-      if (!q) return inTab;
-      const hay = `${i.question} ${i.answer}`.toLowerCase();
-      return inTab && hay.includes(q);
-    });
-    // Sort A→Z by question for stable UX
+  // Filter within selected category; then sort A→Z
+  const inCategory = useMemo(() => {
+    const list = items.filter((i) => (i.category ?? 'General') === tab);
     return list.sort((a, b) => a.question.localeCompare(b.question));
-  }, [items, tab, q]);
+  }, [items, tab]);
 
-  // Featured = first six of current category (also filtered by search if any)
-  const featured = useMemo(() => filtered.slice(0, 6), [filtered]);
+  // Search inside current category only (keeps results focused)
+  const filtered = useMemo(() => {
+    if (!q) return inCategory;
+    return inCategory.filter((i) =>
+      (`${i.question} ${i.answer}`.toLowerCase()).includes(q)
+    );
+  }, [inCategory, q]);
+
+  // Quick answers (first 3 of the filtered set) — removed from the main list to avoid duplication
+  const quick = useMemo(() => filtered.slice(0, 3), [filtered]);
+  const quickIds = useMemo(() => new Set(quick.map((f) => f.id)), [quick]);
+
+  // Main list with “show more” pagination to keep things light
+  const MAIN_PAGE = 6;
+  const [limit, setLimit] = useState(MAIN_PAGE);
+  useEffect(() => setLimit(MAIN_PAGE), [tab, q]); // reset when category/search changes
+  const main = useMemo(() => filtered.filter((f) => !quickIds.has(f.id)).slice(0, limit), [filtered, quickIds, limit]);
+  const hasMore = filtered.filter((f) => !quickIds.has(f.id)).length > limit;
 
   const mark = (text: string) => {
     if (!q) return text;
@@ -60,15 +72,12 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
       <>
         {parts.map((p, idx) =>
           p.toLowerCase() === q ? (
-            <mark
-              key={idx}
-              className="bg-lavender-400/40 text-text-primary rounded-sm px-0.5"
-            >
+            <mark key={idx} className="bg-lavender-400/40 text-text-primary rounded-sm px-0.5">
               {p}
             </mark>
           ) : (
             <span key={idx}>{p}</span>
-          )
+          ),
         )}
       </>
     );
@@ -76,21 +85,23 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
   return (
     <div className="min-h-screen bg-surface">
-      {/* HERO / SEARCH */}
+      {/* HERO */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <DecorShapes />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-center">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">How can we help?</h1>
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <h1 className="text-center text-3xl md:text-4xl font-semibold tracking-tight">
+            How can we help?
+          </h1>
 
-          {/* Search bar */}
+          {/* Search */}
           <div className="mt-6 flex justify-center">
             <form
-              className="relative w-full max-w-2xl"
               onSubmit={(e) => e.preventDefault()}
               role="search"
+              className="relative w-full max-w-2xl"
             >
               <input
-                aria-label="Search FAQs"
+                aria-label="Search FAQs within current category"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Type your question"
@@ -105,35 +116,31 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Tabs / chips (no All) */}
-          <div className="mt-6 inline-flex flex-wrap justify-center gap-2 bg-white/10 p-1 rounded-pill backdrop-blur">
-            {categories.map((c) => {
-              const active = tab === c;
+          {/* Tabs */}
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {categories.map(({ name, count }) => {
+              const active = tab === name;
               return (
                 <button
-                  key={c}
-                  onClick={() => setTab(c)}
+                  key={name}
+                  onClick={() => setTab(name)}
                   aria-pressed={active}
                   className={[
-                    'px-4 py-2 rounded-pill text-sm md:text-base transition',
-                    active
-                      ? 'bg-white text-brand-800 shadow-soft'
-                      : 'text-white/85 hover:bg-white/10',
+                    'rounded-pill px-4 py-2 text-sm md:text-base transition flex items-center gap-2',
+                    active ? 'bg-white text-brand-800 shadow-soft' : 'bg-white/10 text-white/90 hover:bg-white/15',
                   ].join(' ')}
                 >
-                  {c}
+                  <span>{name}</span>
+                  <span className={active ? 'text-brand-700' : 'text-white/70'}>· {count}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Light info bar */}
-          <p className="mt-5 text-white/80">
+          {/* Hint */}
+          <p className="mt-4 text-center text-white/80">
             Can’t find what you need?{' '}
-            <a
-              href="/contact"
-              className="underline decoration-white/40 underline-offset-4 hover:text-white"
-            >
+            <a href="/contact" className="underline decoration-white/40 underline-offset-4 hover:text-white">
               Contact us
             </a>
             .
@@ -141,42 +148,48 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
         </div>
       </section>
 
-      {/* FEATURED */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 md:py-12">
-        <h2 className="text-center text-xl md:text-2xl font-semibold text-text-primary">
-          Featured in {tab}
-        </h2>
-
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featured.map((f) => (
-            <a
-              key={f.id}
-              href={`#${f.id}`}
-              className="group block rounded-card border border-slate-200/60 bg-white p-5 hover:border-brand-300 hover:shadow-soft transition"
-            >
-              <p className="text-sm uppercase tracking-wide text-text-secondary">
-                {f.category ?? 'General'}
-              </p>
-              <h3 className="mt-1 font-medium text-text-primary group-hover:text-brand-700">
-                {f.question}
-              </h3>
-            </a>
-          ))}
-          {featured.length === 0 && (
-            <div className="rounded-card border border-slate-200/60 bg-white p-6 text-center text-text-secondary">
-              No featured items in this category yet.
+      {/* QUICK ANSWERS */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base md:text-lg font-semibold text-text-primary">
+            Quick answers in <span className="text-brand-700">{tab}</span>
+          </h2>
+          {q && (
+            <div className="text-sm text-text-secondary">
+              {filtered.length} result{filtered.length === 1 ? '' : 's'}
             </div>
           )}
         </div>
+
+        {quick.length ? (
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {quick.map((f) => (
+              <a
+                key={f.id}
+                href={`#${f.id}`}
+                className="group rounded-card border border-slate-200/60 bg-white p-4 hover:border-brand-300 hover:shadow-soft transition"
+              >
+                <p className="text-xs uppercase tracking-wide text-text-secondary"> {f.category ?? 'General'} </p>
+                <h3 className="mt-1 font-medium text-text-primary group-hover:text-brand-700">
+                  {mark(f.question)}
+                </h3>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 rounded-card border border-slate-200/60 bg-white p-6 text-center text-text-secondary">
+            No quick answers found in this category.
+          </div>
+        )}
       </section>
 
-      {/* RESULTS / ACCORDION */}
+      {/* MAIN LIST (accordion; collapsed by default) */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pb-16">
-        {filtered.length === 0 ? (
-          <EmptyState query={query} />
+        {main.length === 0 ? (
+          <EmptyState query={query} tab={tab} />
         ) : (
           <div className="space-y-3">
-            {filtered.map((f) => (
+            {main.map((f) => (
               <details
                 key={f.id}
                 id={f.id}
@@ -187,7 +200,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                     <span className="mt-1 shrink-0 rounded-full bg-brand-100 p-1 text-brand-700">
                       <QIcon />
                     </span>
-                    <div className="flex-1 text-lg text-text-primary">
+                    <div className="flex-1 text-base md:text-lg text-text-primary">
                       {mark(f.question)}
                     </div>
                     <span className="ml-2 mt-1 shrink-0 rounded-full border border-slate-200 px-2 py-0.5 text-xs text-text-secondary group-open:bg-brand-50 group-open:text-brand-800">
@@ -201,6 +214,17 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                 </div>
               </details>
             ))}
+
+            {hasMore && (
+              <div className="pt-4">
+                <button
+                  onClick={() => setLimit((n) => n + MAIN_PAGE)}
+                  className="mx-auto block rounded-pill bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 transition"
+                >
+                  Show more
+                </button>
+              </div>
+            )}
           </div>
         )}
       </section>
@@ -210,16 +234,14 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
 /* ---------- helpers ---------- */
 
-function EmptyState({ query }: { query: string }) {
+function EmptyState({ query, tab }: { query: string; tab: string }) {
   return (
     <div className="rounded-card border border-slate-200 bg-white p-8 text-center">
-      <p className="text-lg font-medium text-text-primary">No results</p>
+      <p className="text-lg font-medium text-text-primary">No results in {tab}</p>
       <p className="mt-1 text-text-secondary">
-        We couldn’t find any FAQs for “{query}”. Try a different keyword or{' '}
-        <a href="/contact" className="text-brand-700 underline underline-offset-4">
-          contact us
-        </a>
-        .
+        {query
+          ? <>We couldn’t find any FAQs for “{query}”. Try a shorter keyword or another category.</>
+          : <>This category doesn’t have items yet. Please check another category.</>}
       </p>
     </div>
   );
@@ -251,5 +273,5 @@ function DecorShapes() {
 }
 
 function escapeRegExp(s: string) {
-  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
