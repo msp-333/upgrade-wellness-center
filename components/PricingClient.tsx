@@ -9,8 +9,8 @@ export type Item = {
   period?: string;          // e.g., "per year"
   badge?: string;           // e.g., "Best Value", "Premium", "Special", "Required"
   tone?: 'brand' | 'premium' | 'special';
-  description: string[];    // brief copy; first line is the summary
-  details?: string[];       // OPTIONAL per-card extra notes; falls back to description.slice(1)
+  description: string[];    // first line is the summary
+  details?: string[];       // OPTIONAL per-card notes (else falls back to description.slice(1))
   ctaHref?: string;
   ctaLabel?: string;
 };
@@ -78,14 +78,14 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
   return (
     <div className="bg-surface text-text-primary">
-      {/* Header — lighter, calm, on-brand */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-surface to-surface text-text-primary">
+      {/* Header — light, calm, brand-aligned */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-surface to-surface">
         <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
         <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Our Pricing</h1>
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">Our Pricing</h1>
             <p className="mx-auto mt-2 max-w-xl text-text-secondary">
               Simple, transparent options—book what fits your routine.
             </p>
@@ -117,7 +117,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Membership notice (aligned; no overlap) */}
+      {/* Membership notice */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-6">
         <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 md:p-6 shadow-soft">
           <div className="grid gap-4 md:grid-cols-[auto,1fr,auto] md:items-center">
@@ -158,7 +158,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
             return (
               <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
-                {/* Header row with inline badge chip */}
+                {/* Title + inside chip */}
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-lg font-semibold">{it.title}</h3>
                   {it.badge && (
@@ -179,7 +179,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
                   <p className="mt-4 text-text-secondary">{it.description[0]}</p>
                 )}
 
-                {/* Per-card details (NOT shared) */}
+                {/* Per-card details (unique) */}
                 {specifics.length > 0 && (
                   <details className="mt-3 group">
                     <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
@@ -217,28 +217,29 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
 function cardClass(tone: Item['tone']) {
   const base =
-    'relative flex h-full flex-col rounded-card border p-6 shadow-soft bg-white hover:shadow-md transition';
+    'relative flex h-full flex-col rounded-card border p-6 shadow-soft bg-white hover:shadow-md transition focus-within:ring-2 focus-within:ring-brand-300/60';
   switch (tone) {
     case 'premium':
       return `${base} border-lavender-600/40 bg-lavender-600/5`;
     case 'special':
-      return `${base} border-gold-mist bg-gold-mist/20`;
+      return `${base} border-brand-200 bg-brand-50/40`;
     default:
       return `${base} border-brand-300/40`;
   }
 }
 
-/* Inline badge chip (inside card, like your screenshot) */
+/* Inline badge chip — crisp mint look, handles 2-line labels gracefully */
 function chipClass(tone: Item['tone']) {
-  const base = 'rounded-pill px-3 py-1 text-xs font-semibold';
+  const base =
+    'rounded-pill px-3 py-1 text-[11px] font-semibold leading-tight border shadow-[0_0_0_1px_rgba(16,185,129,0.15)] text-center';
   switch (tone) {
     case 'premium':
-      return `${base} bg-lavender-600/10 text-lavender-600 border border-lavender-600/30`;
+      return `${base} bg-lavender-600/10 text-lavender-600 border-lavender-600/30`;
     case 'special':
-      // soft mint chip for "Special"
-      return `${base} bg-brand-50 text-text-primary border border-brand-200`;
+      return `${base} bg-brand-50 text-text-primary border-brand-200`;
     default:
-      return `${base} bg-brand-50 text-brand-800 border border-brand-200`;
+      // brand/misc -> fresh mint chip
+      return `${base} bg-brand-50 text-brand-800 border-brand-200`;
   }
 }
 
