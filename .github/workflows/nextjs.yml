@@ -19,7 +19,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Ensures asset URLs are /<repo>/... on GitHub Pages
       NEXT_PUBLIC_BASE_PATH: "/${{ github.event.repository.name }}"
       CI: "true"
     steps:
@@ -35,11 +34,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Build only. Requires `output: 'export'` in next.config.mjs
-      - name: Build static site
+      - name: Build static site (no export)
         run: npx next build
 
-      # Allow Pages to serve /_next/*
       - name: Add .nojekyll
         run: |
           mkdir -p out
