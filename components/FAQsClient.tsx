@@ -12,55 +12,41 @@ type FAQ = {
 const CATEGORY_ORDER = ['General', 'Booking', 'Sessions', 'Payments', 'Policies'];
 
 export default function FAQsClient({ items }: { items: FAQ[] }) {
-  /* ---------- categories (ordered, with counts) ---------- */
+  /* ---------- categories (ordered; no counts shown) ---------- */
   const categories = useMemo(() => {
-    const counts = new Map<string, number>();
-    items.forEach((i) => {
-      const c = i.category ?? 'General';
-      counts.set(c, (counts.get(c) ?? 0) + 1);
-    });
+    const set = new Set<string>();
+    items.forEach((i) => set.add(i.category ?? 'General'));
 
     const order = (c: string) => {
       const idx = CATEGORY_ORDER.indexOf(c);
       return idx === -1 ? 999 : idx;
     };
 
-    return Array.from(counts.entries())
-      .sort(([a], [b]) => order(a) - order(b) || a.localeCompare(b))
-      .map(([name, count]) => ({ name, count }));
+    return Array.from(set).sort((a, b) => order(a) - order(b) || a.localeCompare(b));
   }, [items]);
 
-  const [tab, setTab] = useState<string>(categories[0]?.name ?? 'General');
+  const [tab, setTab] = useState<string>(categories[0] ?? 'General');
   useEffect(() => {
-    if (!categories.find((c) => c.name === tab)) setTab(categories[0]?.name ?? 'General');
+    if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
   }, [categories, tab]);
 
-  /* ---------- search ---------- */
+  /* ---------- search (scoped to current tab for clarity) ---------- */
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
 
-  // When searching, user can expand scope from current category to all
-  const [searchAll, setSearchAll] = useState(false);
-  useEffect(() => {
-    if (!q) setSearchAll(false); // reset scope when query cleared
-  }, [q]);
-
-  /* ---------- filtered data (no duplication, A→Z) ---------- */
+  /* ---------- filtered data (A→Z, compact) ---------- */
   const filtered = useMemo(() => {
-    const scopeList =
-      q && searchAll ? items : items.filter((i) => (i.category ?? 'General') === tab);
+    const scope = items.filter((i) => (i.category ?? 'General') === tab);
+    if (!q) return scope.sort((a, b) => a.question.localeCompare(b.question));
+    return scope
+      .filter((i) => (`${i.question} ${i.answer}`.toLowerCase()).includes(q))
+      .sort((a, b) => a.question.localeCompare(b.question));
+  }, [items, tab, q]);
 
-    const list = !q
-      ? scopeList
-      : scopeList.filter((i) => (`${i.question} ${i.answer}`.toLowerCase()).includes(q));
-
-    return list.sort((a, b) => a.question.localeCompare(b.question));
-  }, [items, tab, q, searchAll]);
-
-  /* ---------- pagination (reduce clutter) ---------- */
+  /* ---------- pagination (keep page compact) ---------- */
   const PAGE = 8;
   const [limit, setLimit] = useState(PAGE);
-  useEffect(() => setLimit(PAGE), [tab, q, searchAll]);
+  useEffect(() => setLimit(PAGE), [tab, q]);
   const visible = filtered.slice(0, limit);
   const hasMore = filtered.length > limit;
 
@@ -85,11 +71,12 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
   return (
     <div className="min-h-screen bg-surface text-text-primary">
-      {/* Header / Search — light and calm */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-surface to-surface">
-        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
-        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      {/* Header / Search — classic green */}
+      <section className="relative overflow-hidden bg-brand-900 text-white">
+        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl" />
+        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/40 opacity-40 blur-3xl" />
+
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
           <h1 className="text-center text-3xl md:text-4xl font-semibold tracking-tight">
             How can we help?
           </h1>
@@ -105,8 +92,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                 aria-label="Search FAQs"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={`Search ${searchAll ? 'all categories' : tab}`}
-                className="w-full rounded-pill bg-white text-text-primary placeholder:text-text-secondary/70 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-lavender-500/60"
+                placeholder={`Search ${tab}`}
+                className="w-full rounded-pill bg-white text-text-primary placeholder:text-white/70/5 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-lavender-500/60"
               />
               <button
                 aria-label="Search"
@@ -117,78 +104,39 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Category tabs with counts */}
-          <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {categories.map(({ name, count }) => {
-              const active = tab === name && !searchAll;
+          {/* Category chips (no counts) */}
+          <div className="mt-6 flex gap-2 overflow-x-auto px-1 sm:justify-center">
+            {categories.map((name) => {
+              const active = tab === name;
               return (
                 <button
                   key={name}
-                  onClick={() => { setTab(name); setSearchAll(false); }}
+                  onClick={() => setTab(name)}
                   aria-pressed={active}
                   className={[
-                    'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
-                    active ? 'bg-white text-brand-800 shadow-soft ring-1 ring-brand-200'
-                           : 'bg-white/70 text-text-primary hover:bg-white shadow-soft'
+                    'whitespace-nowrap rounded-pill px-4 py-2 text-sm md:text-base transition',
+                    active
+                      ? 'bg-white text-brand-800 shadow-soft ring-1 ring-white/40'
+                      : 'bg-white/10 text-white/90 hover:bg-white/15'
                   ].join(' ')}
                 >
-                  <span>{name}</span>
-                  <span className={active ? 'text-brand-700' : 'text-text-secondary'}>· {count}</span>
+                  {name}
                 </button>
               );
             })}
-
-            {/* Search-all toggle appears only when actively typing */}
-            {q && (
-              <button
-                onClick={() => setSearchAll((v) => !v)}
-                className={[
-                  'rounded-pill px-4 py-2 text-sm md:text-base transition',
-                  searchAll
-                    ? 'bg-white text-brand-800 shadow-soft ring-1 ring-brand-200'
-                    : 'bg-white/70 text-text-primary hover:bg-white shadow-soft',
-                ].join(' ')}
-                title="Search across all categories"
-              >
-                {searchAll ? 'Searching: All categories' : 'Search all'}
-              </button>
-            )}
           </div>
-
-          {/* Small helper line */}
-          <p className="mt-4 text-center text-text-secondary">
-            Can’t find what you need?{' '}
-            <a href="/contact" className="underline underline-offset-4 text-brand-700">
-              Contact us
-            </a>
-            .
-          </p>
         </div>
       </section>
 
-      {/* Results (single clean list, no duplicates/“featured” section) */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-12">
+      {/* Results (single clean list) */}
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-12 pb-24">
         {filtered.length === 0 ? (
           <div className="rounded-card border border-slate-200 bg-white p-8 text-center">
             <p className="text-lg font-medium">No results{q ? ` for “${query}”` : ''}</p>
-            <p className="mt-1 text-text-secondary">
-              Try a shorter keyword{q ? ' or search all categories' : ''}.
-            </p>
+            <p className="mt-1 text-text-secondary">Try a shorter keyword.</p>
           </div>
         ) : (
           <>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-base md:text-lg font-semibold">
-                {q ? 'Results' : tab}{' '}
-                <span className="text-text-secondary">· {filtered.length}</span>
-              </h2>
-              {filtered.length > PAGE && (
-                <span className="text-sm text-text-secondary">
-                  Showing {Math.min(limit, filtered.length)} of {filtered.length}
-                </span>
-              )}
-            </div>
-
             <div className="space-y-3">
               {visible.map((f) => (
                 <details
@@ -201,9 +149,15 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                       <span className="mt-1 shrink-0 rounded-full bg-brand-100 p-1 text-brand-700">
                         <QIcon />
                       </span>
+
                       <div className="flex-1 text-base md:text-lg">{mark(f.question)}</div>
-                      <span className="ml-2 mt-1 shrink-0 rounded-full border border-slate-200 px-2 py-0.5 text-xs text-text-secondary group-open:bg-brand-50 group-open:text-brand-800">
-                        {f.category ?? 'General'}
+
+                      {/* Chevron “dropdown button” (replaces category label) */}
+                      <span
+                        aria-hidden="true"
+                        className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-text-secondary transition-transform group-open:rotate-180"
+                      >
+                        <ChevronDownIcon />
                       </span>
                     </div>
                   </summary>
@@ -225,6 +179,15 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                 </div>
               )}
             </div>
+
+            {/* Bottom helper (moved to bottom, extra space) */}
+            <p className="mt-12 text-center text-text-secondary">
+              Can’t find what you need?{' '}
+              <a href="/contact" className="underline underline-offset-4 text-brand-700">
+                Contact us
+              </a>
+              .
+            </p>
           </>
         )}
       </section>
@@ -244,6 +207,13 @@ function QIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M12 2a10 10 0 1 0 6.32 17.78l2.45 2.45 1.41-1.41-2.45-2.45A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm-1-5h2v2h-2v-2Zm1-9a4 4 0 0 0-4 4h2a2 2 0 1 1 3.45 1.39c-.46.46-1.01.86-1.45 1.11V14h2v-.7c.77-.44 2-1.5 2-3.3a4 4 0 0 0-4-4Z"/>
+    </svg>
+  );
+}
+function ChevronDownIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
     </svg>
   );
 }
