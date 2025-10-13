@@ -33,7 +33,7 @@ export default function ServicesPage() {
           className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white"
           aria-hidden
         />
-        <Container className="pt-12 md:pt-16 pb-6">
+        <Container className="pt-14 md:pt-20 pb-6 md:pb-8">
           <div className="max-w-3xl">
             <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-700/70">
               Offerings
@@ -49,24 +49,25 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      {/* Cards (restored to original layout; small QoL tweaks only) */}
-      <section className="py-8 md:py-10" aria-labelledby="services-heading">
+      {/* Cards */}
+      <section className="py-10 md:py-12 lg:py-16" aria-labelledby="services-heading">
         <Container>
-          <h2 id="services-heading" className="sr-only">
-            All services
-          </h2>
+          <h2 id="services-heading" className="sr-only">All services</h2>
 
-          {/* equal-height rows + keep original 2-col at sm; add lg 3-col as a mild enhancement */}
-          <div className="grid auto-rows-fr gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Equal-height cards, clean gaps, full stretch */}
+          <div className="mx-auto max-w-6xl grid grid-cols-1 items-stretch content-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-7">
             {list.map((s) => (
-              <ServiceCard key={s.id} item={s} />
+              <div key={s.id} className="h-full">
+                {/* Ensure the card fills the grid track */}
+                <ServiceCard item={s} />
+              </div>
             ))}
           </div>
         </Container>
       </section>
 
       {/* Footer CTA */}
-      <section className="pb-12 md:pb-16">
+      <section className="pb-14 md:pb-20">
         <Container>
           <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-600 to-emerald-700 text-white shadow-xl">
             <div
@@ -77,7 +78,7 @@ export default function ServicesPage() {
               className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-emerald-300/20 blur-3xl"
               aria-hidden
             />
-            <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,auto] md:p-10">
+            <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,auto] md:p-10 lg:gap-8">
               <div>
                 <h2 className="text-2xl md:text-3xl">Ready to get started?</h2>
                 <p className="mt-2 text-white/90">
