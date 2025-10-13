@@ -1,10 +1,10 @@
-// app/about/page.tsx
+// app/home/page.tsx
 import Link from 'next/link'
 import Container from '@/components/Container'
 import services from '@/data/services.json'
 
 export const metadata = {
-  title: 'About | Upgrade Wellness Center',
+  title: 'Home | Upgrade Wellness Center',
   description:
     'Hydration, healing, and the harmony of health—calm, evidence-informed care that fits real life.',
 }
