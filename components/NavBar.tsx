@@ -19,11 +19,16 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
 
-  // Helper to prefix assets for GitHub Pages subpaths
+  // Prefix assets for GH Pages subpath
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+  // Normalize pathname (strip base path in GH Pages)
+  const normPath =
+    base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
 
   // Close drawer on route change
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => setOpen(false), [normPath]);
 
   // Header elevation on scroll
   useEffect(() => {
@@ -41,18 +46,19 @@ export default function NavBar() {
   }, []);
 
   const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+    href === '/' ? normPath === '/' : normPath.startsWith(href);
 
   return (
     <header
       className={clsx(
-        'sticky top-0 z-50 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/70',
+        // slightly taller + softer bg
+        'sticky top-0 z-50 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/80',
         'border-b border-lavender-400/30',
         'relative before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-lavender-500/40 before:to-transparent',
         elevated && 'shadow-soft'
       )}
     >
-      {/* Skip link for a11y */}
+      {/* Skip link */}
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-pill focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow-soft"
@@ -60,15 +66,18 @@ export default function NavBar() {
         Skip to content
       </a>
 
-      <Container className="flex h-16 items-center justify-between">
-        {/* Logo (plain <img> for GH Pages reliability) */}
+      {/* Increased vertical height */}
+      <Container className="flex min-h-[72px] md:min-h-[84px] items-center justify-between">
+        {/* Logo — correct path under /images + base path */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
           <img
-            src={asset('/logo.png')}
+            src={asset('/images/logo.png')}
             alt="Upgrade Wellness"
-            width={128}
-            height={32}
-            className="h-8 w-auto"
+            width={160}
+            height={40}
+            className="h-10 w-auto"
+            loading="eager"
+            fetchPriority="high"
           />
         </Link>
 
