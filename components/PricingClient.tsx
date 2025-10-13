@@ -5,11 +5,11 @@ import { useMemo, useRef, useState } from 'react';
 /* ---------------- Types ---------------- */
 export type Item = {
   title: string;
-  price: string;            // display-ready (e.g., "$120")
+  price: string;            // e.g., "$120"
   period?: string;          // e.g., "per year"
   badge?: string;           // e.g., "Best Value", "Premium", "Special", "Required"
   tone?: 'brand' | 'premium' | 'special';
-  description: string[];    // paragraphs
+  description: string[];    // brief copy (first line shown)
   ctaHref?: string;
   ctaLabel?: string;
 };
@@ -27,6 +27,15 @@ const LABELS: Record<keyof PricingData, string> = {
   overnight: 'Overnight',
   packages: 'Packages',
 };
+
+/* ---------------- General notes (shared across all cards) ---------------- */
+const GENERAL_NOTES: string[] = [
+  'We are a wellness center; services are not medical care and do not diagnose, treat, or cure disease.',
+  'A PMA Membership is required prior to your first appointment.',
+  'Please cancel or reschedule at least 24 hours in advance to avoid fees.',
+  'Minors must be accompanied by a parent or legal guardian.',
+  'Pricing and availability may change; taxes/fees may apply where required.',
+];
 
 /* ---------------- Sorting helpers ---------------- */
 const BADGE_ORDER = ['Best Value', 'Premium', 'Special', 'Required', 'New Customer'];
@@ -62,6 +71,16 @@ function sortFor(tab: keyof PricingData, arr: Item[]) {
 /* ---------------- Component ---------------- */
 export default function PricingClient({ data }: { data: PricingData }) {
   const tabs = useMemo(() => (Object.keys(LABELS) as (keyof PricingData)[]), []);
+  const counts = useMemo(
+    () => ({
+      membership: data.membership.length,
+      sessions: data.sessions.length,
+      overnight: data.overnight.length,
+      packages: data.packages.length,
+    }),
+    [data]
+  );
+
   const [tab, setTab] = useState<keyof PricingData>('membership');
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,7 +94,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
   return (
     <div className="bg-surface text-text-primary">
-      {/* Header / Hero (more compact + aligned) */}
+      {/* Header / Hero */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl" />
         <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/40 opacity-40 blur-3xl" />
@@ -84,7 +103,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Our Pricing</h1>
             <p className="mx-auto mt-2 max-w-xl text-white/85">
-              Simple options to help you recharge—no surprises.
+              Calm, clear options—book what fits your routine.
             </p>
           </div>
 
@@ -103,11 +122,14 @@ export default function PricingClient({ data }: { data: PricingData }) {
                   aria-selected={active}
                   onClick={() => setTab(key)}
                   className={[
-                    'rounded-pill px-4 py-2 text-sm md:text-base transition',
+                    'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
                     active ? 'bg-white text-brand-800 shadow-soft' : 'bg-white/10 text-white/90 hover:bg-white/15'
                   ].join(' ')}
                 >
-                  {LABELS[key]}
+                  <span>{LABELS[key]}</span>
+                  <span className={active ? 'text-brand-700' : 'text-white/70'}>
+                    · {counts[key]}
+                  </span>
                 </button>
               );
             })}
@@ -115,21 +137,21 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Membership notice (no overlapping negative margins) */}
+      {/* Membership notice (aligned grid, no overlap) */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-6">
         <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 md:p-6 shadow-soft">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white shrink-0">
+          <div className="grid gap-4 md:grid-cols-[auto,1fr,auto] md:items-center">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
               <InfoIcon />
             </div>
-            <div className="flex-1">
+            <div>
               <h3 className="text-lg font-semibold text-brand-800">Membership Required</h3>
               <p className="mt-1 text-text-secondary">
-                Please add the PMA Membership to your cart first. After accepting the agreement,
-                you’ll be able to book your first appointment. Need help? Call us anytime.
+                Add the PMA Membership to your cart first. After accepting the agreement,
+                you’ll be able to book your first appointment.
               </p>
             </div>
-            <div className="shrink-0">
+            <div>
               <button
                 onClick={gotoMembership}
                 className="rounded-pill bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700 transition"
@@ -141,14 +163,14 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Active category title */}
+      {/* Active category */}
       <section ref={sectionRef} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         <div className="text-center">
           <h2 className="text-xl md:text-2xl font-semibold">{LABELS[tab]}</h2>
           <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-brand-600/70" />
         </div>
 
-        {/* Cards (concise, aligned, expandable details) */}
+        {/* Cards */}
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {sorted.map((it, idx) => (
             <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
@@ -161,27 +183,27 @@ export default function PricingClient({ data }: { data: PricingData }) {
                 {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
               </div>
 
-              {/* Compact copy: first paragraph only + Details toggle for rest */}
+              {/* Keep copy concise: show only first line */}
               {it.description?.length > 0 && (
-                <>
-                  <p className="mt-4 text-text-secondary">
-                    {it.description[0]}
-                  </p>
-
-                  {it.description.length > 1 && (
-                    <details className="mt-2">
-                      <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
-                        Details
-                      </summary>
-                      <div className="mt-2 space-y-2 text-sm text-text-secondary">
-                        {it.description.slice(1).map((p, i) => (
-                          <p key={i}>{p}</p>
-                        ))}
-                      </div>
-                    </details>
-                  )}
-                </>
+                <p className="mt-4 text-text-secondary">{it.description[0]}</p>
               )}
+
+              {/* Shared general details for UWC */}
+              <details className="mt-3">
+                <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
+                  What to know
+                </summary>
+                <ul className="mt-2 space-y-2 text-sm text-text-secondary">
+                  {GENERAL_NOTES.map((n, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                        <CheckIcon />
+                      </span>
+                      <span>{n}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
 
               <div className="mt-auto pt-6">
                 <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
@@ -191,6 +213,11 @@ export default function PricingClient({ data }: { data: PricingData }) {
             </article>
           ))}
         </div>
+
+        {/* Optional page-level fine print */}
+        <p className="mt-8 text-center text-xs text-text-secondary">
+          Questions about pricing or scheduling? <a href="/contact" className="underline">Contact us</a>.
+        </p>
       </section>
     </div>
   );
@@ -236,11 +263,19 @@ function ctaClass(tone: Item['tone']) {
   }
 }
 
+/* Icons */
 function InfoIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="12" cy="12" r="10" fill="currentColor" className="opacity-10" />
       <path fill="currentColor" d="M11 10h2v7h-2zM11 7h2v2h-2z" />
+    </svg>
+  );
+}
+function CheckIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" />
     </svg>
   );
 }
