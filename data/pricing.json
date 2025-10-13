@@ -1,0 +1,108 @@
+{
+  "membership": [
+    {
+      "title": "Become A Member",
+      "price": "$10",
+      "period": "per year",
+      "badge": "Required",
+      "tone": "brand",
+      "description": [
+        "Pay yearly membership fee.",
+        "*This is a required fee in order to become a member of Elevated Wellness and Rejuvenation.",
+        "You’ll receive an email about renewal every year on your anniversary date. To cancel, please call us."
+      ],
+      "ctaHref": "/contact",
+      "ctaLabel": "Book Appointment"
+    }
+  ],
+  "sessions": [
+    {
+      "title": "2 Hour Session",
+      "price": "$120",
+      "description": [
+        "Children 12 & under are free to accompany their parent.",
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+      ]
+    },
+    {
+      "title": "3 Hour Session",
+      "price": "$180",
+      "description": [
+        "Children 12 & under are free to accompany their parent.",
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+      ]
+    },
+    {
+      "title": "4 Hour Session",
+      "price": "$240",
+      "description": [
+        "Children 12 & under are free to accompany their parent.",
+        "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to rechargeyoursoulinthe406@gmail.com."
+      ]
+    },
+    {
+      "title": "2 Hour Veteran Session",
+      "price": "$100",
+      "badge": "Special",
+      "tone": "special",
+      "description": [
+        "Welcome all Veterans and thank you for your service.",
+        "Enjoy a $20 discount on each 2-hour session you book."
+      ]
+    },
+    {
+      "title": "Pet Energy Session",
+      "price": "$45",
+      "description": [
+        "Dogs must be crated or leashed at all times. Cats must be crated.",
+        "Please keep animals off furniture and ensure they are well-behaved."
+      ]
+    }
+  ],
+  "overnight": [
+    {
+      "title": "12 Hour Overnight Energy Session",
+      "price": "$350",
+      "badge": "Premium",
+      "tone": "premium",
+      "description": [
+        "Overnight 12-hour session.",
+        "We offer a queen cabinet bed and several recliners that lay completely flat."
+      ]
+    },
+    {
+      "title": "12 Hour Overnight Couples Energy Session",
+      "price": "$500",
+      "badge": "Premium",
+      "tone": "premium",
+      "description": [
+        "Overnight stay for 12 hours for two.",
+        "Includes cabinet bed and recliners that lay completely flat."
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "title": "Unlimited Monthly Package",
+      "price": "$650",
+      "badge": "Best Value",
+      "tone": "brand",
+      "description": [
+        "Unlimited hourly sessions up to 4 hours per session, Monday–Thursday only.",
+        "Runs from the 1st to the last day of the month.",
+        "**Packages are sold individually, not split between clients, and cannot be used on overnight sessions. Non-refundable.**",
+        "A free journal to track your health journey is included."
+      ]
+    },
+    {
+      "title": "(5) 2 Hour Sessions",
+      "price": "$450",
+      "badge": "New Customer",
+      "tone": "special",
+      "description": [
+        "Five 2-hour sessions at $45/hour — new customer promotion.",
+        "**Packages are sold individually, not split between clients, and cannot be used on overnight sessions. Non-refundable.**"
+      ]
+    }
+  ]
+}

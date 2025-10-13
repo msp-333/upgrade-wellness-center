@@ -1,4 +1,3 @@
-// app/about/page.tsx
 import Link from 'next/link';
 import Container from '@/components/Container';
 
@@ -8,163 +7,221 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  // Prefix assets so it works on GitHub Pages subpaths
+  const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
+
   const values = [
-    {
-      title: 'Simplicity',
-      body: 'Tiny steps, clear actions, and routines that fit real life.',
-    },
-    {
-      title: 'Science-informed',
-      body: 'Decisions guided by current evidence and practical experience.',
-    },
-    {
-      title: 'Compassion',
-      body: 'Supportive, judgment-free coaching and studio culture.',
-    },
-    {
-      title: 'Consistency',
-      body: 'Build momentum with trackable habits and gentle accountability.',
-    },
+    { title: 'Simplicity', body: 'Small steps, real routines.' },
+    { title: 'Science-informed', body: 'Grounded, practical, updated.' },
+    { title: 'Compassion', body: 'Care that meets you where you are.' },
+    { title: 'Consistency', body: 'Tiny wins, repeated.' },
   ];
 
   const modalities = [
     {
-      title: 'Energy Enhancement System',
-      body:
-        'A calm, restorative environment designed to help you unplug and recharge.',
+      title: 'Energy Enhancement',
+      body: 'Unplug. Restore.',
+      icon: EnergyIcon,
     },
     {
       title: 'Red Light Therapy',
-      body:
-        'Low-level light sessions that are comfortable, quick, and easy to stack with your day.',
+      body: 'Gentle. Quick.',
+      icon: LightIcon,
     },
     {
       title: 'Hydrogen Water',
-      body:
-        'Refreshing, hydrogen-rich water offered as a simple hydration upgrade.',
+      body: 'Hydrate. Refresh.',
+      icon: WaterIcon,
     },
+  ];
+
+  const gallery = [
+    { src: asset('/images/about-studio.jpg'), alt: 'Studio lounge' },
+    { src: asset('/images/about-session.jpg'), alt: 'Quiet session' },
+    { src: asset('/images/about-light.jpg'), alt: 'Red light setup' },
+    { src: asset('/images/about-people.jpg'), alt: 'Welcoming space' },
+    { src: asset('/images/about-lounge.jpg'), alt: 'Calm corner' },
   ];
 
   return (
     <Container className="py-12 md:py-16">
-      {/* Hero / Intro */}
-      <section className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-emerald-700/10 via-teal-500/10 to-emerald-700/5 p-8 md:p-12">
-        <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl" />
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-          About Upgrade Wellness
-        </h1>
-        <p className="mt-3 max-w-2xl text-slate-600">
-          We help people feel and perform better through simple, science-informed
-          programs that respect your time and energy.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {['Start small', 'Measure what matters', 'Build momentum'].map((t) => (
-            <span
-              key={t}
-              className="inline-flex items-center rounded-full border border-emerald-200 bg-white/60 px-3 py-1 text-sm text-emerald-700 backdrop-blur"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* Mission & Approach */}
-      <section className="mt-10 grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border bg-white/70 p-6 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60">
-          <h2 className="text-xl font-semibold text-slate-900">Mission</h2>
-          <p className="mt-3 text-slate-600">
-            Help people feel and perform better through simple, science-informed
-            programs that fit real life.
+      {/* HERO — split with images */}
+      <section className="grid items-center gap-8 md:grid-cols-2">
+        <div>
+          <p className="text-sm font-semibold tracking-wide text-brand-700">ABOUT UPGRADE</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-text-primary md:text-5xl">
+            Better feels possible.
+          </h1>
+          <p className="mt-3 max-w-xl text-base text-text-secondary md:text-lg">
+            We keep wellness simple—calm spaces, clear guidance, and practical
+            routines that fit real life.
           </p>
-        </div>
 
-        <div className="rounded-2xl border bg-white/70 p-6 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60">
-          <h2 className="text-xl font-semibold text-slate-900">Approach</h2>
-          <ul className="mt-3 space-y-2 text-slate-600">
-            {[
-              'Start small and build momentum.',
-              'Focus on core pillars: sleep, stress, nutrition, and movement.',
-              'Create accountability and community support.',
-              'Measure what matters and iterate.',
-            ].map((item) => (
-              <li key={item} className="flex gap-3">
-                <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" />
-                <span>{item}</span>
-              </li>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {['Calm space', 'Evidence-minded', 'Judgment-free'].map((t) => (
+              <span
+                key={t}
+                className="inline-flex items-center rounded-pill border border-brand-300/60 bg-white px-3 py-1 text-sm text-brand-800 shadow-soft"
+              >
+                {t}
+              </span>
             ))}
-          </ul>
+          </div>
+        </div>
+
+        {/* Collage */}
+        <div className="relative">
+          <img
+            src={asset('/images/about-studio.jpg')}
+            alt="Studio"
+            loading="lazy"
+            className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"
+          />
+          <img
+            src={asset('/images/about-session.jpg')}
+            alt="Session"
+            loading="lazy"
+            className="absolute -bottom-6 -left-6 hidden h-40 w-56 rounded-2xl object-cover shadow-soft md:block"
+          />
+          <img
+            src={asset('/images/about-light.jpg')}
+            alt="Red light"
+            loading="lazy"
+            className="absolute -top-6 -right-6 hidden h-32 w-44 rounded-2xl object-cover shadow-soft md:block"
+          />
         </div>
       </section>
 
-      {/* Values */}
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-slate-900">What we value</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {values.map((v) => (
-            <div
-              key={v.title}
-              className="rounded-2xl border bg-white p-5 shadow-sm transition hover:shadow-md"
-            >
-              <div className="text-sm font-medium text-emerald-700">{v.title}</div>
-              <p className="mt-2 text-sm text-slate-600">{v.body}</p>
-            </div>
-          ))}
-        </div>
+      {/* QUICK STATS — minimal copy, big type */}
+      <section className="mt-12 grid gap-4 sm:grid-cols-3">
+        {[
+          { k: '3', v: 'Core modalities' },
+          { k: '60–240', v: 'Minute sessions' },
+          { k: '1%', v: 'Better each day' },
+        ].map((s) => (
+          <div
+            key={s.v}
+            className="rounded-card border bg-white p-5 text-center shadow-soft"
+          >
+            <div className="text-3xl font-semibold text-text-primary md:text-4xl">{s.k}</div>
+            <div className="mt-1 text-sm text-text-secondary">{s.v}</div>
+          </div>
+        ))}
       </section>
 
-      {/* Modalities */}
+      {/* MODALITIES — icon cards, short lines */}
       <section className="mt-12">
-        <h2 className="text-xl font-semibold text-slate-900">
-          Modalities we offer
+        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">
+          What we offer
         </h2>
-        <p className="mt-2 text-sm text-slate-600">
-          These are wellness modalities and are not intended to diagnose, treat, cure,
-          or prevent disease. Always consult your licensed healthcare provider for
-          medical concerns.
-        </p>
-
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {modalities.map((m) => (
             <div
               key={m.title}
-              className="rounded-2xl border bg-white p-5 shadow-sm"
+              className="group rounded-card border bg-white p-5 shadow-soft transition hover:border-brand-300/70"
             >
-              <div className="text-base font-medium text-slate-900">{m.title}</div>
-              <p className="mt-2 text-sm text-slate-600">{m.body}</p>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+                  <m.icon />
+                </span>
+                <div>
+                  <div className="text-base font-semibold text-text-primary">{m.title}</div>
+                  <div className="text-sm text-text-secondary">{m.body}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-text-secondary">
+          Wellness modalities are not medical care. Consult your licensed provider for medical concerns.
+        </p>
+      </section>
+
+      {/* VALUES — tight, varied sizes */}
+      <section className="mt-12">
+        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">How we operate</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {values.map((v) => (
+            <div key={v.title} className="rounded-card border bg-white p-5 shadow-soft">
+              <div className="text-sm font-medium text-brand-700">{v.title}</div>
+              <p className="mt-1 text-sm text-text-secondary">{v.body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA */}
+      {/* GALLERY — mosaic, low text */}
       <section className="mt-12">
-        <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border bg-gradient-to-r from-emerald-600 to-teal-500 p-6 text-white md:flex-row md:items-center">
+        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">Studio & sessions</h2>
+        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {/* big lead image */}
+          <img
+            src={gallery[0].src}
+            alt={gallery[0].alt}
+            loading="lazy"
+            className="col-span-2 h-56 w-full rounded-2xl object-cover shadow-soft md:h-72"
+          />
+          {/* smalls */}
+          {gallery.slice(1).map((g) => (
+            <img
+              key={g.src}
+              src={g.src}
+              alt={g.alt}
+              loading="lazy"
+              className="h-40 w-full rounded-2xl object-cover shadow-soft md:h-48"
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* CTA — concise */}
+      <section className="mt-12">
+        <div className="flex flex-col items-start justify-between gap-4 rounded-card border bg-gradient-to-r from-brand-700 to-gradient-end p-6 text-white md:flex-row md:items-center">
           <div>
-            <h3 className="text-lg font-semibold">Ready to start your upgrade?</h3>
+            <h3 className="text-lg font-semibold md:text-xl">Ready to start?</h3>
             <p className="mt-1 text-sm/relaxed opacity-90">
-              Reach out with questions or book a visit—we’re happy to help you plan
-              your first step.
+              Book a visit or ask a quick question—no pressure.
             </p>
           </div>
           <div className="flex gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm transition hover:opacity-90"
+              className="inline-flex items-center rounded-pill bg-white px-4 py-2 text-sm font-semibold text-brand-800 shadow-soft transition hover:opacity-90"
             >
               Contact us
             </Link>
             <Link
               href="/services"
-              className="inline-flex items-center rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/40 transition hover:bg-white/15"
+              className="inline-flex items-center rounded-pill bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/40 transition hover:bg-white/15"
             >
-              See services
+              Explore services
             </Link>
           </div>
         </div>
       </section>
     </Container>
+  );
+}
+
+/* --------- icons (clean, lightweight) --------- */
+function EnergyIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="opacity-90">
+      <path fill="currentColor" d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />
+    </svg>
+  );
+}
+function LightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="opacity-90">
+      <path fill="currentColor" d="M12 2a8 8 0 0 0-8 8c0 3 2 5 4 6v2h8v-2c2-1 4-3 4-6a8 8 0 0 0-8-8zM9 20h6v2H9z" />
+    </svg>
+  );
+}
+function WaterIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="opacity-90">
+      <path fill="currentColor" d="M12 2s7 7 7 12a7 7 0 1 1-14 0c0-5 7-12 7-12z" />
+    </svg>
   );
 }

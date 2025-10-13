@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: '/about/', label: 'About Us' },
   { href: '/services/', label: 'Services' },
   { href: '/faqs/', label: 'FAQs' },
+  { href: '/pricing/', label: 'Pricing' }
 ];
 
 export default function NavBar() {
