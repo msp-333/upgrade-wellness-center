@@ -25,8 +25,8 @@ export default function AboutPage() {
 
   return (
     <Container className="py-12 md:py-16">
-      {/* HERO — single image (no overlays), generous bottom margin */}
-      <section className="grid items-center gap-8 md:grid-cols-2 mb-12 md:mb-16">
+      {/* HERO — split content + 3-image collage (overlapping on md+) */}
+      <section className="grid items-center gap-8 md:grid-cols-2 mb-14 md:mb-16">
         <div>
           <p className="text-xs font-semibold tracking-[0.14em] text-brand-700">ABOUT UPGRADE</p>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-text-primary">
@@ -48,18 +48,33 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* One clean hero image */}
-        <div>
+        {/* Collage: large image with two small overlapping accents (hidden on mobile) */}
+        <div className="relative">
+          {/* main */}
           <img
             src={asset('/images/about-studio.png')}
             alt="Upgrade Wellness studio"
             loading="lazy"
-            className="h-80 w-full rounded-3xl object-cover shadow-soft md:h-[22rem]"
+            className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"
+          />
+          {/* bottom-left accent */}
+          <img
+            src={asset('/images/about-session.png')}
+            alt="Quiet session"
+            loading="lazy"
+            className="absolute -bottom-6 -left-6 hidden h-40 w-56 rounded-2xl object-cover shadow-soft ring-1 ring-white/70 md:block"
+          />
+          {/* top-right accent */}
+          <img
+            src={asset('/images/about-light.png')}
+            alt="Red light setup"
+            loading="lazy"
+            className="absolute -top-6 -right-6 hidden h-32 w-44 rounded-2xl object-cover shadow-soft ring-1 ring-white/70 md:block"
           />
         </div>
       </section>
 
-      {/* QUICK STATS — balanced spacing */}
+      {/* QUICK STATS — balanced spacing & alignment */}
       <section className="grid gap-4 sm:grid-cols-3">
         {[
           { k: '3', v: 'Core modalities' },
@@ -73,59 +88,7 @@ export default function AboutPage() {
         ))}
       </section>
 
-      {/* SPOTLIGHTS — Energy Enhancement & Red Light Therapy */}
-      <section className="mt-12 md:mt-14 space-y-8">
-        {/* Energy Enhancement */}
-        <div className="grid items-center gap-6 rounded-3xl border bg-white p-6 shadow-soft md:grid-cols-2">
-          <div>
-            <h2 className="text-xl md:text-2xl font-semibold text-text-primary">Energy Enhancement</h2>
-            <p className="mt-2 text-text-secondary">
-              A quiet, restorative room designed to help you unplug and recharge. Arrive as you are—rest, breathe, and
-              take a pause from busy.
-            </p>
-            <div className="mt-4">
-              <Link
-                href="/services#energy-enhancement"
-                className="inline-flex items-center rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition"
-              >
-                Learn more
-              </Link>
-            </div>
-          </div>
-          <img
-            src={asset('/images/about-session.png')}
-            alt="Energy Enhancement room"
-            loading="lazy"
-            className="h-56 w-full rounded-2xl object-cover md:h-64"
-          />
-        </div>
-
-        {/* Red Light Therapy */}
-        <div className="grid items-center gap-6 rounded-3xl border bg-white p-6 shadow-soft md:grid-cols-2">
-          <img
-            src={asset('/images/about-light.png')}
-            alt="Red light therapy lamp"
-            loading="lazy"
-            className="order-last h-56 w-full rounded-2xl object-cover md:order-first md:h-64"
-          />
-          <div>
-            <h2 className="text-xl md:text-2xl font-semibold text-text-primary">Red Light Therapy</h2>
-            <p className="mt-2 text-text-secondary">
-              Short, comfortable sessions using visible red and near-infrared light—easy to stack with your routine.
-            </p>
-            <div className="mt-4">
-              <Link
-                href="/services#red-light-therapy"
-                className="inline-flex items-center rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition"
-              >
-                Learn more
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* MODALITIES — compact grid */}
+      {/* MODALITIES — compact grid (no “learn more” spotlight cards) */}
       <section className="mt-12">
         <h3 className="text-lg md:text-xl font-semibold text-text-primary">What we offer</h3>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
