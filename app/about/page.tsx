@@ -18,46 +18,25 @@ export default function AboutPage() {
   ];
 
   const modalities = [
-    {
-      title: 'Energy Enhancement',
-      body: 'Unplug. Restore.',
-      icon: EnergyIcon,
-    },
-    {
-      title: 'Red Light Therapy',
-      body: 'Gentle. Quick.',
-      icon: LightIcon,
-    },
-    {
-      title: 'Hydrogen Water',
-      body: 'Hydrate. Refresh.',
-      icon: WaterIcon,
-    },
-  ];
-
-  const gallery = [
-    { src: asset('/images/about-studio.png'), alt: 'Studio lounge' },
-    { src: asset('/images/about-session.png'), alt: 'Quiet session' },
-    { src: asset('/images/about-light.png'), alt: 'Red light setup' },
-    { src: asset('/images/about-people.jpg'), alt: 'Welcoming space' },
-    { src: asset('/images/about-lounge.jpg'), alt: 'Calm corner' },
+    { title: 'Hydrogen Water', body: 'Hydrate. Refresh.', icon: WaterIcon, href: '/services#hydrogen-water' },
+    { title: 'Energy Enhancement', body: 'Unplug. Restore.', icon: EnergyIcon, href: '/services#energy-enhancement' },
+    { title: 'Red Light Therapy', body: 'Gentle. Quick.', icon: LightIcon, href: '/services#red-light-therapy' },
   ];
 
   return (
-    <Container className="py-12 md:py-16">
-      {/* HERO — split with images */}
+    <Container className="py-10 md:py-14">
+      {/* HERO — compact, split layout */}
       <section className="grid items-center gap-8 md:grid-cols-2">
         <div>
-          <p className="text-sm font-semibold tracking-wide text-brand-700">ABOUT UPGRADE</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-text-primary md:text-5xl">
+          <p className="text-xs font-semibold tracking-[0.14em] text-brand-700">ABOUT UPGRADE</p>
+          <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-text-primary">
             Better feels possible.
           </h1>
-          <p className="mt-3 max-w-xl text-base text-text-secondary md:text-lg">
-            We keep wellness simple—calm spaces, clear guidance, and practical
-            routines that fit real life.
+          <p className="mt-3 max-w-xl text-base md:text-lg text-text-secondary">
+            Calm spaces, clear guidance, and practical routines that fit real life.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {['Calm space', 'Evidence-minded', 'Judgment-free'].map((t) => (
               <span
                 key={t}
@@ -69,55 +48,103 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Collage */}
+        {/* Collage (kept small so the page breathes) */}
         <div className="relative">
           <img
             src={asset('/images/about-studio.png')}
-            alt="Studio"
+            alt="Upgrade Wellness studio"
             loading="lazy"
             className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"
           />
           <img
             src={asset('/images/about-session.png')}
-            alt="Session"
+            alt="Quiet session"
             loading="lazy"
             className="absolute -bottom-6 -left-6 hidden h-40 w-56 rounded-2xl object-cover shadow-soft md:block"
           />
           <img
             src={asset('/images/about-light.png')}
-            alt="Red light"
+            alt="Red light therapy device"
             loading="lazy"
             className="absolute -top-6 -right-6 hidden h-32 w-44 rounded-2xl object-cover shadow-soft md:block"
           />
         </div>
       </section>
 
-      {/* QUICK STATS — minimal copy, big type */}
-      <section className="mt-12 grid gap-4 sm:grid-cols-3">
+      {/* QUICK STATS — concise, even margins */}
+      <section className="mt-10 grid gap-4 sm:grid-cols-3">
         {[
           { k: '3', v: 'Core modalities' },
           { k: '60–240', v: 'Minute sessions' },
           { k: '1%', v: 'Better each day' },
         ].map((s) => (
-          <div
-            key={s.v}
-            className="rounded-card border bg-white p-5 text-center shadow-soft"
-          >
-            <div className="text-3xl font-semibold text-text-primary md:text-4xl">{s.k}</div>
+          <div key={s.v} className="rounded-card border bg-white p-5 text-center shadow-soft">
+            <div className="text-3xl md:text-4xl font-semibold text-text-primary">{s.k}</div>
             <div className="mt-1 text-sm text-text-secondary">{s.v}</div>
           </div>
         ))}
       </section>
 
-      {/* MODALITIES — icon cards, short lines */}
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">
-          What we offer
-        </h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+      {/* SPOTLIGHTS — Energy Enhancement & Red Light Therapy (with pictures) */}
+      <section className="mt-10 space-y-6">
+        {/* Energy Enhancement */}
+        <div className="grid items-center gap-6 rounded-3xl border bg-white p-6 shadow-soft md:grid-cols-2">
+          <div>
+            <h2 className="text-xl md:text-2xl font-semibold text-text-primary">Energy Enhancement</h2>
+            <p className="mt-2 text-text-secondary">
+              A quiet, restorative room designed to help you unplug and recharge. Arrive as you are—rest, breathe, and
+              take a pause from busy.
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/services#energy-enhancement"
+                className="inline-flex items-center rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition"
+              >
+                Learn more
+              </Link>
+            </div>
+          </div>
+          <img
+            src={asset('/images/about-session.png')}
+            alt="Energy Enhancement room"
+            loading="lazy"
+            className="h-56 w-full rounded-2xl object-cover md:h-64"
+          />
+        </div>
+
+        {/* Red Light Therapy */}
+        <div className="grid items-center gap-6 rounded-3xl border bg-white p-6 shadow-soft md:grid-cols-2">
+          <img
+            src={asset('/images/about-light.png')}
+            alt="Red light therapy lamp"
+            loading="lazy"
+            className="order-last h-56 w-full rounded-2xl object-cover md:order-first md:h-64"
+          />
+          <div>
+            <h2 className="text-xl md:text-2xl font-semibold text-text-primary">Red Light Therapy</h2>
+            <p className="mt-2 text-text-secondary">
+              Short, comfortable sessions using visible red and near-infrared light—easy to stack with your routine.
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/services#red-light-therapy"
+                className="inline-flex items-center rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition"
+              >
+                Learn more
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MODALITIES — minimal cards (kept tight) */}
+      <section className="mt-10">
+        <h3 className="text-lg md:text-xl font-semibold text-text-primary">What we offer</h3>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
           {modalities.map((m) => (
-            <div
+            <Link
               key={m.title}
+              href={m.href}
               className="group rounded-card border bg-white p-5 shadow-soft transition hover:border-brand-300/70"
             >
               <div className="flex items-center gap-3">
@@ -129,7 +156,7 @@ export default function AboutPage() {
                   <div className="text-sm text-text-secondary">{m.body}</div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <p className="mt-3 text-xs text-text-secondary">
@@ -137,10 +164,10 @@ export default function AboutPage() {
         </p>
       </section>
 
-      {/* VALUES — tight, varied sizes */}
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">How we operate</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {/* VALUES — breathable grid */}
+      <section className="mt-10">
+        <h3 className="text-lg md:text-xl font-semibold text-text-primary">How we operate</h3>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {values.map((v) => (
             <div key={v.title} className="rounded-card border bg-white p-5 shadow-soft">
               <div className="text-sm font-medium text-brand-700">{v.title}</div>
@@ -150,38 +177,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* GALLERY — mosaic, low text */}
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-text-primary md:text-2xl">Studio & sessions</h2>
-        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {/* big lead image */}
-          <img
-            src={gallery[0].src}
-            alt={gallery[0].alt}
-            loading="lazy"
-            className="col-span-2 h-56 w-full rounded-2xl object-cover shadow-soft md:h-72"
-          />
-          {/* smalls */}
-          {gallery.slice(1).map((g) => (
-            <img
-              key={g.src}
-              src={g.src}
-              alt={g.alt}
-              loading="lazy"
-              className="h-40 w-full rounded-2xl object-cover shadow-soft md:h-48"
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* CTA — concise */}
+      {/* CTA — concise, aligned with site palette */}
       <section className="mt-12">
         <div className="flex flex-col items-start justify-between gap-4 rounded-card border bg-gradient-to-r from-brand-700 to-gradient-end p-6 text-white md:flex-row md:items-center">
           <div>
-            <h3 className="text-lg font-semibold md:text-xl">Ready to start?</h3>
-            <p className="mt-1 text-sm/relaxed opacity-90">
-              Book a visit or ask a quick question—no pressure.
-            </p>
+            <h3 className="text-lg md:text-xl font-semibold">Ready to start?</h3>
+            <p className="mt-1 text-sm/relaxed opacity-90">Book a visit or ask a quick question—no pressure.</p>
           </div>
           <div className="flex gap-3">
             <Link
