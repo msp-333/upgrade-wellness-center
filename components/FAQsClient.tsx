@@ -28,11 +28,10 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
     if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
   }, [categories, tab]);
 
-  /* ---------- search ---------- */
+  /* ---------- search (tab-first; auto-expand when no matches) ---------- */
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
 
-  /* ---------- filtered data (tab-first; auto-expand if none) ---------- */
   const { list: filtered, autoExpanded } = useMemo(() => {
     const inTab = items.filter((i) => (i.category ?? 'General') === tab);
     const hay = (arr: FAQ[]) =>
@@ -48,7 +47,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
     return a.question.localeCompare(b.question);
   }
 
-  /* ---------- pagination ---------- */
+  /* ---------- pagination (compact view) ---------- */
   const PAGE = 8;
   const [limit, setLimit] = useState(PAGE);
   useEffect(() => setLimit(PAGE), [tab, q]);
@@ -76,23 +75,20 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
   return (
     <div className="min-h-screen bg-surface text-text-primary">
-      {/* Header / Search — softened green (gradient + radial wash) */}
+      {/* Header — softened green + balanced paddings */}
       <section className="relative isolate overflow-hidden text-white">
-        {/* Soft green gradient base */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand-700 via-brand-600 to-gradient-end" />
-        {/* Radial lightening wash using your 'hero-radial' token */}
         <div className="absolute inset-0 -z-10 bg-hero-radial opacity-90" />
-        {/* Subtle shapes */}
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-[32px] bg-brand-100/60 blur-2xl" />
         <div className="absolute -left-28 -bottom-28 h-80 w-80 rounded-[32px] bg-lavender-600/20 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-22">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14 md:py-20">
           <h1 className="text-center text-3xl md:text-4xl font-semibold tracking-tight">
             How can we help?
           </h1>
 
           {/* Search */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 md:mt-7 flex justify-center">
             <form
               onSubmit={(e) => e.preventDefault()}
               role="search"
@@ -114,8 +110,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Category chips (no counts) — mobile scrollable */}
-          <div className="mt-6 flex gap-2 overflow-x-auto px-1 sm:justify-center">
+          {/* Category chips (no counts) — compact gap; mobile scroll */}
+          <div className="mt-5 flex gap-2 overflow-x-auto px-1 sm:justify-center">
             {categories.map((name) => {
               const active = tab === name;
               return (
@@ -138,8 +134,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
         </div>
       </section>
 
-      {/* Results */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-12 pb-28">
+      {/* Results — tighter rhythm, more bottom space */}
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8 md:py-10 pb-32">
         {q && autoExpanded && filtered.length > 0 && (
           <p className="mb-3 text-center text-sm text-text-secondary">
             No matches in <span className="font-medium">{tab}</span>. Showing matches from all categories.
@@ -147,33 +143,37 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
         )}
 
         {filtered.length === 0 ? (
-          <div className="rounded-card border border-slate-200 bg-white p-8 text-center">
+          <div className="rounded-card border border-slate-200 bg-white p-7 md:p-8 text-center">
             <p className="text-lg font-medium">No results{q ? ` for “${query}”` : ''}</p>
             <p className="mt-1 text-text-secondary">Try a different keyword.</p>
           </div>
         ) : (
           <>
-            <div className="space-y-3">
+            <div className="space-y-2.5 md:space-y-3">
               {visible.map((f) => (
                 <details
                   key={f.id}
                   id={f.id}
-                  className="group rounded-card bg-white p-5 shadow-soft border border-slate-200/70 open:border-brand-300"
+                  className="group rounded-card bg-white p-5 md:p-5 shadow-soft border border-slate-200/70 open:border-brand-300"
                 >
                   <summary className="cursor-pointer list-none">
                     <div className="flex items-start gap-3">
                       <span className="mt-1 shrink-0 rounded-full bg-brand-100 p-1 text-brand-700">
                         <QIcon />
                       </span>
+
                       <div className="flex-1 text-base md:text-lg">{mark(f.question)}</div>
+
+                      {/* Chevron button (visible + rotates on open) */}
                       <span
                         aria-hidden="true"
-                        className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-white/70 transition-transform group-open:rotate-180"
+                        className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform group-open:rotate-180 group-open:bg-brand-50 group-open:text-brand-700"
                       >
                         <ChevronDownIcon />
                       </span>
                     </div>
                   </summary>
+
                   <div className="mt-3 pl-9 text-text-secondary">
                     <p className="whitespace-pre-line">{mark(f.answer)}</p>
                   </div>
@@ -181,7 +181,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
               ))}
 
               {hasMore && (
-                <div className="pt-4 text-center">
+                <div className="pt-3 text-center">
                   <button
                     onClick={() => setLimit((n) => n + PAGE)}
                     className="rounded-pill bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700 transition"
@@ -224,7 +224,7 @@ function QIcon() {
 }
 function ChevronDownIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
     </svg>
   );
