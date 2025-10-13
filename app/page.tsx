@@ -29,7 +29,7 @@ export default function AboutPage() {
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets
-  const HERO = 'public/images/about-hero.jpg' // ← put your hero photo here
+  const HERO = 'public/images/about-hero.png' // ← put your hero photo here
   const MAP = 'public/images/map-downtown.png'
 
   const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
