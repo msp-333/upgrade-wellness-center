@@ -20,13 +20,12 @@ export default function Footer() {
             <img
               src={asset(LOGO)}
               alt="Upgrade Wellness Center logo"
-              width={40}
-              height={40}
+              width={100}
+              height={100}
               decoding="async"
               loading="lazy"
               className="h-10 w-10 object-contain"
             />
-            <span className="font-semibold text-slate-900">Upgrade Wellness</span>
           </Link>
           <p className="mt-3 text-sm text-slate-600">
             Calm, evidence-informed care for everyday life.
