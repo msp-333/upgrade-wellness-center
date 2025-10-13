@@ -3,7 +3,7 @@ import Container from '@/components/Container'
 import services from '@/data/services.json'
 
 export const metadata = {
-  title: 'Upgrade Wellness Center',
+  title: 'About | Upgrade Wellness Center',
   description:
     'Hydration, healing, and the harmony of health—calm, evidence-informed care that fits real life.',
 }
@@ -21,13 +21,14 @@ type Service = {
   image?: string
 }
 
-export default function HomePage() {
+export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
 
-  // Prefix assets for GitHub Pages subpaths
+  // Prefix assets so it works on GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets
+  const HERO = '/images/about-hero.jpg' // ← put your hero photo here
   const MAP = '/images/map-downtown.png'
   const ENTRANCE = '/images/entrance-thumb.jpg'
 
@@ -39,32 +40,48 @@ export default function HomePage() {
   const appleMapsUrl = `https://maps.apple.com/?q=${mapsQuery}`
 
   const pill =
-    'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm'
+    'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
   return (
     <>
-      {/* ===== Hero ====================================================== */}
-      <section className="relative isolate overflow-hidden" aria-labelledby="home-hero-title">
+      {/* ===== Hero with background image ================================= */}
+      <section className="relative isolate" aria-labelledby="about-hero-title">
+        {/* Background image */}
+        <img
+          src={asset(HERO)}
+          alt="Soft, calming wellness environment"
+          className="absolute inset-0 -z-30 h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+        {/* Dark-to-transparent overlay for legibility */}
+        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/50 via-slate-900/25 to-white/0" aria-hidden />
+        {/* Subtle tint + radial glow */}
         <div
-          className="absolute inset-0 -z-20"
+          className="absolute inset-0 -z-10"
           aria-hidden
           style={{
             background:
-              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,0.95) 0%, rgba(249,250,248,0.7) 40%, rgba(249,250,248,0) 100%)',
+              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.75) 0%, rgba(249,250,248,.35) 40%, rgba(249,250,248,0) 100%)',
           }}
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-600/10 via-teal-400/10 to-transparent" aria-hidden />
-        <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-lavender-500/20 blur-3xl" aria-hidden />
 
-        <Container className="relative py-20 md:py-28">
-          <div className="mx-auto max-w-5xl rounded-[20px] p-[1px]">
-            <div className="rounded-[20px] bg-white/70 p-8 shadow-[0_10px_24px_rgba(16,24,40,.08)] ring-1 ring-white/50 backdrop-blur md:p-14">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-700/80">Holistic • Human • Kind</p>
-              <h1 id="home-hero-title" className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-                Time for a <span className="text-emerald-600">Recharge</span>
+        <Container className="relative py-24 md:py-32">
+          {/* Glass card */}
+          <div className="mx-auto max-w-5xl rounded-[22px] p-[1px] shadow-[0_10px_28px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
+            <div className="rounded-[22px] bg-white/70 p-8 md:p-14 backdrop-blur">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
+                Holistic • Human • Kind
+              </p>
+              <h1
+                id="about-hero-title"
+                className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl"
+              >
+                The <span className="text-emerald-600">Upgrade</span> Way
               </h1>
               <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
-                Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
+                We blend hydrogen-rich hydration, light therapy, and energy enhancement in a calm,
+                evidence-informed setting—so care feels doable, gentle, and real.
               </p>
 
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
@@ -78,13 +95,13 @@ export default function HomePage() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact/"
-                  className="inline-flex items-center justify-center rounded-[999px] bg-lavender-600 px-5 py-3 text-sm font-semibold text-white shadow transition-colors hover:bg-lavender-500 focus:outline-none focus:ring-2 focus:ring-lavender-500/40"
+                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
                 >
                   Contact Us
                 </Link>
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/90 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                 >
                   Explore services
                 </Link>
@@ -94,7 +111,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* ===== Quote strip (stars removed) =============================== */}
+      {/* ===== Quote strip =============================================== */}
       <section className="bg-[var(--surface)] py-10" aria-labelledby="quotes">
         <Container className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
           <h2 id="quotes" className="sr-only">What clients say</h2>
@@ -253,7 +270,7 @@ export default function HomePage() {
                 <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500">
                   Get Directions
                 </a>
-                <Link href="/contact/" className="rounded-[999px] bg-lavender-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-lavender-500">
+                <Link href="/contact/" className="rounded-[999px] bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-600">
                   Contact Us
                 </Link>
               </div>
