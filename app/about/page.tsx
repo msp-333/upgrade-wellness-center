@@ -24,9 +24,9 @@ export default function AboutPage() {
   ];
 
   return (
-    <Container className="py-10 md:py-14">
-      {/* HERO — compact, split layout */}
-      <section className="grid items-center gap-8 md:grid-cols-2">
+    <Container className="py-12 md:py-16">
+      {/* HERO — single image (no overlays), generous bottom margin */}
+      <section className="grid items-center gap-8 md:grid-cols-2 mb-12 md:mb-16">
         <div>
           <p className="text-xs font-semibold tracking-[0.14em] text-brand-700">ABOUT UPGRADE</p>
           <h1 className="mt-2 text-3xl md:text-5xl font-semibold tracking-tight text-text-primary">
@@ -48,31 +48,19 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Collage (kept small so the page breathes) */}
-        <div className="relative">
+        {/* One clean hero image */}
+        <div>
           <img
             src={asset('/images/about-studio.png')}
             alt="Upgrade Wellness studio"
             loading="lazy"
-            className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"
-          />
-          <img
-            src={asset('/images/about-session.png')}
-            alt="Quiet session"
-            loading="lazy"
-            className="absolute -bottom-6 -left-6 hidden h-40 w-56 rounded-2xl object-cover shadow-soft md:block"
-          />
-          <img
-            src={asset('/images/about-light.png')}
-            alt="Red light therapy device"
-            loading="lazy"
-            className="absolute -top-6 -right-6 hidden h-32 w-44 rounded-2xl object-cover shadow-soft md:block"
+            className="h-80 w-full rounded-3xl object-cover shadow-soft md:h-[22rem]"
           />
         </div>
       </section>
 
-      {/* QUICK STATS — concise, even margins */}
-      <section className="mt-10 grid gap-4 sm:grid-cols-3">
+      {/* QUICK STATS — balanced spacing */}
+      <section className="grid gap-4 sm:grid-cols-3">
         {[
           { k: '3', v: 'Core modalities' },
           { k: '60–240', v: 'Minute sessions' },
@@ -85,8 +73,8 @@ export default function AboutPage() {
         ))}
       </section>
 
-      {/* SPOTLIGHTS — Energy Enhancement & Red Light Therapy (with pictures) */}
-      <section className="mt-10 space-y-6">
+      {/* SPOTLIGHTS — Energy Enhancement & Red Light Therapy */}
+      <section className="mt-12 md:mt-14 space-y-8">
         {/* Energy Enhancement */}
         <div className="grid items-center gap-6 rounded-3xl border bg-white p-6 shadow-soft md:grid-cols-2">
           <div>
@@ -137,8 +125,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* MODALITIES — minimal cards (kept tight) */}
-      <section className="mt-10">
+      {/* MODALITIES — compact grid */}
+      <section className="mt-12">
         <h3 className="text-lg md:text-xl font-semibold text-text-primary">What we offer</h3>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {modalities.map((m) => (
@@ -165,7 +153,7 @@ export default function AboutPage() {
       </section>
 
       {/* VALUES — breathable grid */}
-      <section className="mt-10">
+      <section className="mt-12">
         <h3 className="text-lg md:text-xl font-semibold text-text-primary">How we operate</h3>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {values.map((v) => (
@@ -177,8 +165,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA — concise, aligned with site palette */}
-      <section className="mt-12">
+      {/* CTA — concise */}
+      <section className="mt-14">
         <div className="flex flex-col items-start justify-between gap-4 rounded-card border bg-gradient-to-r from-brand-700 to-gradient-end p-6 text-white md:flex-row md:items-center">
           <div>
             <h3 className="text-lg md:text-xl font-semibold">Ready to start?</h3>
