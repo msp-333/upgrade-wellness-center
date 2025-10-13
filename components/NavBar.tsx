@@ -61,7 +61,7 @@ export default function NavBar() {
       <Container className="flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="Upgrade Wellness" width={128} height={32} priority />
+          <Image src="/logo.png" alt="Upgrade Wellness" width={128} height={32} priority />
         </Link>
 
         {/* Desktop nav */}
