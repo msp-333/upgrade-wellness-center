@@ -37,7 +37,7 @@ export default function AboutPage() {
 
   const gallery = [
     { src: asset('/images/about-studio.png'), alt: 'Studio lounge' },
-    { src: asset('/images/about-session.jpg'), alt: 'Quiet session' },
+    { src: asset('/images/about-session.png'), alt: 'Quiet session' },
     { src: asset('/images/about-light.jpg'), alt: 'Red light setup' },
     { src: asset('/images/about-people.jpg'), alt: 'Welcoming space' },
     { src: asset('/images/about-lounge.jpg'), alt: 'Calm corner' },
@@ -78,7 +78,7 @@ export default function AboutPage() {
             className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"
           />
           <img
-            src={asset('/images/about-session.jpg')}
+            src={asset('/images/about-session.png')}
             alt="Session"
             loading="lazy"
             className="absolute -bottom-6 -left-6 hidden h-40 w-56 rounded-2xl object-cover shadow-soft md:block"
