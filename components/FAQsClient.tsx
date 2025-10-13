@@ -30,27 +30,39 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
     if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
   }, [categories, tab]);
 
-  /* ---------- search (scoped to current tab for clarity) ---------- */
+  /* ---------- search ---------- */
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
 
-  /* ---------- filtered data (A→Z, compact) ---------- */
-  const filtered = useMemo(() => {
-    const scope = items.filter((i) => (i.category ?? 'General') === tab);
-    if (!q) return scope.sort((a, b) => a.question.localeCompare(b.question));
-    return scope
-      .filter((i) => (`${i.question} ${i.answer}`.toLowerCase()).includes(q))
-      .sort((a, b) => a.question.localeCompare(b.question));
+  /* ---------- filtered data ---------- */
+  const { list: filtered, autoExpanded } = useMemo(() => {
+    const inTab = items.filter((i) => (i.category ?? 'General') === tab);
+    const haystack = (arr: FAQ[]) =>
+      arr.filter((i) => (`${i.question} ${i.answer}`.toLowerCase()).includes(q));
+
+    // No query: just tab
+    if (!q) return { list: inTab.sort(byQuestion), autoExpanded: false };
+
+    // With query: try tab first; if empty, auto-expand to all categories
+    const tabMatches = haystack(inTab).sort(byQuestion);
+    if (tabMatches.length > 0) return { list: tabMatches, autoExpanded: false };
+
+    const allMatches = haystack(items).sort(byQuestion);
+    return { list: allMatches, autoExpanded: allMatches.length > 0 };
   }, [items, tab, q]);
 
-  /* ---------- pagination (keep page compact) ---------- */
+  function byQuestion(a: FAQ, b: FAQ) {
+    return a.question.localeCompare(b.question);
+  }
+
+  /* ---------- pagination (keeps list compact) ---------- */
   const PAGE = 8;
   const [limit, setLimit] = useState(PAGE);
   useEffect(() => setLimit(PAGE), [tab, q]);
   const visible = filtered.slice(0, limit);
   const hasMore = filtered.length > limit;
 
-  /* ---------- search highlighting ---------- */
+  /* ---------- highlight ---------- */
   const mark = (text: string) => {
     if (!q) return text;
     const parts = text.split(new RegExp(`(${escapeRegExp(query)})`, 'ig'));
@@ -71,18 +83,18 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
   return (
     <div className="min-h-screen bg-surface text-text-primary">
-      {/* Header / Search — classic green */}
+      {/* Header / Search — classic green, taller spacing */}
       <section className="relative overflow-hidden bg-brand-900 text-white">
-        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl" />
-        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/40 opacity-40 blur-3xl" />
+        <div className="absolute -right-24 -top-20 h-72 w-72 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl" />
+        <div className="absolute -left-28 -bottom-28 h-80 w-80 rounded-[32px] bg-lavender-600/40 opacity-40 blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
           <h1 className="text-center text-3xl md:text-4xl font-semibold tracking-tight">
             How can we help?
           </h1>
 
           {/* Search */}
-          <div className="mt-6 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <form
               onSubmit={(e) => e.preventDefault()}
               role="search"
@@ -93,7 +105,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={`Search ${tab}`}
-                className="w-full rounded-pill bg-white text-text-primary placeholder:text-white/70/5 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-lavender-500/60"
+                className="w-full rounded-pill bg-white text-text-primary placeholder:text-white/70 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-lavender-500/60"
               />
               <button
                 aria-label="Search"
@@ -104,7 +116,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Category chips (no counts) */}
+          {/* Category chips (no counts) — mobile scrollable */}
           <div className="mt-6 flex gap-2 overflow-x-auto px-1 sm:justify-center">
             {categories.map((name) => {
               const active = tab === name;
@@ -128,12 +140,19 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
         </div>
       </section>
 
-      {/* Results (single clean list) */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-12 pb-24">
+      {/* Results */}
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-12 pb-28">
+        {/* Tiny helper only when we auto-expanded search to all categories */}
+        {q && autoExpanded && filtered.length > 0 && (
+          <p className="mb-3 text-center text-sm text-text-secondary">
+            No matches in <span className="font-medium">{tab}</span>. Showing matches from all categories.
+          </p>
+        )}
+
         {filtered.length === 0 ? (
           <div className="rounded-card border border-slate-200 bg-white p-8 text-center">
             <p className="text-lg font-medium">No results{q ? ` for “${query}”` : ''}</p>
-            <p className="mt-1 text-text-secondary">Try a shorter keyword.</p>
+            <p className="mt-1 text-text-secondary">Try a different keyword.</p>
           </div>
         ) : (
           <>
@@ -152,10 +171,10 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
                       <div className="flex-1 text-base md:text-lg">{mark(f.question)}</div>
 
-                      {/* Chevron “dropdown button” (replaces category label) */}
+                      {/* Chevron “dropdown button” */}
                       <span
                         aria-hidden="true"
-                        className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-text-secondary transition-transform group-open:rotate-180"
+                        className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-white/70 transition-transform group-open:rotate-180"
                       >
                         <ChevronDownIcon />
                       </span>
@@ -180,7 +199,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
               )}
             </div>
 
-            {/* Bottom helper (moved to bottom, extra space) */}
+            {/* Bottom helper (moved to very bottom with more space) */}
             <p className="mt-12 text-center text-text-secondary">
               Can’t find what you need?{' '}
               <a href="/contact" className="underline underline-offset-4 text-brand-700">
