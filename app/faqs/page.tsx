@@ -7,12 +7,13 @@ export const metadata = {
   description: 'Common questions about our programs and events.',
 };
 
-// Fully static for GitHub Pages
+// Static for GitHub Pages
 export const dynamic = 'force-static';
 
 type FAQ = { id: string; question: string; answer: string; category?: string };
 
 export default function FAQsPage() {
+  // Normalize to ensure every item has a category
   const items = (faqs as FAQ[]).map((i) => ({
     ...i,
     category: i.category ?? 'General',

@@ -1,5 +1,4 @@
 'use client';
-
 import { useMemo, useRef, useState } from 'react';
 
 /* ---------------- Types ---------------- */
@@ -85,7 +84,9 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">Our Pricing</h1>
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">
+              Our Pricing
+            </h1>
             <p className="mx-auto mt-2 max-w-xl text-text-secondary">
               Simple, transparent options—book what fits your routine.
             </p>
@@ -142,30 +143,23 @@ export default function PricingClient({ data }: { data: PricingData }) {
         </div>
       </section>
 
-      {/* Active category */}
-      <section ref={sectionRef} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 md:py-10">
-        <div className="text-center">
-          <h2 className="text-xl md:text-2xl font-semibold">{LABELS[tab]}</h2>
-          <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-brand-600/70" />
-        </div>
+      {/* Results (no big heading) */}
+      <section ref={sectionRef} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <h2 className="sr-only">{LABELS[tab]}</h2>
 
-        {/* Cards */}
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {sorted.map((it, idx) => {
-            const specifics = (it.details && it.details.length > 0)
-              ? it.details
-              : (it.description?.slice(1) ?? []);
+            const specifics =
+              (it.details && it.details.length > 0)
+                ? it.details
+                : (it.description?.slice(1) ?? []);
 
             return (
               <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
                 {/* Title + inside chip */}
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-lg font-semibold">{it.title}</h3>
-                  {it.badge && (
-                    <span className={chipClass(it.tone)}>
-                      {it.badge}
-                    </span>
-                  )}
+                  {it.badge && <span className={chipClass(it.tone)}>{it.badge}</span>}
                 </div>
 
                 {/* Price */}
@@ -174,12 +168,12 @@ export default function PricingClient({ data }: { data: PricingData }) {
                   {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
                 </div>
 
-                {/* Short summary */}
+                {/* Summary */}
                 {it.description?.[0] && (
                   <p className="mt-4 text-text-secondary">{it.description[0]}</p>
                 )}
 
-                {/* Per-card details (unique) */}
+                {/* Per-card details */}
                 {specifics.length > 0 && (
                   <details className="mt-3 group">
                     <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
