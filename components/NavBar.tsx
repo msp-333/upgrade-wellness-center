@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import Container from './Container';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -13,13 +12,15 @@ const NAV_ITEMS = [
   { href: '/services/', label: 'Services' },
   { href: '/pricing/', label: 'Pricing' },
   { href: '/faqs/', label: 'FAQs' },
-
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
+
+  // Helper to prefix assets for GitHub Pages subpaths
+  const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
 
   // Close drawer on route change
   useEffect(() => setOpen(false), [pathname]);
@@ -47,7 +48,6 @@ export default function NavBar() {
       className={clsx(
         'sticky top-0 z-50 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/70',
         'border-b border-lavender-400/30',
-        // subtle top gradient hairline
         'relative before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-lavender-500/40 before:to-transparent',
         elevated && 'shadow-soft'
       )}
@@ -61,9 +61,15 @@ export default function NavBar() {
       </a>
 
       <Container className="flex h-16 items-center justify-between">
-        {/* Logo */}
+        {/* Logo (plain <img> for GH Pages reliability) */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Upgrade Wellness" width={128} height={32} priority />
+          <img
+            src={asset('/logo.png')}
+            alt="Upgrade Wellness"
+            width={128}
+            height={32}
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -76,10 +82,8 @@ export default function NavBar() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={clsx(
-                  // base
                   'relative rounded-full px-3 py-2 text-sm font-medium transition-colors',
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
-                  // ✨ bubble highlight (no underline)
                   active
                     ? 'text-slate-900 bg-lavender-500/15 ring-1 ring-lavender-500/30 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]'
                     : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
@@ -91,7 +95,7 @@ export default function NavBar() {
           })}
         </nav>
 
-        {/* Desktop CTA — lavender/purple */}
+        {/* Desktop CTA */}
         <div className="hidden md:block">
           <Link
             href="/contact/"
@@ -146,7 +150,6 @@ export default function NavBar() {
                   className={clsx(
                     'relative rounded-lg px-3 py-2 text-base transition-colors',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
-                    // ✨ bubble highlight (no underline)
                     active
                       ? 'bg-lavender-500/15 text-slate-900 ring-1 ring-lavender-500/30'
                       : 'text-slate-700 hover:bg-slate-100'
