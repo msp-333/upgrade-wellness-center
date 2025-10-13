@@ -1,38 +1,57 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type FAQ = {
   id: string;
   question: string;
   answer: string;
-  category?: string;
+  category?: string; // normalized by page.tsx
 };
 
+const CATEGORY_ORDER = ['General', 'Booking', 'Sessions', 'Payments', 'Policies'];
+
 export default function FAQsClient({ items }: { items: FAQ[] }) {
+  // Build categories (unique), ordered by CATEGORY_ORDER then A→Z
   const categories = useMemo(() => {
-    const set = new Set<string>(['All']);
-    items.forEach((i) => set.add(i.category ?? 'General'));
-    return Array.from(set);
+    const uniq = new Set<string>();
+    items.forEach((i) => uniq.add(i.category ?? 'General'));
+    const arr = Array.from(uniq);
+
+    const idx = (c: string) => {
+      const i = CATEGORY_ORDER.indexOf(c);
+      return i === -1 ? 999 : i;
+    };
+
+    return arr.sort((a, b) => {
+      const d = idx(a) - idx(b);
+      return d !== 0 ? d : a.localeCompare(b);
+    });
   }, [items]);
 
-  const [query, setQuery] = useState('');
-  const [tab, setTab] = useState('All');
+  // Default to first category so not everything shows at once
+  const [tab, setTab] = useState<string>(categories[0] ?? 'General');
+  useEffect(() => {
+    if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
+  }, [categories, tab]);
 
-  const normalized = (s: string) => s.toLowerCase().trim();
-  const q = normalized(query);
+  const [query, setQuery] = useState('');
+
+  const q = query.trim().toLowerCase();
 
   const filtered = useMemo(() => {
-    return items.filter((i) => {
-      const inTab = tab === 'All' ? true : (i.category ?? 'General') === tab;
+    const list = items.filter((i) => {
+      const inTab = (i.category ?? 'General') === tab;
       if (!q) return inTab;
-      const hay =
-        `${i.question} ${i.answer}`.toLowerCase();
+      const hay = `${i.question} ${i.answer}`.toLowerCase();
       return inTab && hay.includes(q);
     });
-  }, [items, q, tab]);
+    // Sort A→Z by question for stable UX
+    return list.sort((a, b) => a.question.localeCompare(b.question));
+  }, [items, tab, q]);
 
-  const featured = useMemo(() => items.slice(0, 6), [items]);
+  // Featured = first six of current category (also filtered by search if any)
+  const featured = useMemo(() => filtered.slice(0, 6), [filtered]);
 
   const mark = (text: string) => {
     if (!q) return text;
@@ -61,9 +80,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
       <section className="relative overflow-hidden bg-brand-900 text-white">
         <DecorShapes />
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-center">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            How can we help?
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">How can we help?</h1>
 
           {/* Search bar */}
           <div className="mt-6 flex justify-center">
@@ -88,19 +105,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Light info bar (contact) */}
-          <p className="mt-5 text-white/80">
-            Can’t find what you need?{' '}
-            <a
-              href="/contact"
-              className="underline decoration-white/40 underline-offset-4 hover:text-white"
-            >
-              Contact us
-            </a>
-            .
-          </p>
-
-          {/* Tabs / chips */}
+          {/* Tabs / chips (no All) */}
           <div className="mt-6 inline-flex flex-wrap justify-center gap-2 bg-white/10 p-1 rounded-pill backdrop-blur">
             {categories.map((c) => {
               const active = tab === c;
@@ -121,13 +126,25 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
               );
             })}
           </div>
+
+          {/* Light info bar */}
+          <p className="mt-5 text-white/80">
+            Can’t find what you need?{' '}
+            <a
+              href="/contact"
+              className="underline decoration-white/40 underline-offset-4 hover:text-white"
+            >
+              Contact us
+            </a>
+            .
+          </p>
         </div>
       </section>
 
-      {/* FEATURED ARTICLES */}
+      {/* FEATURED */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 md:py-12">
         <h2 className="text-center text-xl md:text-2xl font-semibold text-text-primary">
-          Featured articles
+          Featured in {tab}
         </h2>
 
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -138,13 +155,18 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
               className="group block rounded-card border border-slate-200/60 bg-white p-5 hover:border-brand-300 hover:shadow-soft transition"
             >
               <p className="text-sm uppercase tracking-wide text-text-secondary">
-                {(f.category ?? 'General')}
+                {f.category ?? 'General'}
               </p>
               <h3 className="mt-1 font-medium text-text-primary group-hover:text-brand-700">
                 {f.question}
               </h3>
             </a>
           ))}
+          {featured.length === 0 && (
+            <div className="rounded-card border border-slate-200/60 bg-white p-6 text-center text-text-secondary">
+              No featured items in this category yet.
+            </div>
+          )}
         </div>
       </section>
 
@@ -169,15 +191,13 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                       {mark(f.question)}
                     </div>
                     <span className="ml-2 mt-1 shrink-0 rounded-full border border-slate-200 px-2 py-0.5 text-xs text-text-secondary group-open:bg-brand-50 group-open:text-brand-800">
-                      {(f.category ?? 'General')}
+                      {f.category ?? 'General'}
                     </span>
                   </div>
                 </summary>
 
                 <div className="mt-3 pl-9 text-text-secondary">
-                  <p className="whitespace-pre-line">
-                    {mark(f.answer)}
-                  </p>
+                  <p className="whitespace-pre-line">{mark(f.answer)}</p>
                 </div>
               </details>
             ))}
@@ -188,6 +208,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
   );
 }
 
+/* ---------- helpers ---------- */
+
 function EmptyState({ query }: { query: string }) {
   return (
     <div className="rounded-card border border-slate-200 bg-white p-8 text-center">
@@ -196,7 +218,8 @@ function EmptyState({ query }: { query: string }) {
         We couldn’t find any FAQs for “{query}”. Try a different keyword or{' '}
         <a href="/contact" className="text-brand-700 underline underline-offset-4">
           contact us
-        </a>.
+        </a>
+        .
       </p>
     </div>
   );
@@ -219,7 +242,6 @@ function QIcon() {
 }
 
 function DecorShapes() {
-  // subtle floating shapes to mimic help-center header art, kept minimal
   return (
     <>
       <div className="pointer-events-none absolute -top-10 -left-10 h-56 w-56 rounded-[32px] bg-gradient-to-br from-brand-700 to-gradient-end opacity-30 blur-2xl animate-drift-1" />
@@ -229,5 +251,5 @@ function DecorShapes() {
 }
 
 function escapeRegExp(s: string) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
 }

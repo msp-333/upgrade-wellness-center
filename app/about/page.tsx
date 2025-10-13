@@ -36,7 +36,7 @@ export default function AboutPage() {
   ];
 
   const gallery = [
-    { src: asset('/images/about-studio.jpg'), alt: 'Studio lounge' },
+    { src: asset('/images/about-studio.png'), alt: 'Studio lounge' },
     { src: asset('/images/about-session.jpg'), alt: 'Quiet session' },
     { src: asset('/images/about-light.jpg'), alt: 'Red light setup' },
     { src: asset('/images/about-people.jpg'), alt: 'Welcoming space' },
@@ -72,7 +72,7 @@ export default function AboutPage() {
         {/* Collage */}
         <div className="relative">
           <img
-            src={asset('/images/about-studio.jpg')}
+            src={asset('/images/about-studio.png')}
             alt="Studio"
             loading="lazy"
             className="h-72 w-full rounded-3xl object-cover shadow-soft md:h-80"

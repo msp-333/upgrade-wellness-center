@@ -1,27 +1,22 @@
 // app/faqs/page.tsx
 import faqs from '@/data/faqs.json';
-
-type FAQ = {
-  id: string;
-  question: string;
-  answer: string;
-  category?: string; // optional; falls back to "General"
-};
+import FAQsClient from '@/components/FAQsClient';
 
 export const metadata = {
   title: 'FAQs',
   description: 'Common questions about our programs and events.',
 };
 
-// Force a static page for GitHub Pages static export
+// Static HTML for GitHub Pages
 export const dynamic = 'force-static';
 
-import FAQsClient from '@/components/FAQsClient';
+type FAQ = { id: string; question: string; answer: string; category?: string };
 
 export default function FAQsPage() {
-  const items = (faqs as FAQ[]).map((f) => ({
-    ...f,
-    category: f.category ?? 'General',
+  // Normalize & ensure category fallback
+  const items = (faqs as FAQ[]).map((i) => ({
+    ...i,
+    category: i.category ?? 'General',
   }));
 
   return <FAQsClient items={items} />;
