@@ -105,7 +105,7 @@ export default function AboutPage() {
                 </Link>
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/90 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-lavender/600 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                 >
                   Explore services
                 </Link>
