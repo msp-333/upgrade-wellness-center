@@ -24,10 +24,9 @@ type Service = {
 
 export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
-
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets you already use
+  // Assets (hero unchanged)
   const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
@@ -56,15 +55,23 @@ export default function AboutPage() {
     { id: 'stress',      label: 'Alleviates Stress',                         Icon: StressIcon },
     { id: 'sleep',       label: 'Improves Sleep',                            Icon: MoonIcon },
     { id: 'homeostasis', label: 'Dynamic Homeostasis',                       Icon: HomeostasisIcon },
-    { id: 'telomeres',   label: 'Lengthen Telomeres',                        Icon: DNAIcon },
+    // telomeres removed per request
     { id: 'stem',        label: 'Mobilizes Stem Cells',                      Icon: StemIcon },
     { id: 'brain',       label: 'Brain Hemisphere Synchronization',          Icon: BrainIcon },
     { id: 'energy',      label: 'Increases Energy\n& Physical Stamina',      Icon: BoltIcon },
   ]
 
+  // Static variant classes so Tailwind keeps them (used to softly vary icon pods)
+  const iconBgVariants = [
+    'bg-emerald-50 ring-emerald-600/10',
+    'bg-teal-50 ring-teal-600/10',
+    'bg-emerald-50 ring-emerald-600/10',
+    'bg-teal-50 ring-teal-600/10',
+  ] as const
+
   return (
     <>
-      {/* ===== Hero ======================================================= */}
+      {/* ===== Hero (UNCHANGED) ========================================== */}
       <section className="relative isolate" aria-labelledby="about-hero-title">
         <img
           src={asset(HERO)}
@@ -85,49 +92,31 @@ export default function AboutPage() {
         />
 
         <Container className="relative py-24 md:py-32">
-          <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
+          <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur [animation:fade-in_0.8s_ease-out_0.12s_both]">
             <div className="rounded-[24px] bg-white/75 p-8 md:p-14 backdrop-blur">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
-                Holistic • Human • Kind
-              </p>
-
-              <h1
-                id="about-hero-title"
-                className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl"
-              >
+              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">Holistic • Human • Kind</p>
+              <h1 id="about-hero-title" className="mt-2 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
                 Time for a{' '}
                 <span className="bg-gradient-to-r from-[#0C8D69] via-emerald-500 to-[#19B6AE] bg-clip-text text-transparent">
                   Recharge
                 </span>
               </h1>
-
               <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
                 Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
               </p>
-
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
                 {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                  <li
-                    key={t}
-                    className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
-                    style={{ transitionDelay: `${i * 60}ms` }}
-                  >
+                  <li key={t} className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
+                      style={{ transitionDelay: `${i * 60}ms` }}>
                     <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
                   </li>
                 ))}
               </ul>
-
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/contact/"
-                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
-                >
+                <Link href="/contact/" className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40">
                   Contact Us
                 </Link>
-                <Link
-                  href="/services/"
-                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
-                >
+                <Link href="/services/" className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60">
                   Explore services
                 </Link>
               </div>
@@ -136,19 +125,27 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Quote strip =============================================== */}
-      <section className="bg-[var(--surface)] py-10" aria-labelledby="quotes">
-        <Container className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
+      {/* ===== Quote strip (thin pattern + divider) ======================= */}
+      <section className="relative py-10" aria-labelledby="quotes">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(40rem_20rem_at_50%_-10%,rgba(129,177,230,0.08),transparent_60%)]" />
+        <Container className="[animation:fade-in_0.8s_ease-out_0.2s_both]">
           <h2 id="quotes" className="sr-only">What clients say</h2>
-          <blockquote className="text-center text-sm text-slate-600 md:text-left">“Calm, caring, and effective.”</blockquote>
-          <span className="hidden h-4 w-px bg-slate-300 md:block" aria-hidden />
-          <blockquote className="text-center text-sm text-slate-600 md:text-left">“I leave lighter every time.”</blockquote>
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="flex items-center justify-center gap-6 text-sm text-slate-600">
+              <blockquote>“Calm, caring, and effective.”</blockquote>
+              <span className="h-4 w-px bg-slate-300" aria-hidden />
+              <blockquote>“I leave lighter every time.”</blockquote>
+            </div>
+            <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-emerald-500/40 via-slate-300 to-emerald-500/40" />
+          </div>
         </Container>
       </section>
 
-      {/* ===== Pillars ==================================================== */}
-      <section className="py-16" aria-labelledby="pillars">
-        <Container>
+      {/* ===== Pillars (soft blobs for distinction) ======================= */}
+      <section className="relative overflow-hidden py-16" aria-labelledby="pillars">
+        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-100/50 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-24 h-80 w-80 rounded-full bg-teal-100/50 blur-3xl" />
+        <Container className="[animation:fade-in-up_0.8s_cubic-bezier(0.22,1,0.36,1)_0.25s_both]">
           <h2 id="pillars" className="mx-auto mb-6 max-w-3xl text-center text-2xl font-semibold text-slate-900">
             Care that’s practical, kind, and grounded
           </h2>
@@ -160,8 +157,8 @@ export default function AboutPage() {
             ].map((c, i) => (
               <div
                 key={c.title}
-                className="group relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
-                style={{ transitionDelay: `${i * 60}ms` }}
+                className="group relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)] [animation:fade-in_0.7s_ease-out_both]"
+                style={{ animationDelay: `${0.15 + i * 0.08}s` }}
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/30 via-transparent to-emerald-500/30" />
                 <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[12px] bg-emerald-50">
@@ -175,53 +172,76 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== EE System – SQUARE TILE GRID (larger icons, cohesive) ====== */}
-      <section className="bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
+      {/* ===== EE System – ENHANCED SQUARE TILE GRID ===================== */}
+      <section className="relative bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
+        {/* subtle grid pattern behind */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 id="ee-title" className="text-2xl font-semibold text-slate-900">
+          <div className="mx-auto max-w-3xl text-center [animation:fade-in_0.8s_ease-out_0.2s_both]">
+            <span className="mx-auto inline-block rounded-full border border-emerald-600/20 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
+              EE System Benefits
+            </span>
+            <h2 id="ee-title" className="mt-3 text-2xl font-semibold text-slate-900">
               The EE System Creates an Environment Where Health Can Flourish
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              Large, unified tiles with centered icons and labels—fully responsive and crisp.
+              Big, cohesive tiles with layered borders, conic halos, and animated sheen—CSS-only.
             </p>
           </div>
 
-          {/* Outer frame with soft gradient border */}
-          <div className="mt-8 rounded-[28px] p-[1px] bg-gradient-to-br from-emerald-200/70 via-teal-200/60 to-emerald-100/60 shadow-[0_10px_26px_rgba(16,24,40,.10)]">
+          {/* gradient micro-border frame */}
+          <div className="mt-8 rounded-[28px] p-[1px] bg-gradient-to-br from-emerald-200/70 via-teal-200/60 to-emerald-100/60 shadow-[0_10px_26px_rgba(16,24,40,.10)] [animation:fade-in_0.8s_ease-out_0.28s_both]">
             <div className="rounded-[27px] border border-emerald-600/10 bg-white p-5">
-              <ul
-                role="list"
-                className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              >
-                {eeBenefits.map((b, i) => (
-                  <li
-                    key={b.id}
-                    className="group aspect-square rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
-                    style={{ transitionDelay: `${(i % 8) * 20}ms` }}
-                  >
-                    <div className="flex h-full flex-col items-center justify-center text-center">
-                      {/* Larger icon container (but balanced for cohesion) */}
-                      <div className="mb-3 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-300 group-hover:scale-[1.06]">
-                        <b.Icon className="h-10 w-10 text-emerald-700" />
+              <ul role="list" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {eeBenefits.map((b, i) => {
+                  const iconVariant = iconBgVariants[i % iconBgVariants.length]
+                  return (
+                    <li
+                      key={b.id}
+                      tabIndex={0}
+                      role="group"
+                      className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-emerald-500/40"
+                      style={{ animationDelay: `${0.18 + (i % 8) * 0.05}s` }}
+                    >
+                      {/* conic halo (very soft) */}
+                      <div className="pointer-events-none absolute -inset-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="absolute inset-0 rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(16,185,129,0.10),rgba(45,212,191,0.10),rgba(16,185,129,0.10))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)] [animation:spin-slower_14s_linear_infinite]" />
                       </div>
-                      <p className="whitespace-pre-line text-[15.5px] font-medium leading-snug text-slate-800">
-                        {b.label}
-                      </p>
-                    </div>
-                  </li>
-                ))}
+
+                      {/* inner radial light */}
+                      <div className="pointer-events-none absolute inset-0 rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(16,185,129,0.10),transparent_60%)]" aria-hidden />
+
+                      {/* content */}
+                      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center [animation:fade-in-up_0.6s_cubic-bezier(0.22,1,0.36,1)_both]">
+                        <div className={`mb-4 inline-flex h-24 w-24 items-center justify-center rounded-2xl ring-1 transition-transform duration-300 group-hover:scale-[1.06] ${iconVariant}`}>
+                          <b.Icon className="h-12 w-12 text-emerald-700" />
+                        </div>
+                        <p className="whitespace-pre-line text-[15.5px] font-medium leading-snug text-slate-800">
+                          {b.label}
+                        </p>
+                      </div>
+
+                      {/* animated sheen */}
+                      <span className="pointer-events-none absolute -inset-[1px] rounded-[20px] opacity-0 transition-opacity duration-300 group-hover:opacity-30 [background:linear-gradient(100deg,transparent,rgba(255,255,255,0.5),transparent)] [animation:none] group-hover:[animation:sheen_800ms_ease-out]"></span>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ===== Featured Services ========================================= */}
-      <section className="py-16" id="featured-services" aria-labelledby="featured">
+      {/* ===== Featured Services (split background) ======================= */}
+      <section className="relative py-16" id="featured-services" aria-labelledby="featured">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 -z-10 bg-gradient-to-b from-white to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_40rem_at_100%_100%,rgba(12,141,105,0.10),transparent_60%)]" />
         <Container>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 id="featured" className="text-2xl font-semibold text-slate-900">Featured Services</h2>
+          <div className="mx-auto max-w-2xl text-center [animation:fade-in_0.8s_ease-out_0.18s_both]">
+            <span className="mx-auto inline-block rounded-full border border-slate-300 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate-700">
+              Featured
+            </span>
+            <h2 id="featured" className="mt-3 text-2xl font-semibold text-slate-900">Featured Services</h2>
             <p className="mt-2 text-slate-600">Three simple ways to support recovery and everyday energy.</p>
           </div>
 
@@ -232,11 +252,10 @@ export default function AboutPage() {
                 <article
                   key={s.id}
                   aria-labelledby={headingId}
-                  className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
-                  style={{ transitionDelay: `${i * 60}ms` }}
+                  className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)] [animation:fade-in_0.7s_ease-out_both]"
+                  style={{ animationDelay: `${0.2 + i * 0.08}s` }}
                 >
                   <div className="relative h-44 w-full overflow-hidden rounded-[16px] ring-1 ring-inset ring-slate-200">
-                    <div className="absolute inset-0 pointer-events-none motion-safe:animate-pulse" style={{ animationDuration: '5s' }} />
                     <img
                       src={asset(s.image ?? '/images/service-fallback.jpg')}
                       alt={s.name}
@@ -270,7 +289,7 @@ export default function AboutPage() {
             })}
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="mt-8 flex items-center justify-center gap-4 [animation:fade-in_0.8s_ease-out_0.36s_both]">
             <Link href="/services/" className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900">
               Compare services
             </Link>
@@ -282,13 +301,17 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Visit Us =================================================== */}
-      <section className="bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
+      {/* ===== Visit Us (two-card scene) ================================= */}
+      <section className="relative bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_40rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
         <Container>
-          <h2 id="visit" className="text-2xl font-semibold text-slate-900">Visit Us</h2>
+          <h2 id="visit" className="text-center text-2xl font-semibold text-slate-900 [animation:fade-in_0.8s_ease-out_0.18s_both]">
+            Visit Us
+          </h2>
 
-        <div className="mt-6 grid gap-8 md:grid-cols-2">
-            <div className="relative">
+          <div className="mt-6 grid gap-8 md:grid-cols-2">
+            {/* Map Card */}
+            <div className="relative [animation:fade-in-up_0.7s_cubic-bezier(0.22,1,0.36,1)_0.22s_both]">
               <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
                   src={asset(MAP)}
@@ -319,26 +342,30 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div>
-              <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
-              <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
+            {/* Contact Card */}
+            <div className="[animation:fade-in-up_0.7s_cubic-bezier(0.22,1,0.36,1)_0.28s_both]">
+              <div className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="pointer-events-none absolute -top-16 -right-12 h-40 w-40 rounded-full bg-emerald-50 blur-3xl" />
+                <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
+                <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
-              <div className="mt-5 flex items-center gap-6 text-sm">
-                <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`tel:+11234567890`}>
-                  <PhoneIcon className="h-4 w-4 text-emerald-700" /> {phone}
-                </a>
-                <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`mailto:${email}`}>
-                  <MailIcon className="h-4 w-4 text-emerald-700" /> {email}
-                </a>
-              </div>
+                <div className="mt-5 flex items-center gap-6 text-sm">
+                  <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`tel:+11234567890`}>
+                    <PhoneIcon className="h-4 w-4 text-emerald-700" /> {phone}
+                  </a>
+                  <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`mailto:${email}`}>
+                    <MailIcon className="h-4 w-4 text-emerald-700" /> {email}
+                  </a>
+                </div>
 
-              <div className="mt-5 flex items-center gap-3">
-                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500">
-                  Get Directions
-                </a>
-                <Link href="/contact/" className="rounded-[999px] bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-600">
-                  Contact Us
-                </Link>
+                <div className="mt-5 flex items-center gap-3">
+                  <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500">
+                    Get Directions
+                  </a>
+                  <Link href="/contact/" className="rounded-[999px] bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-600">
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -348,7 +375,7 @@ export default function AboutPage() {
       {/* ===== CTA ======================================================== */}
       <section className="py-16" aria-labelledby="cta">
         <Container>
-          <div className="relative overflow-hidden rounded-[22px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
+          <div className="relative overflow-hidden rounded-[22px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)] [animation:fade-in_0.8s_ease-out_0.2s_both]">
             <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
             <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
             <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
@@ -368,6 +395,17 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      {/* ---- Lightweight keyframes (CSS-only, no libs) ------------------ */}
+      <style jsx global>{`
+        @keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes spin-slower { to { transform: rotate(360deg) } }
+        @keyframes sheen { 0% { transform: translateX(-120%) } 100% { transform: translateX(120%) } }
+        @media (prefers-reduced-motion: reduce) {
+          [animation] { animation: none !important; }
+        }
+      `}</style>
     </>
   )
 }
@@ -507,13 +545,6 @@ function HomeostasisIcon(props: React.SVGProps<SVGSVGElement>) {
       <path d="M6 12h12M8 8h8M8 16h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="1.5"/>
       <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="1.5"/>
-    </svg>
-  )
-}
-function DNAIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M8 3c2 2 6 2 8 0M8 21c2-2 6-2 8 0M8 3v18M16 3v18M8 9h8M8 15h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
     </svg>
   )
 }
