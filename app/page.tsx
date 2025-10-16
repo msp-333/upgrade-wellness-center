@@ -1,4 +1,5 @@
-// app/home/page.tsx
+'use client'
+
 import Link from 'next/link'
 import Container from '@/components/Container'
 import services from '@/data/services.json'
