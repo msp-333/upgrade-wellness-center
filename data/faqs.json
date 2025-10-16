@@ -317,43 +317,43 @@
   {
     "id": "hrw-what",
     "category": "HW",
-    "question": "Hydrogen Water: What is it?",
+    "question": "What is it?",
     "answer": "Purified water infused with dissolved molecular hydrogen (H₂). It is different from alkaline or flavored waters."
   },
   {
     "id": "hrw-served",
     "category": "HW",
-    "question": "Hydrogen Water: How is it served?",
+    "question": "How is it served?",
     "answer": "By the glass in the studio or in sealed take-home bottles. Please bring a clean, airtight bottle if you prefer refills."
   },
   {
     "id": "hrw-when",
     "category": "HW",
-    "question": "Hydrogen Water: When should I drink it?",
+    "question": "When should I drink it?",
     "answer": "Hydrogen dissipates over time. For best experience, drink soon after dispensing or within the same day. Keep sealed and refrigerated if not consumed immediately."
   },
   {
     "id": "hrw-how-much",
     "category": "HW",
-    "question": "Hydrogen Water: How much should I drink?",
+    "question": "How much should I drink?",
     "answer": "Commonly 250–500 mL per serving, 1–2 times per day. Adjust to your preference and hydration needs (this is not medical advice)."
   },
   {
     "id": "hrw-safety",
     "category": "HW",
-    "question": "Hydrogen Water: Taste & safety",
+    "question": "Taste & safety",
     "answer": "Tastes like regular water. Generally well tolerated; if you are pregnant, breastfeeding, have kidney issues, or complex medical conditions, consult your clinician."
   },
   {
     "id": "hrw-meds",
     "category": "HW",
-    "question": "Hydrogen Water: Can I mix it with supplements or meds?",
+    "question": "Can I mix it with supplements or meds?",
     "answer": "Separate from medications unless your clinician says otherwise. Avoid mixing with oxidizing agents."
   },
   {
     "id": "hrw-quality",
     "category": "HW",
-    "question": "Hydrogen Water: Quality checks",
+    "question": "Quality checks",
     "answer": "We maintain our system per manufacturer guidance and perform routine checks. Ask staff about our latest maintenance log."
   },
 
