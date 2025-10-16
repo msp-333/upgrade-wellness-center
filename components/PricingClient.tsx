@@ -1,5 +1,7 @@
-'use client';
+'use client'
+
 import { useMemo, useRef, useState } from 'react'
+import Reveal from '@/components/Reveal'
 
 /* ---------------- Types ---------------- */
 export type Item = {
@@ -75,81 +77,101 @@ export default function PricingClient({ data }: { data: PricingData }) {
     sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  /* Reusable container spacing */
+  /* Reusable container spacing (harmonized with other pages) */
   const wrap = 'mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'
 
   return (
     <div className="bg-surface text-text-primary">
-      {/* ===== Header — reduced stacking, clearer rhythm ================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50/70 via-surface to-surface">
+      {/* ===== Header — soft grid wash + staggered reveal ================ */}
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-emerald-50 via-surface to-surface" aria-hidden />
+        <div
+          className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] md:bg-[size:28px_28px]"
+          aria-hidden
+        />
         <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
         <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
 
-        <div className={`${wrap} py-12 md:py-16`}>
-          <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">Our Pricing</h1>
-            <p className="mx-auto mt-2 max-w-xl text-text-secondary">
-              Simple, transparent options—book what fits your routine.
-            </p>
-          </div>
+        <div className={`${wrap} pt-14 sm:pt-16 md:pt-20 pb-6 sm:pb-8`}>
+          <Reveal delay={80}>
+            <div className="text-center">
+              <span className="inline-block rounded-full border border-emerald-600/20 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-700">
+                Pricing
+              </span>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+                Our Pricing
+              </h1>
+              <p className="mx-auto mt-2 max-w-xl text-text-secondary">
+                Simple, transparent options—book what fits your routine.
+              </p>
+            </div>
+          </Reveal>
 
-          {/* Tabs (with counts) */}
-          <div
-            role="tablist"
-            aria-label="Pricing categories"
-            className="mt-6 flex flex-wrap justify-center gap-2"
-          >
-            {tabs.map((key) => {
-              const active = tab === key
-              return (
-                <button
-                  key={key}
-                  role="tab"
-                  aria-selected={active}
-                  aria-controls={`pricing-panel-${key}`}
-                  onClick={() => setTab(key)}
-                  className={[
-                    'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
-                    'shadow-soft ring-1',
-                    active
-                      ? 'bg-white text-brand-800 ring-brand-200'
-                      : 'bg-white/80 text-text-primary ring-slate-200 hover:bg-white'
-                  ].join(' ')}
-                >
-                  <span>{LABELS[key]}</span>
-                  <span className={active ? 'text-brand-700' : 'text-text-secondary'} aria-hidden>
-                    · {counts[key]}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+          {/* Tabs with counts */}
+          <Reveal delay={140}>
+            <div
+              role="tablist"
+              aria-label="Pricing categories"
+              className="mt-6 flex flex-wrap justify-center gap-2"
+            >
+              {tabs.map((key, i) => {
+                const active = tab === key
+                return (
+                  <button
+                    key={key}
+                    role="tab"
+                    aria-selected={active}
+                    aria-controls={`pricing-panel-${key}`}
+                    onClick={() => setTab(key)}
+                    className={[
+                      'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
+                      'shadow-soft ring-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300/60',
+                      active
+                        ? 'bg-white text-brand-800 ring-brand-200'
+                        : 'bg-white/85 text-text-primary ring-slate-200 hover:bg-white',
+                    ].join(' ')}
+                    style={{ transitionDelay: `${i * 50}ms` }}
+                  >
+                    <span>{LABELS[key]}</span>
+                    <span className={active ? 'text-brand-700' : 'text-text-secondary'} aria-hidden>
+                      · {counts[key]}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ===== Membership notice — tighter, balanced ===================== */}
-      <section className={`${wrap} mt-8 md:mt-10`}>
-        <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 md:p-6 shadow-soft">
-          <div className="grid items-center gap-4 md:grid-cols-[auto,1fr,auto]">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
-              <InfoIcon />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-brand-800">Membership Required</h3>
-              <p className="mt-1 text-text-secondary">
-                Add the PMA Membership to your cart first. After accepting the agreement, you’ll be able to book.
-              </p>
-            </div>
-            <div className="flex md:justify-end">
-              <button
-                onClick={gotoMembership}
-                className="rounded-pill bg-brand-600 px-4 py-2 font-medium text-white transition hover:bg-brand-700"
-              >
-                View Membership Options
-              </button>
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="Choose a plan" tone="lavender" />
+
+      {/* ===== Membership notice — emphasized, dismissible feel ========== */}
+      <section className={`${wrap} mt-6 sm:mt-8`}>
+        <Reveal delay={110}>
+          <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 sm:p-6 shadow-soft">
+            <div className="grid items-center gap-4 sm:grid-cols-[auto,1fr,auto]">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
+                <InfoIcon />
+              </div>
+              <div>
+                <h2 className="text-base font-semibold text-brand-800 sm:text-lg">Membership Required</h2>
+                <p className="mt-1 text-sm text-text-secondary">
+                  Add the PMA Membership to your cart first. After accepting the agreement, you’ll be able to book.
+                </p>
+              </div>
+              <div className="flex sm:justify-end">
+                <button
+                  onClick={gotoMembership}
+                  className="w-full sm:w-auto rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700"
+                >
+                  View Membership Options
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ===== Results ==================================================== */}
@@ -158,69 +180,108 @@ export default function PricingClient({ data }: { data: PricingData }) {
         id={`pricing-panel-${tab}`}
         role="tabpanel"
         aria-labelledby={tab}
-        className={`${wrap} py-10 md:py-12 scroll-mt-24 md:scroll-mt-28`}
+        className={`${wrap} py-10 sm:py-12 md:py-16 scroll-mt-24 md:scroll-mt-28`}
       >
         <h2 className="sr-only">{LABELS[tab]}</h2>
 
         {sorted.length === 0 ? (
-          <div className="rounded-card border border-slate-200 bg-white p-8 text-center text-text-secondary">
-            No options yet for <span className="font-medium text-text-primary">{LABELS[tab]}</span>. Check back soon.
-          </div>
+          <Reveal delay={100}>
+            <div className="rounded-card border border-slate-200 bg-white p-8 text-center text-text-secondary">
+              No options yet for <span className="font-medium text-text-primary">{LABELS[tab]}</span>. Check back soon.
+            </div>
+          </Reveal>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6"
+          >
             {sorted.map((it, idx) => {
               const specifics =
                 it.details && it.details.length > 0 ? it.details : it.description?.slice(1) ?? []
               return (
-                <article key={`${it.title}-${idx}`} className={cardClass(it.tone)}>
-                  {/* Title + chip */}
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-semibold">{it.title}</h3>
-                    {it.badge && <span className={chipClass(it.tone)}>{it.badge}</span>}
-                  </div>
+                <Reveal key={`${it.title}-${idx}`} delay={120 + (idx % 9) * 70}>
+                  <li>
+                    <article className={cardClass(it.tone)}>
+                      {/* Title + chip */}
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-base font-semibold sm:text-lg">{it.title}</h3>
+                        {it.badge && <span className={chipClass(it.tone)}>{it.badge}</span>}
+                      </div>
 
-                  {/* Price */}
-                  <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-3xl font-extrabold tracking-tight">{it.price}</span>
-                    {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
-                  </div>
+                      {/* Price */}
+                      <div className="mt-2 flex items-baseline gap-2">
+                        <span className="text-2xl font-extrabold tracking-tight sm:text-3xl">{it.price}</span>
+                        {it.period && <span className="text-sm text-text-secondary">{it.period}</span>}
+                      </div>
 
-                  {/* Summary */}
-                  {it.description?.[0] && (
-                    <p className="mt-4 text-text-secondary">{it.description[0]}</p>
-                  )}
+                      {/* Summary */}
+                      {it.description?.[0] && (
+                        <p className="mt-3 text-sm text-text-secondary sm:text-[15px]">{it.description[0]}</p>
+                      )}
 
-                  {/* Details */}
-                  {specifics.length > 0 && (
-                    <details className="group mt-3">
-                      <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
-                        Details
-                      </summary>
-                      <ul className="mt-2 space-y-2 text-sm text-text-secondary">
-                        {specifics.map((d, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                              <DotIcon />
-                            </span>
-                            <span>{d}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  )}
+                      {/* Details */}
+                      {specifics.length > 0 && (
+                        <details className="group mt-3">
+                          <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
+                            Details
+                          </summary>
+                          <ul className="mt-2 space-y-2 text-sm text-text-secondary">
+                            {specifics.map((d, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                                  <DotIcon />
+                                </span>
+                                <span>{d}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
 
-                  {/* CTA */}
-                  <div className="mt-auto pt-6">
-                    <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
-                      {it.ctaLabel ?? 'Book Appointment'}
-                    </a>
-                  </div>
-                </article>
+                      {/* CTA */}
+                      <div className="mt-auto pt-6">
+                        <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
+                          {it.ctaLabel ?? 'Book Appointment'}
+                        </a>
+                      </div>
+                    </article>
+                  </li>
+                </Reveal>
               )
             })}
-          </div>
+          </ul>
         )}
       </section>
+
+      {/* ===== Tiny policy strip (harmonized lavender) =================== */}
+      <section className="pb-10 sm:pb-12">
+        <Reveal delay={90}>
+          <div className={`${wrap}`}>
+            <div className="mx-auto max-w-3xl rounded-2xl border border-[#E4DAFF] bg-[#F8F5FF] px-4 py-3 text-center text-sm text-slate-700">
+              Sessions are non-diagnostic and non-medical. For medical concerns, please consult your licensed provider.
+            </div>
+          </div>
+        </Reveal>
+      </section>
+    </div>
+  )
+}
+
+/* ---------------- Section divider (matches other pages) ---------------- */
+function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'emerald' | 'lavender' }) {
+  const line =
+    tone === 'lavender'
+      ? 'from-[#7C6FB0]/30 via-transparent to-[#7C6FB0]/30'
+      : 'from-emerald-500/30 via-transparent to-emerald-500/30'
+  return (
+    <div className="py-6 sm:py-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-3xl items-center gap-3 px-1 sm:gap-4">
+          <span className={`hidden sm:block h-px w-10 bg-gradient-to-r ${line}`} />
+          <span className="text-[10px] sm:text-xs font-medium uppercase tracking-widest text-slate-500">{label}</span>
+          <span className={`h-px flex-1 bg-gradient-to-r ${line}`} />
+        </div>
+      </div>
     </div>
   )
 }
@@ -229,7 +290,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
 function cardClass(tone: Item['tone']) {
   const base =
-    'relative flex h-full flex-col rounded-card border p-6 shadow-soft bg-white hover:shadow-md transition focus-within:ring-2 focus-within:ring-brand-300/60'
+    'relative flex h-full flex-col rounded-card border p-5 sm:p-6 shadow-soft bg-white transition hover:shadow-md focus-within:ring-2 focus-within:ring-brand-300/60'
   switch (tone) {
     case 'premium':
       return `${base} border-lavender-600/40 bg-lavender-600/5`
@@ -257,7 +318,7 @@ function chipClass(tone: Item['tone']) {
 /* CTA — consistent, prominent */
 function ctaClass(_: Item['tone']) {
   const base =
-    'block w-full rounded-pill px-4 py-2 text-center font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+    'block w-full rounded-pill px-4 py-2 text-center text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
   return `${base} bg-lavender-600 text-white hover:bg-lavender-500 focus-visible:ring-lavender-300`
 }
 
