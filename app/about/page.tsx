@@ -9,7 +9,6 @@ export const metadata = {
 }
 
 export default function AboutPage() {
-  // Prefix assets so it works on GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   const values = [
@@ -28,59 +27,55 @@ export default function AboutPage() {
   return (
     <main>
       <Container className="py-14 sm:py-16 md:py-20">
-        {/* ===== HERO ==================================================== */}
-        <SectionDivider label="About Upgrade" tone="lavender" />
+        {/* ===== HERO (single header — no duplicate label) ================ */}
         <section className="relative grid items-center gap-8 md:grid-cols-2">
-          {/* soft background accents */}
+          {/* soft accents */}
           <div className="pointer-events-none absolute -top-20 -left-24 h-64 w-64 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-28 -right-24 h-72 w-72 rounded-full bg-emerald-100/60 blur-3xl" />
 
           <Reveal delay={80}>
-            <div>
+            <header aria-labelledby="about-title">
               <p className="text-[11px] font-semibold tracking-[0.14em] text-brand-700">ABOUT UPGRADE</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-text-primary md:text-5xl">
+              <h1 id="about-title" className="mt-2 text-3xl font-semibold tracking-tight text-text-primary md:text-5xl">
                 Better feels possible.
               </h1>
               <p className="mt-3 max-w-xl text-base text-text-secondary md:text-lg">
                 Calm spaces, clear guidance, and practical routines that fit real life.
               </p>
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <ul className="mt-5 flex flex-wrap gap-2" aria-label="Trust points">
                 {['Calm space', 'Evidence-minded', 'Judgment-free'].map((t, i) => (
-                  <span
+                  <li
                     key={t}
                     className="inline-flex items-center rounded-pill border border-brand-300/60 bg-white px-3 py-1 text-sm text-brand-800 shadow-soft transition-transform duration-500 hover:-translate-y-0.5"
                     style={{ transitionDelay: `${i * 60}ms` }}
                   >
                     {t}
-                  </span>
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </header>
           </Reveal>
 
-          {/* Collage: large image + two accents */}
+          {/* Collage */}
           <Reveal delay={140}>
             <div className="relative">
-              {/* main */}
               <img
                 src={asset('/images/about-studio.png')}
-                alt="Upgrade Wellness studio"
+                alt="The Upgrade Wellness studio lounge area"
                 loading="lazy"
                 className="h-64 w-full rounded-3xl object-cover shadow-soft ring-1 ring-inset ring-white/60 sm:h-72 md:h-80"
               />
-              {/* bottom-left accent */}
               <img
                 src={asset('/images/about-session.png')}
-                alt="Quiet session"
+                alt="Quiet session space"
                 loading="lazy"
                 className="absolute -bottom-6 -left-6 hidden h-32 w-48 rounded-2xl object-cover shadow-soft ring-1 ring-white/70 md:block motion-safe:animate-[float_9s_ease-in-out_infinite]"
                 style={{ animationDelay: '300ms' }}
               />
-              {/* top-right accent */}
               <img
                 src={asset('/images/about-light.png')}
-                alt="Red light setup"
+                alt="Red light therapy setup"
                 loading="lazy"
                 className="absolute -top-6 -right-6 hidden h-28 w-40 rounded-2xl object-cover shadow-soft ring-1 ring-white/70 md:block motion-safe:animate-[float_10s_ease-in-out_infinite]"
               />
@@ -88,14 +83,14 @@ export default function AboutPage() {
           </Reveal>
         </section>
 
-        {/* ===== QUICK STATS ============================================ */}
-        <section className="mt-10 grid gap-4 sm:grid-cols-3">
+        {/* ===== QUICK STATS (tight rhythm, consistent copy) ============== */}
+        <section className="mt-12 grid gap-4 sm:grid-cols-3">
           {[
             { k: '3', v: 'Core modalities' },
             { k: '60–240', v: 'Minute sessions' },
             { k: '1%', v: 'Better each day' },
           ].map((s, i) => (
-            <Reveal key={s.v} delay={120 + i * 90}>
+            <Reveal key={s.v} delay={100 + i * 90}>
               <div className="rounded-card border bg-white p-5 text-center shadow-soft transition-transform duration-500 hover:-translate-y-1 hover:shadow-md">
                 <div className="text-3xl font-semibold text-text-primary md:text-4xl">{s.k}</div>
                 <div className="mt-1 text-sm text-text-secondary">{s.v}</div>
@@ -104,7 +99,7 @@ export default function AboutPage() {
           ))}
         </section>
 
-        {/* ===== MODALITIES ============================================= */}
+        {/* ===== MODALITIES (cards align with Home aesthetics) ============ */}
         <section className="mt-14 sm:mt-16">
           <SectionHeader
             kicker="What we offer"
@@ -141,7 +136,7 @@ export default function AboutPage() {
           </Reveal>
         </section>
 
-        {/* ===== VALUES =================================================== */}
+        {/* ===== VALUES (balanced grid; consistent language) ============== */}
         <section className="mt-14 sm:mt-16">
           <SectionHeader
             kicker="How we operate"
@@ -162,15 +157,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ===== CTA ====================================================== */}
+        {/* ===== CTA (kept concise; spacing harmonized) =================== */}
         <section className="mt-16">
           <Reveal delay={160}>
             <div className="flex flex-col items-start justify-between gap-4 rounded-card border bg-gradient-to-r from-brand-700 to-gradient-end p-6 text-white md:flex-row md:items-center">
               <div>
-                <h3 className="text-lg font-semibold md:text-xl">Ready to start?</h3>
-                <p className="mt-1 text-sm/relaxed opacity-90">
-                  Book a visit or ask a quick question—no pressure.
-                </p>
+                <h2 className="text-lg font-semibold md:text-xl">Ready to start?</h2>
+                <p className="mt-1 text-sm/relaxed opacity-90">Book a visit or ask a quick question—no pressure.</p>
               </div>
               <div className="grid gap-3 sm:auto-cols-max sm:grid-flow-col">
                 <Link
@@ -194,7 +187,7 @@ export default function AboutPage() {
   )
 }
 
-/* ------------------------------ Section helpers ------------------------------ */
+/* ---------- Reusable headers (matches Home) ---------- */
 function SectionHeader({
   kicker,
   title,
@@ -208,45 +201,26 @@ function SectionHeader({
   tone?: 'emerald' | 'lavender'
   align?: 'left' | 'center'
 }) {
-  const alignCls = align === 'center' ? 'text-center mx-auto' : ''
+  const alignCls = align === 'center' ? 'mx-auto text-center' : ''
   const pillColor =
     tone === 'lavender'
       ? 'bg-white text-[#7C6FB0] border-[#E4DAFF]'
       : 'bg-white text-emerald-700 border-emerald-600/20'
+
   return (
     <Reveal delay={80}>
-      <div className={`max-w-3xl ${alignCls}`}>
+      <header className={`max-w-3xl ${alignCls}`}>
         <span className={`inline-block rounded-full border px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider ${pillColor}`}>
           {kicker}
         </span>
         <h2 className="mt-3 text-xl font-semibold leading-tight text-text-primary sm:text-2xl md:text-3xl">{title}</h2>
         {subtitle && <p className="mt-2 text-sm leading-relaxed text-text-secondary sm:text-[15px]">{subtitle}</p>}
-      </div>
+      </header>
     </Reveal>
   )
 }
 
-function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'emerald' | 'lavender' }) {
-  const line =
-    tone === 'lavender'
-      ? 'from-[#7C6FB0]/30 via-transparent to-[#7C6FB0]/30'
-      : 'from-emerald-500/30 via-transparent to-emerald-500/30'
-  return (
-    <div className="pb-6 pt-2 sm:py-6">
-      <Container>
-        <div className="mx-auto flex max-w-3xl items-center gap-3 px-1 sm:gap-4">
-          <span className={`hidden h-px w-10 bg-gradient-to-r sm:block ${line}`} />
-          <span className="text-[10px] font-medium uppercase tracking-widest text-slate-500 sm:text-xs">
-            {label}
-          </span>
-          <span className={`h-px flex-1 bg-gradient-to-r ${line}`} />
-        </div>
-      </Container>
-    </div>
-  )
-}
-
-/* ------------------------------ Icons ------------------------------ */
+/* ---------- Icons ---------- */
 function EnergyIcon() {
   return (
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="opacity-90">
