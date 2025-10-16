@@ -42,6 +42,27 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
+  // EE System benefits grid (no images; inline SVG icons)
+  const eeBenefits: { id: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
+    { id: 'regen', label: 'Cells Regenerate', Icon: SparkleIcon },
+    { id: 'oxygen', label: 'Oxygenates Blood\n& Improves Circulation', Icon: DropO2Icon },
+    { id: 'alkaline', label: 'Balances\nAlkalinity (pH)', Icon: BalancePHIcon },
+    { id: 'detox', label: 'Eliminates Toxins', Icon: DetoxIcon },
+    { id: 'mental', label: 'Improved Mental Health\n& Elevated Mood', Icon: SmileIcon },
+    { id: 'focus', label: 'Improved Concentration\nAnd Focus', Icon: FocusIcon },
+    { id: 'inflammation', label: 'Reduces Inflammation', Icon: InflammationIcon },
+    { id: 'cell-reg', label: 'Stimulates Cell Regeneration', Icon: CellIcon },
+    { id: 'immune', label: 'Improves Immune Function', Icon: ShieldIcon },
+    { id: 'pain', label: 'Relieves Pain', Icon: ReliefIcon },
+    { id: 'stress', label: 'Alleviates Stress', Icon: StressIcon },
+    { id: 'sleep', label: 'Improves Sleep', Icon: MoonIcon },
+    { id: 'homeostasis', label: 'Dynamic Homeostasis', Icon: HomeostasisIcon },
+    { id: 'telomeres', label: 'Lengthen Telomeres', Icon: DNAIcon },
+    { id: 'stem', label: 'Mobilizes Stem Cells', Icon: StemIcon },
+    { id: 'brain', label: 'Brain Hemisphere Synchronization', Icon: BrainIcon },
+    { id: 'energy', label: 'Increases Energy\n& Physical Stamina', Icon: BoltIcon },
+  ]
+
   return (
     <>
       {/* ===== Hero with background image ================================= */}
@@ -56,13 +77,14 @@ export default function AboutPage() {
         />
         {/* Dark-to-transparent overlay for legibility */}
         <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/50 via-slate-900/25 to-white/0" aria-hidden />
-        {/* Subtle tint + radial glow */}
+        {/* Subtle animated glow */}
         <div
-          className="absolute inset-0 -z-10"
+          className="pointer-events-none absolute inset-0 -z-10 motion-safe:animate-pulse"
           aria-hidden
           style={{
             background:
               'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.75) 0%, rgba(249,250,248,.35) 40%, rgba(249,250,248,0) 100%)',
+            animationDuration: '6s',
           }}
         />
 
@@ -90,7 +112,7 @@ export default function AboutPage() {
 
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
                 {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
-                  <li key={t} className="inline-flex items-center gap-2">
+                  <li key={t} className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5">
                     <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
                   </li>
                 ))}
@@ -99,13 +121,13 @@ export default function AboutPage() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/contact/"
-                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                  className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
                 >
                   Contact Us
                 </Link>
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-lavender/600 px-5 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                 >
                   Explore services
                 </Link>
@@ -134,10 +156,11 @@ export default function AboutPage() {
               { title: 'Licensed & evidence-informed', body: 'Care grounded in research and real-world practice.' },
               { title: 'Human-friendly & practical', body: 'Gentle, doable steps that fit your actual life.' },
               { title: 'Supportive community', body: 'Events and groups that help you stay consistent.' },
-            ].map((c) => (
+            ].map((c, i) => (
               <div
                 key={c.title}
-                className="relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(16,24,40,.08)]"
+                className="group relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
+                style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/30 via-transparent to-emerald-500/30" />
                 <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[12px] bg-emerald-50">
@@ -151,6 +174,42 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== EE System Environment (icon + text grid, no images) ======== */}
+      <section className="bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
+        <Container>
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 id="ee-title" className="text-2xl font-semibold text-slate-900">
+              The EE System fosters an environment where health can flourish
+            </h2>
+            <p className="mt-2 text-sm text-slate-600">
+              A clean, responsive grid—no images required.
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-[24px] border border-emerald-600/10 bg-white p-4 shadow-sm">
+            <ul
+              role="list"
+              className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
+              {eeBenefits.map((b, i) => (
+                <li
+                  key={b.id}
+                  className="group flex items-start gap-3 rounded-[16px] border border-slate-200 p-4 shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
+                  style={{ transitionDelay: `${(i % 8) * 30}ms` }}
+                >
+                  <div className="mt-0.5 inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-500 group-hover:scale-105">
+                    <b.Icon className="h-5 w-5 text-emerald-700" />
+                  </div>
+                  <p className="whitespace-pre-line text-sm font-medium leading-snug text-slate-800">
+                    {b.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
       {/* ===== Featured Services ========================================= */}
       <section className="py-16" id="featured-services" aria-labelledby="featured">
         <Container>
@@ -160,15 +219,17 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Service cards">
-            {list.map((s) => {
+            {list.map((s, i) => {
               const headingId = `svc-${s.slug}-title`
               return (
                 <article
                   key={s.id}
                   aria-labelledby={headingId}
-                  className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(16,24,40,.08)]"
+                  className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
+                  style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <div className="relative h-44 w-full overflow-hidden rounded-[16px] ring-1 ring-inset ring-slate-200">
+                    <div className="absolute inset-0 pointer-events-none motion-safe:animate-pulse" style={{ animationDuration: '5s' }} />
                     <img
                       src={asset(s.image ?? '/images/service-fallback.jpg')}
                       alt={s.name}
@@ -214,14 +275,14 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Visit Us (chips + entrance image removed) ================== */}
+      {/* ===== Visit Us =================================================== */}
       <section className="bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
         <Container>
           <h2 id="visit" className="text-2xl font-semibold text-slate-900">Visit Us</h2>
 
           <div className="mt-6 grid gap-8 md:grid-cols-2">
             <div className="relative">
-              <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm">
+              <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
                   src={asset(MAP)}
                   width="960"
@@ -255,8 +316,6 @@ export default function AboutPage() {
               <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
               <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
-              {/* Removed: parking/transit/accessibility chips */}
-
               <div className="mt-5 flex items-center gap-6 text-sm">
                 <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`tel:+11234567890`}>
                   <PhoneIcon className="h-4 w-4 text-emerald-700" /> {phone}
@@ -274,8 +333,6 @@ export default function AboutPage() {
                   Contact Us
                 </Link>
               </div>
-
-              {/* Removed: entrance image + caption */}
             </div>
           </div>
         </Container>
@@ -285,18 +342,18 @@ export default function AboutPage() {
       <section className="py-16" aria-labelledby="cta">
         <Container>
           <div className="relative overflow-hidden rounded-[20px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
-            <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" aria-hidden />
-            <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" aria-hidden />
+            <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
+            <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
             <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
               <div>
                 <h2 id="cta" className="text-2xl md:text-3xl">Start your upgrade—personalized wellness, one step at a time.</h2>
                 <p className="mt-2 text-white/90">A calm, supportive place to recharge.</p>
               </div>
               <div className="flex items-center justify-start gap-3 md:justify-end">
-                <Link href="/contact/" className="rounded-[999px] bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white">
+                <Link href="/contact/" className="rounded-[999px] bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white">
                   Book a time
                 </Link>
-                <Link href="/events/" className="rounded-[999px] border border-white/80 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70">
+                <Link href="/events/" className="rounded-[999px] border border-white/80 px-4 py-2 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70">
                   See events
                 </Link>
               </div>
@@ -336,6 +393,143 @@ function MailIcon(props: React.SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.5"/>
       <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  )
+}
+
+/* ------- EE Grid Icons (inline SVG – simple, lightweight) --------- */
+function SparkleIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 3l1.8 4.5L18 9l-4.2 1.5L12 15l-1.8-4.5L6 9l4.2-1.5L12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  )
+}
+function DropO2Icon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 3s6 6 6 10a6 6 0 1 1-12 0c0-4 6-10 6-10Z" stroke="currentColor" strokeWidth="1.5"/>
+      <text x="12" y="15" textAnchor="middle" fontSize="7" fill="currentColor">O₂</text>
+    </svg>
+  )
+}
+function BalancePHIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M4 12h16M12 4v16" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="8" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  )
+}
+function DetoxIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <rect x="6" y="4" width="12" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M9 9h6M9 13h6" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  )
+}
+function SmileIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8.5 10h.01M15.5 10h.01M8 14c1.2 1 2.8 1.5 4 1.5S14.8 15 16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+function FocusIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <rect x="5" y="5" width="14" height="14" rx="3" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function InflammationIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 4c3 3 5 5.5 5 8a5 5 0 1 1-10 0c0-2.5 2-5 5-8Z" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M12 9v6" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function CellIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="9" cy="11" r="2" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="14.5" cy="14" r="1.5" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function ShieldIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3Z" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+function ReliefIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M7 12h10M7 12a5 5 0 1 1 10 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+function StressIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M8 15c2-1 6-1 8 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M9 9l2 2M15 9l-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M20 12.5A8 8 0 1 1 11.5 4 6.5 6.5 0 0 0 20 12.5Z" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function HomeostasisIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M6 12h12M8 8h8M8 16h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function DNAIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M8 3c2 2 6 2 8 0M8 21c2-2 6-2 8 0M8 3v18M16 3v18M8 9h8M8 15h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+function StemIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M12 21V8c0-2.2 1.8-4 4-4M12 21V8c0-2.2-1.8-4-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="16" cy="4" r="2" stroke="currentColor" strokeWidth="1.5"/>
+      <circle cx="8" cy="4" r="2" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  )
+}
+function BrainIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M9 7a3 3 0 1 0-3 3v4a3 3 0 1 0 3 3M15 7a3 3 0 1 1 3 3v4a3 3 0 1 1-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  )
+}
+function BoltIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M13 2L6 14h5l-1 8 7-12h-5l1-8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
     </svg>
   )
 }
