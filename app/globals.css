@@ -84,3 +84,8 @@ h3 { @apply text-xl sm:text-2xl font-semibold; }
   background:#F3F4F6;color:#334155;border:1px solid #E5E7EB;
   font-size:.8125rem;line-height:1rem;font-weight:500;
 }
+
+@keyframes float {
+  0%,100% { transform: translateY(0) }
+  50% { transform: translateY(-6px) }
+}
