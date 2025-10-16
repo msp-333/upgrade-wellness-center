@@ -62,12 +62,12 @@ export default function AboutPage() {
     { id: 'energy',      label: 'Increases Energy\n& Physical Stamina',      Icon: BoltIcon },
   ]
 
-  // Alternating icon pod variants (kept static so Tailwind preserves them)
+  // Alternating icon pods with lavender mixed in (hex so it works without theme edits)
   const iconBgVariants = [
     'bg-emerald-50 ring-emerald-600/10',
+    'bg-[#F3EDFF] ring-[#7C6FB0]/10',   // lavender
     'bg-teal-50 ring-teal-600/10',
-    'bg-emerald-50 ring-emerald-600/10',
-    'bg-teal-50 ring-teal-600/10',
+    'bg-[#F3EDFF] ring-[#7C6FB0]/10',   // lavender
   ] as const
 
   return (
@@ -137,91 +137,84 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Quote strip =============================================== */}
-      <section className="relative py-10" aria-labelledby="quotes">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(40rem_20rem_at_50%_-10%,rgba(129,177,230,0.08),transparent_60%)]" />
+      {/* ===== Section Divider =========================================== */}
+      <Divider label="Why Upgrade" tone="emerald" />
+
+      {/* ===== Pillars (with lavender micro-accents) ===================== */}
+      <section className="relative overflow-hidden py-16" aria-labelledby="pillars">
+        {/* soft blobs */}
+        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-24 h-80 w-80 rounded-full bg-emerald-100/60 blur-3xl" />
         <Container>
-          <Reveal delay={200}>
-            <h2 id="quotes" className="sr-only">What clients say</h2>
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="flex items-center justify-center gap-6 text-sm text-slate-600">
-                <blockquote>“Calm, caring, and effective.”</blockquote>
-                <span className="h-4 w-px bg-slate-300" aria-hidden />
-                <blockquote>“I leave lighter every time.”</blockquote>
-              </div>
-              <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-emerald-500/40 via-slate-300 to-emerald-500/40" />
-            </div>
+          <Reveal delay={120}>
+            <HeaderBlock
+              kicker="Our Approach"
+              title="Care that’s practical, kind, and grounded"
+              subtitle="We blend evidence, empathy, and doable habits."
+              tone="lavender"
+            />
           </Reveal>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              { title: 'Licensed & evidence-informed', body: 'Care grounded in research and real-world practice.' },
+              { title: 'Human-friendly & practical', body: 'Gentle, doable steps that fit your actual life.' },
+              { title: 'Supportive community', body: 'Events and groups that help you stay consistent.' },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={160 + i * 90}>
+                <div className="group relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/30 via-transparent to-emerald-500/30" />
+                  <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/15">
+                    <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
+                  </div>
+                  <h3 className="text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
+                  <p className="mt-1 text-sm text-slate-600">{c.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </section>
 
-      {/* ===== Pillars ==================================================== */}
-      <section className="relative overflow-hidden py-16" aria-labelledby="pillars">
-        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-emerald-100/50 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -right-24 h-80 w-80 rounded-full bg-teal-100/50 blur-3xl" />
-        <Container>
-          <Reveal delay={250}>
-            <h2 id="pillars" className="mx-auto mb-6 max-w-3xl text-center text-2xl font-semibold text-slate-900">
-              Care that’s practical, kind, and grounded
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {[
-                { title: 'Licensed & evidence-informed', body: 'Care grounded in research and real-world practice.' },
-                { title: 'Human-friendly & practical', body: 'Gentle, doable steps that fit your actual life.' },
-                { title: 'Supportive community', body: 'Events and groups that help you stay consistent.' },
-              ].map((c, i) => (
-                <Reveal key={c.title} delay={200 + i * 80}>
-                  <div className="group relative rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/30 via-transparent to-emerald-500/30" />
-                    <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[12px] bg-emerald-50">
-                      <LeafIcon className="h-5 w-5 text-emerald-700" />
-                    </div>
-                    <h3 className="text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
-                    <p className="mt-1 text-sm text-slate-600">{c.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      {/* ===== Section Divider =========================================== */}
+      <Divider label="EE System Benefits" tone="lavender" />
 
       {/* ===== EE System – ENHANCED SQUARE TILE GRID ===================== */}
       <section className="relative bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
+        {/* subtle grid pattern */}
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:28px_28px]" />
         <Container>
-          <Reveal delay={180}>
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="mx-auto inline-block rounded-full border border-emerald-600/20 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
-                EE System Benefits
-              </span>
-              <h2 id="ee-title" className="mt-3 text-2xl font-semibold text-slate-900">
-                The EE System Creates an Environment Where Health Can Flourish
-              </h2>
-              <p className="mt-2 text-sm text-slate-600">
-                Big, cohesive tiles with layered borders, conic halos, and soft motion—CSS-only.
-              </p>
-            </div>
+          <Reveal delay={120}>
+            <HeaderBlock
+              kicker="EE System"
+              title="An environment where health can flourish"
+              subtitle="Big, cohesive tiles with layered borders, conic halos, and gentle motion."
+              tone="lavender"
+              align="center"
+            />
+          </Reveal>
 
-            <div className="mt-8 rounded-[28px] p-[1px] bg-gradient-to-br from-emerald-200/70 via-teal-200/60 to-emerald-100/60 shadow-[0_10px_26px_rgba(16,24,40,.10)]">
+          {/* framed grid with lavender-emerald gradient */}
+          <Reveal delay={180}>
+            <div className="mt-8 rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4, #F3EDFF)] shadow-[0_10px_26px_rgba(16,24,40,.10)]">
               <div className="rounded-[27px] border border-emerald-600/10 bg-white p-5">
                 <ul role="list" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {eeBenefits.map((b, i) => {
                     const iconVariant = iconBgVariants[i % iconBgVariants.length]
                     return (
-                      <Reveal key={b.id} delay={160 + (i % 8) * 60}>
+                      <Reveal key={b.id} delay={140 + (i % 8) * 70}>
                         <li
                           tabIndex={0}
                           role="group"
-                          className="relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-emerald-500/40"
+                          className="relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
                         >
-                          {/* conic halo */}
+                          {/* conic halo blends lavender + emerald */}
                           <div className="pointer-events-none absolute -inset-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                            <div className="absolute inset-0 rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(16,185,129,0.10),rgba(45,212,191,0.10),rgba(16,185,129,0.10))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)]" />
+                            <div className="absolute inset-0 rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(124,111,176,0.12),rgba(16,185,129,0.10),rgba(124,111,176,0.12))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)]" />
                           </div>
 
                           {/* inner radial light */}
-                          <div className="pointer-events-none absolute inset-0 rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(16,185,129,0.10),transparent_60%)]" aria-hidden />
+                          <div className="pointer-events-none absolute inset-0 rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(124,111,176,0.10),transparent_60%)]" aria-hidden />
 
                           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
                             <div className={`mb-4 inline-flex h-24 w-24 items-center justify-center rounded-2xl ring-1 transition-transform duration-300 group-hover:scale-[1.06] ${iconVariant}`}>
@@ -245,26 +238,80 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== Section Divider =========================================== */}
+      <Divider label="How It Works" tone="emerald" />
+
+      {/* ===== How It Works (lavender cards) ============================== */}
+      <section className="relative py-16" aria-labelledby="how-title">
+        <Container>
+          <Reveal delay={120}>
+            <HeaderBlock
+              kicker="Getting Started"
+              title="How your session flows"
+              subtitle="Simple steps that keep things clear and calm."
+              tone="emerald"
+              align="center"
+            />
+          </Reveal>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                step: '1',
+                title: 'Arrive & Settle',
+                body: 'A few calm minutes to check in, hydrate, and set your intention.',
+              },
+              {
+                step: '2',
+                title: 'Restore',
+                body: 'Relax into the session; let your body do its best healing work.',
+              },
+              {
+                step: '3',
+                title: 'Integrate',
+                body: 'We share simple next steps to extend benefits into your week.',
+              },
+            ].map((card, i) => (
+              <Reveal key={card.step} delay={160 + i * 90}>
+                <div className="relative overflow-hidden rounded-[22px] border border-[#E4DAFF] bg-[#F8F5FF] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+                  <div className="pointer-events-none absolute -top-20 -right-16 h-56 w-56 rounded-full bg-[#EADFFF] blur-3xl" />
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#7C6FB0] ring-1 ring-[#7C6FB0]/20">
+                      {card.step}
+                    </span>
+                    <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
+                  </div>
+                  <p className="mt-3 text-sm text-slate-700">{card.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== Section Divider =========================================== */}
+      <Divider label="Featured Services" tone="lavender" />
+
       {/* ===== Featured Services ========================================= */}
       <section className="relative py-16" id="featured-services" aria-labelledby="featured">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 -z-10 bg-gradient-to-b from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_40rem_at_100%_100%,rgba(12,141,105,0.10),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_40rem_at_100%_100%,rgba(124,111,176,0.10),transparent_60%)]" />
         <Container>
-          <Reveal delay={180}>
-            <div className="mx-auto max-w-2xl text-center">
-              <span className="mx-auto inline-block rounded-full border border-slate-300 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate-700">
-                Featured
-              </span>
-              <h2 id="featured" className="mt-3 text-2xl font-semibold text-slate-900">Featured Services</h2>
-              <p className="mt-2 text-slate-600">Three simple ways to support recovery and everyday energy.</p>
-            </div>
+          <Reveal delay={120}>
+            <HeaderBlock
+              kicker="Featured"
+              title="Popular ways to restore"
+              subtitle="Three simple ways to support recovery and everyday energy."
+              tone="lavender"
+              align="center"
+            />
           </Reveal>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Service cards">
             {list.map((s, i) => {
               const headingId = `svc-${s.slug}-title`
               return (
-                <Reveal key={s.id} delay={200 + i * 80}>
+                <Reveal key={s.id} delay={160 + i * 90}>
                   <article
                     aria-labelledby={headingId}
                     className="group relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
@@ -294,7 +341,7 @@ export default function AboutPage() {
                       <span className="text-sm text-slate-700">
                         {typeof s.priceFrom === 'number' ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></> : <>&nbsp;</>}
                       </span>
-                      <Link href={`/services/#${s.slug}`} className="text-sm font-medium text-emerald-700 underline decoration-emerald-200 underline-offset-4 transition-colors hover:text-emerald-800">
+                      <Link href={`/services/#${s.slug}`} className="text-sm font-medium text-[#7C6FB0] underline decoration-[#E4DAFF] underline-offset-4 transition-colors hover:text-[#6a60a0]">
                         View details
                       </Link>
                     </div>
@@ -304,7 +351,7 @@ export default function AboutPage() {
             })}
           </div>
 
-          <Reveal delay={360}>
+          <Reveal delay={380}>
             <div className="mt-8 flex items-center justify-center gap-4">
               <Link href="/services/" className="text-sm font-medium text-slate-800 underline underline-offset-4 hover:text-slate-900">
                 Compare services
@@ -318,18 +365,25 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== Section Divider =========================================== */}
+      <Divider label="Visit Us" tone="emerald" />
+
       {/* ===== Visit Us =================================================== */}
       <section className="relative bg-[var(--surface)] py-16" id="visit-us" aria-labelledby="visit">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_40rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
         <Container>
-          <Reveal delay={180}>
-            <h2 id="visit" className="text-center text-2xl font-semibold text-slate-900">
-              Visit Us
-            </h2>
+          <Reveal delay={120}>
+            <HeaderBlock
+              kicker="Downtown"
+              title="Visit Us"
+              subtitle="Easy to reach, simple to settle in."
+              tone="emerald"
+              align="center"
+            />
           </Reveal>
 
-          <div className="mt-6 grid gap-8 md:grid-cols-2">
-            <Reveal delay={220}>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            <Reveal delay={160}>
               <div className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
                   src={asset(MAP)}
@@ -351,9 +405,9 @@ export default function AboutPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={280}>
+            <Reveal delay={220}>
               <div className="relative overflow-hidden rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="pointer-events-none absolute -top-16 -right-12 h-40 w-40 rounded-full bg-emerald-50 blur-3xl" />
+                <div className="pointer-events-none absolute -top-16 -right-12 h-40 w-40 rounded-full bg-[#EAFBF4] blur-3xl" />
                 <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
                 <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
@@ -370,7 +424,7 @@ export default function AboutPage() {
                   <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500">
                     Get Directions
                   </a>
-                  <Link href="/contact/" className="rounded-[999px] bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-600">
+                  <Link href="/contact/" className="rounded-[999px] bg-[#7C6FB0] px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-[#6a60a0]">
                     Contact Us
                   </Link>
                 </div>
@@ -383,8 +437,8 @@ export default function AboutPage() {
       {/* ===== CTA ======================================================== */}
       <section className="py-16" aria-labelledby="cta">
         <Container>
-          <Reveal delay={200}>
-            <div className="relative overflow-hidden rounded-[22px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
+          <Reveal delay={160}>
+            <div className="relative overflow-hidden rounded-[22px] border border-[#7C6FB0]/25 bg-[linear-gradient(135deg,#0C8D69,#19B6AE_55%,#7C6FB0)] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
               <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
               <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
               <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
@@ -406,6 +460,54 @@ export default function AboutPage() {
         </Container>
       </section>
     </>
+  )
+}
+
+/* ------------------------------ Section helpers ------------------------------ */
+function HeaderBlock({
+  kicker,
+  title,
+  subtitle,
+  tone = 'emerald',
+  align = 'left',
+}: {
+  kicker: string
+  title: string
+  subtitle?: string
+  tone?: 'emerald' | 'lavender'
+  align?: 'left' | 'center'
+}) {
+  const alignCls = align === 'center' ? 'text-center mx-auto' : ''
+  const pillColor =
+    tone === 'lavender'
+      ? 'border-[#E4DAFF] text-[#7C6FB0]'
+      : 'border-emerald-600/20 text-emerald-700'
+  return (
+    <div className={`max-w-3xl ${alignCls}`}>
+      <span className={`inline-block rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${pillColor}`}>
+        {kicker}
+      </span>
+      <h2 className="mt-3 text-2xl font-semibold text-slate-900">{title}</h2>
+      {subtitle && <p className="mt-2 text-sm text-slate-600">{subtitle}</p>}
+    </div>
+  )
+}
+
+function Divider({ label, tone = 'emerald' }: { label: string; tone?: 'emerald' | 'lavender' }) {
+  const line =
+    tone === 'lavender'
+      ? 'from-[#7C6FB0]/30 via-transparent to-[#7C6FB0]/30'
+      : 'from-emerald-500/30 via-transparent to-emerald-500/30'
+  return (
+    <div className="py-8">
+      <Container>
+        <div className="mx-auto flex max-w-3xl items-center gap-4">
+          <span className={`h-px w-10 bg-gradient-to-r ${line}`} />
+          <span className="text-xs font-medium uppercase tracking-widest text-slate-500">{label}</span>
+          <span className={`h-px flex-1 bg-gradient-to-r ${line}`} />
+        </div>
+      </Container>
+    </div>
   )
 }
 
