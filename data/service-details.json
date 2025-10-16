@@ -17,12 +17,56 @@
       "Recline with optional eye mask and blanket.",
       "Hydrate after the session and notice how you feel."
     ],
+    "howItWorks": {
+      "summary": "Many guests are curious about the 'how'. A commonly discussed reference is the Schumann Resonance (~7.83 Hz), which overlaps with relaxed Alpha/Theta brainwave ranges associated with calm, meditative states.",
+      "details": [
+        "Alpha/Theta states: Often linked with relaxed, dreamy, pre-sleep experiences—times when the body prioritizes repair and recovery.",
+        "Cellular charge: In simple terms, a relaxed state supports healthy cell membrane potentials (typically cited as ~70–90 mV).",
+        "Why 'Scalar'? Some use 'scalar waves' to describe fields created by anti-phase coherence (like noise-canceling: opposite waves flatten a signal). In concept analogies, the 'flat' result still carries energy redistributed in a different form."
+      ],
+      "plainLanguage": "Think: a quiet room designed for deep calm—less 'doing', more 'allowing'."
+    },
+    "howToPrepare": [
+      "Dress in comfortable, layered clothing (you may cool down as you relax).",
+      "Outdoor shoes off in the center—bring socks/slippers.",
+      "Arrive ~30 minutes early to unwind before your session.",
+      "Avoid heavy perfumes or oils (some guests are scent-sensitive)."
+    ],
     "safety": {
       "notes": [
         "This is a general wellness session, not a medical therapy.",
         "If you have implanted electronic devices or are pregnant, consult your clinician before trying new wellness practices."
       ]
     },
+    "disclaimer": "Wellness information is educational, not medical advice. Experiences vary.",
+    "media": {
+      "slots": [
+        {
+          "key": "room-hero",
+          "src": "/images/ees-room-hero.jpg",
+          "caption": "EES lounge (1:1–16:9 crop safe)",
+          "aspectHint": "16:9",
+          "maxHeight": "320px"
+        },
+        {
+          "key": "calm-detail",
+          "src": "/images/ees-calm-detail.jpg",
+          "caption": "Calm details (small, subtle)",
+          "aspectHint": "4:3",
+          "maxHeight": "220px"
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "How exactly does this system work?",
+        "a": "Guests often reference Earth's Schumann Resonance (~7.83 Hz), similar to relaxed Alpha/Theta brainwaves. In that state, people commonly report deep calm, rest, and a 'reset' feeling."
+      },
+      {
+        "q": "So why is it called 'Scalar Wave' therapy?",
+        "a": "The term comes from ideas about anti-phase coherence (imagine noise-canceling headphones). Two opposite waves cancel the oscillation but the energy is conserved and redistributed."
+      }
+    ],
     "sources": [
       { "label": "FDA — General Wellness guidance", "href": "#" }
     ]
@@ -45,6 +89,31 @@
       "10–20 minutes under the panel at a measured distance.",
       "Hydrate and resume normal activity."
     ],
+    "helmet810": {
+      "title": "Near-Infrared Light Therapy Helmet (810 nm)",
+      "deviceSpecs": [
+        "LED array: 256 NIR LEDs + 4 red indicator LEDs",
+        "Primary wavelength: 810 nm (not visible to the eye)",
+        "Fit: lightweight helmet for scalp/brain-adjacent exposure"
+      ],
+      "why810": [
+        "Penetration: can reach cortical structures through the skull (~3–4 cm in humans).",
+        "Optical window: lower absorption by water/hemoglobin—often called a 'sweet spot' in NIR.",
+        "Research: 810 nm is widely studied vs. some nearby wavelengths (e.g., 850 nm, 1070 nm)."
+      ],
+      "mechanisms": [
+        "Mitochondria: Cytochrome-c oxidase absorption → supports ATP production.",
+        "Vascular: Nitric Oxide (NO) release → local vasodilation, blood flow, oxygenation.",
+        "Redox signaling: Controlled ROS modulation supports repair signaling.",
+        "Neuroinflammation: May shift microglia expression toward anti-inflammatory (M2).",
+        "Neurotrophic: Can stimulate BDNF, supporting neuronal survival, plasticity, and learning/memory pathways."
+      ],
+      "timeAndFrequency": [
+        "Typical plans: 4–6 sessions/week for 4–12 weeks; each 6–30 minutes.",
+        "Acute protocols (e.g., TBI, stroke): sometimes daily in early stages (per protocol guidance).",
+        "Maintenance (cognition/mood): 1–2×/week longer-term."
+      ]
+    },
     "safety": {
       "notes": [
         "Avoid shining directly into eyes; protective goggles provided.",
@@ -52,6 +121,25 @@
         "Devices can be FDA-cleared for specific indications; ask about our device’s labeling."
       ]
     },
+    "media": {
+      "slots": [
+        {
+          "key": "helmet-hero",
+          "src": "/images/pbm-helmet-hero.jpg",
+          "caption": "NIR Helmet (810 nm) — compact visual",
+          "aspectHint": "1:1",
+          "maxHeight": "280px"
+        },
+        {
+          "key": "panel-close",
+          "src": "/images/red-panel-close.jpg",
+          "caption": "Panel detail (keep small)",
+          "aspectHint": "4:3",
+          "maxHeight": "200px"
+        }
+      ]
+    },
+    "microCopy": "We’ll help you choose panel vs. helmet and set time/distance for your goal.",
     "sources": [
       { "label": "FDA — 510(k) device database", "href": "#" },
       { "label": "Reviews on PBM mechanisms & optical window", "href": "#" }
@@ -73,10 +161,35 @@
       "Served in reusable cups (typical 250–500 mL).",
       "Enjoy before or after a session, or on its own."
     ],
+    "moreAboutH2": {
+      "mechanismSnapshot": [
+        "Molecular hydrogen (H₂) is a small, neutral gas that dissolves in water and is being studied for redox-signaling effects.",
+        "Research explores potential modulation of oxidative stress and inflammation markers, with mixed but growing findings in specific contexts."
+      ],
+      "bestUseTips": [
+        "Fresh is best: dissolved H₂ slowly dissipates—consume soon after serving.",
+        "Chilled service helps palatability and retention."
+      ],
+      "storageAndPrep": [
+        "Prepared in-house with a dedicated generator.",
+        "Served promptly to help preserve dissolved H₂."
+      ]
+    },
     "safety": {
       "notes": [
         "Generally well-tolerated in studies to date.",
         "Not a treatment for medical conditions; consult your clinician for medical care."
+      ]
+    },
+    "media": {
+      "slots": [
+        {
+          "key": "h2-glass",
+          "src": "/images/h2-glass.jpg",
+          "caption": "Chilled H₂ water (tight crop)",
+          "aspectHint": "4:5",
+          "maxHeight": "240px"
+        }
       ]
     },
     "sources": [
