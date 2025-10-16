@@ -28,8 +28,7 @@ export default function AboutPage() {
   // Prefix assets so it works on GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets
-  const HERO = '/images/about-hero.png' // ← put your hero photo here
+  const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
   const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
@@ -42,11 +41,11 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE System benefits grid (no images; inline SVG icons)
-  const eeBenefits: { id: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
+  // --- EE benefits (inline SVG icons; no images) ---
+  const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen', label: 'Cells Regenerate', Icon: SparkleIcon },
     { id: 'oxygen', label: 'Oxygenates Blood\n& Improves Circulation', Icon: DropO2Icon },
-    { id: 'alkaline', label: 'Balances\nAlkalinity (pH)', Icon: BalancePHIcon },
+    { id: 'alkaline', label: 'Balances Alkalinity (pH)', Icon: BalancePHIcon },
     { id: 'detox', label: 'Eliminates Toxins', Icon: DetoxIcon },
     { id: 'mental', label: 'Improved Mental Health\n& Elevated Mood', Icon: SmileIcon },
     { id: 'focus', label: 'Improved Concentration\nAnd Focus', Icon: FocusIcon },
@@ -59,15 +58,14 @@ export default function AboutPage() {
     { id: 'homeostasis', label: 'Dynamic Homeostasis', Icon: HomeostasisIcon },
     { id: 'telomeres', label: 'Lengthen Telomeres', Icon: DNAIcon },
     { id: 'stem', label: 'Mobilizes Stem Cells', Icon: StemIcon },
-    { id: 'brain', label: 'Brain Hemisphere Synchronization', Icon: BrainIcon },
+    { id: 'brain', label: 'Brain Hemisphere\nSynchronization', Icon: BrainIcon },
     { id: 'energy', label: 'Increases Energy\n& Physical Stamina', Icon: BoltIcon },
   ]
 
   return (
     <>
-      {/* ===== Hero with background image ================================= */}
+      {/* ===== Hero ======================================================= */}
       <section className="relative isolate" aria-labelledby="about-hero-title">
-        {/* Background image */}
         <img
           src={asset(HERO)}
           alt="Soft, calming wellness environment"
@@ -75,9 +73,7 @@ export default function AboutPage() {
           loading="eager"
           decoding="async"
         />
-        {/* Dark-to-transparent overlay for legibility */}
         <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/50 via-slate-900/25 to-white/0" aria-hidden />
-        {/* Subtle animated glow */}
         <div
           className="pointer-events-none absolute inset-0 -z-10 motion-safe:animate-pulse"
           aria-hidden
@@ -89,7 +85,6 @@ export default function AboutPage() {
         />
 
         <Container className="relative py-24 md:py-32">
-          {/* Glass card */}
           <div className="mx-auto max-w-5xl rounded-[22px] p-[1px] shadow-[0_10px_28px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
             <div className="rounded-[22px] bg-white/70 p-8 md:p-14 backdrop-blur">
               <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
@@ -111,8 +106,12 @@ export default function AboutPage() {
               </p>
 
               <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-700">
-                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
-                  <li key={t} className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5">
+                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+                  <li
+                    key={t}
+                    className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
+                    style={{ transitionDelay: `${i * 60}ms` }}
+                  >
                     <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
                   </li>
                 ))}
@@ -174,35 +173,38 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== EE System Environment (icon + text grid, no images) ======== */}
+      {/* ===== EE System Environment – SQUARE TILE GRID =================== */}
       <section className="bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <h2 id="ee-title" className="text-2xl font-semibold text-slate-900">
-              The EE System fosters an environment where health can flourish
+              The EE System Creates an Environment Where Health Can Flourish
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              A clean, responsive grid—no images required.
+              Big, clear tiles with centered icons and labels—fully responsive and perfectly aligned.
             </p>
           </div>
 
-          <div className="mt-8 rounded-[24px] border border-emerald-600/10 bg-white p-4 shadow-sm">
+          {/* frame */}
+          <div className="mt-8 rounded-3xl border border-emerald-600/10 bg-white p-4 shadow-sm ring-1 ring-white">
             <ul
               role="list"
-              className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             >
               {eeBenefits.map((b, i) => (
                 <li
                   key={b.id}
-                  className="group flex items-start gap-3 rounded-[16px] border border-slate-200 p-4 shadow-sm transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
-                  style={{ transitionDelay: `${(i % 8) * 30}ms` }}
+                  className="group aspect-square rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
+                  style={{ transitionDelay: `${(i % 8) * 20}ms` }}
                 >
-                  <div className="mt-0.5 inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-500 group-hover:scale-105">
-                    <b.Icon className="h-5 w-5 text-emerald-700" />
+                  <div className="flex h-full flex-col items-center justify-center text-center">
+                    <div className="mb-3 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-300 group-hover:scale-105">
+                      <b.Icon className="h-8 w-8 text-emerald-700" />
+                    </div>
+                    <p className="whitespace-pre-line text-[15px] font-medium leading-snug text-slate-800">
+                      {b.label}
+                    </p>
                   </div>
-                  <p className="whitespace-pre-line text-sm font-medium leading-snug text-slate-800">
-                    {b.label}
-                  </p>
                 </li>
               ))}
             </ul>
@@ -397,7 +399,7 @@ function MailIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-/* ------- EE Grid Icons (inline SVG – simple, lightweight) --------- */
+/* ------- EE Grid Icons (inline SVG – lightweight) --------- */
 function SparkleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
