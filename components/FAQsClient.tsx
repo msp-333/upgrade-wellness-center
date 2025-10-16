@@ -6,24 +6,33 @@ type FAQ = {
   id: string;
   question: string;
   answer: string;
-  category?: string; // normalized by page.tsx
+  category?: string; // normalized below
 };
 
-const CATEGORY_ORDER = ['General', 'Booking', 'Sessions', 'Payments', 'Policies'];
+/** Final category order (no "Sessions") */
+const CATEGORY_ORDER = ['General', 'Booking', 'Policies', 'EES', 'RLT', 'HW', 'Payments'] as const;
+type FinalCategory = typeof CATEGORY_ORDER[number];
+
+/** Normalize incoming categories (e.g., legacy "Sessions" -> "General") */
+function normalizeCategory(cat?: string): FinalCategory {
+  const c = (cat ?? '').trim();
+  if (!c) return 'General';
+  if (/^sessions$/i.test(c)) return 'General';
+  // Pass through known categories; unknown falls back to General
+  const known = CATEGORY_ORDER as readonly string[];
+  return (known.includes(c) ? c : 'General') as FinalCategory;
+}
 
 export default function FAQsClient({ items }: { items: FAQ[] }) {
   /* ---------- categories (ordered; no counts shown) ---------- */
   const categories = useMemo(() => {
-    const set = new Set<string>();
-    items.forEach((i) => set.add(i.category ?? 'General'));
-    const order = (c: string) => {
-      const idx = CATEGORY_ORDER.indexOf(c);
-      return idx === -1 ? 999 : idx;
-    };
+    const set = new Set<FinalCategory>();
+    items.forEach((i) => set.add(normalizeCategory(i.category)));
+    const order = (c: FinalCategory) => CATEGORY_ORDER.indexOf(c);
     return Array.from(set).sort((a, b) => order(a) - order(b) || a.localeCompare(b));
   }, [items]);
 
-  const [tab, setTab] = useState<string>(categories[0] ?? 'General');
+  const [tab, setTab] = useState<FinalCategory>(categories[0] ?? 'General');
   useEffect(() => {
     if (!categories.includes(tab)) setTab(categories[0] ?? 'General');
   }, [categories, tab]);
@@ -33,13 +42,19 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
   const q = query.trim().toLowerCase();
 
   const { list: filtered, autoExpanded } = useMemo(() => {
-    const inTab = items.filter((i) => (i.category ?? 'General') === tab);
+    const inTab = items
+      .map((i) => ({ ...i, category: normalizeCategory(i.category) }))
+      .filter((i) => i.category === tab);
+
     const hay = (arr: FAQ[]) =>
       arr.filter((i) => (`${i.question} ${i.answer}`.toLowerCase()).includes(q));
+
     if (!q) return { list: inTab.sort(byQuestion), autoExpanded: false };
+
     const tabMatches = hay(inTab).sort(byQuestion);
     if (tabMatches.length) return { list: tabMatches, autoExpanded: false };
-    const allMatches = hay(items).sort(byQuestion);
+
+    const allMatches = hay(items.map((i) => ({ ...i, category: normalizeCategory(i.category) }))).sort(byQuestion);
     return { list: allMatches, autoExpanded: allMatches.length > 0 };
   }, [items, tab, q]);
 
@@ -89,11 +104,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
           {/* Search */}
           <div className="mt-6 md:mt-7 flex justify-center">
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              role="search"
-              className="relative w-full max-w-2xl"
-            >
+            <form onSubmit={(e) => e.preventDefault()} role="search" className="relative w-full max-w-2xl">
               <input
                 aria-label="Search FAQs"
                 value={query}

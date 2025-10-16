@@ -5,7 +5,6 @@
     "question": "Disclaimer",
     "answer": "These services are wellness modalities and are not intended to diagnose, treat, cure, or prevent disease. Always consult your licensed healthcare provider for medical concerns."
   },
-
   {
     "id": "studio-booking",
     "category": "Booking",
@@ -16,7 +15,7 @@
     "id": "studio-cancel",
     "category": "Policies",
     "question": "What’s your cancellation policy?",
-    "answer": "Please cancel or reschedule ≥ 24 hours before your appointment to avoid a late-cancel fee. No-shows are charged the full session rate."
+    "answer": "Please cancel or reschedule at least 24 hours before your appointment to avoid a late-cancel fee. No-shows are charged the full session rate."
   },
   {
     "id": "studio-walkins",
@@ -26,160 +25,334 @@
   },
   {
     "id": "studio-wear-bring",
-    "category": "Sessions",
+    "category": "General",
     "question": "What should I wear/bring?",
-    "answer": "Comfortable clothing, a water bottle, and minimal fragrances. We provide sanitized eye masks/blankets upon request."
+    "answer": "Comfortable clothing, a lidded water bottle, and minimal fragrance. We provide sanitized eye masks and blankets upon request."
   },
   {
     "id": "studio-payment",
     "category": "Payments",
     "question": "Payment methods & packages",
-    "answer": "We accept cash, major cards, and e-wallets. Multi-session packages and memberships offer the best value. Ask about current promos."
+    "answer": "We accept cash, major cards, and e-wallets. Multi-session packages and memberships offer the best value. Ask about current promotions."
   },
   {
     "id": "studio-minors",
     "category": "Policies",
     "question": "Minors",
-    "answer": "Guests under 18 must be accompanied by a parent/guardian who can give written consent."
+    "answer": "Guests under 18 must be accompanied by a parent or guardian who can provide written consent."
   },
   {
     "id": "studio-safety",
     "category": "Policies",
     "question": "Health & safety",
-    "answer": "Devices are disinfected after each use. Please postpone visits if you have fever, contagious illness, or open wounds at the treatment site."
+    "answer": "Devices are disinfected after each use. Please postpone visits if you have a fever, contagious illness, or open wounds at the treatment site."
   },
 
   {
     "id": "ees-what",
-    "category": "Sessions",
-    "question": "Energy Enhancement System: What is it?",
-    "answer": "A quiet room experience designed for deep rest/relaxation. Guests typically sit or recline in a calm environment."
+    "category": "EES",
+    "question": "What is the Energy Enhancement System (EES)?",
+    "answer": "A quiet room experience designed for deep rest and relaxation. Guests typically sit or recline in a calm environment while the system runs."
   },
   {
-    "id": "ees-during",
-    "category": "Sessions",
-    "question": "EES: What happens during a session?",
-    "answer": "You rest, meditate, or nap. Many guests report feeling calm, warm, or lightly tingly; some feel sleepy."
+    "id": "ees-session-experience",
+    "category": "EES",
+    "question": "What does an EES session feel like?",
+    "answer": "Most guests report deep relaxation; some feel calm or sleepy during the session and clearer or more energized afterward."
   },
   {
     "id": "ees-length",
-    "category": "Sessions",
-    "question": "EES: How long is a session?",
-    "answer": "Common options are 60–120 minutes. First-time guests often start with 60 minutes."
+    "category": "EES",
+    "question": "How long is an EES session?",
+    "answer": "Common options are 60–120 minutes. First-time guests often start with 60 minutes; longer blocks (3–4 hours) may be available at select times."
   },
   {
-    "id": "ees-frequency",
-    "category": "Sessions",
-    "question": "EES: How often should I come?",
-    "answer": "For general relaxation: 1–2×/week is common. Listen to your body and your schedule."
+    "id": "ees-hours-needed",
+    "category": "EES",
+    "question": "How many hours or sessions do I need?",
+    "answer": "It depends on your goals and how you feel. Many guests try a few sessions to start. Some centers reference around 20 hours as a typical starting point, with others choosing more hours over time. Always consult your clinician if you have health concerns."
+  },
+  {
+    "id": "ees-during",
+    "category": "EES",
+    "question": "What will I do during an EES session?",
+    "answer": "Recline, close your eyes, rest, meditate, or nap—whichever helps you relax. Please keep voices low to maintain a quiet environment."
   },
   {
     "id": "ees-prepare",
-    "category": "Sessions",
-    "question": "EES: How do I prepare/what to bring?",
-    "answer": "Hydrate well, arrive lightly fed, silence devices. Optional: socks, eye mask, journal."
+    "category": "EES",
+    "question": "How should I prepare and what should I bring?",
+    "answer": "Hydrate well, arrive lightly fed, and silence devices. Optional: socks, sleep mask, light blanket, small pillow, journal, or headphones."
+  },
+  {
+    "id": "ees-reading-devices",
+    "category": "EES",
+    "question": "Can I read or use devices during the session?",
+    "answer": "Screens are not recommended. If you prefer to read, bring a book (not an e-reader). A small book lamp is fine; please keep phones silenced."
+  },
+  {
+    "id": "ees-eyes-closed",
+    "category": "EES",
+    "question": "Do my eyes need to stay open?",
+    "answer": "Eye position does not change exposure. We suggest eyes closed for deeper relaxation."
   },
   {
     "id": "ees-aftercare",
-    "category": "Sessions",
-    "question": "EES: Aftercare",
-    "answer": "Drink plenty of water, add light movement, and prioritize rest the remainder of the day."
+    "category": "EES",
+    "question": "What should I do after a session?",
+    "answer": "Hydrate throughout the day and plan gentle downtime when possible. Light movement can help you feel grounded."
+  },
+  {
+    "id": "ees-salt-bath",
+    "category": "EES",
+    "question": "Do I need a salt bath after sessions?",
+    "answer": "Many centers recommend a hot sea-salt bath within 24 hours as a wellness ritual. If you feel sluggish or headachy, rest and hydration usually help—consult your clinician with any concerns."
+  },
+  {
+    "id": "ees-salt-type",
+    "category": "EES",
+    "question": "Which salt should I use for the bath?",
+    "answer": "Use sea salt; some locations offer a house blend. Follow your center’s posted recipe if provided."
+  },
+  {
+    "id": "ees-frequency",
+    "category": "EES",
+    "question": "How often should I come for EES?",
+    "answer": "For general relaxation, 1–2 times per week is common. Adjust frequency based on how you feel, your schedule, and your budget."
   },
   {
     "id": "ees-clearance",
-    "category": "Policies",
-    "question": "EES: Who should consult a clinician first?",
-    "answer": "If you are pregnant, have implanted electronic devices (e.g., pacemaker), a history of seizures, or any condition you’re concerned about—please speak with your clinician before booking."
+    "category": "EES",
+    "question": "Who should consult a clinician before booking?",
+    "answer": "If you are pregnant, have implanted electronic devices (e.g., pacemaker), a history of seizures, or any medical condition you are concerned about, please speak with your clinician before booking."
+  },
+  {
+    "id": "ees-pacemaker",
+    "category": "EES",
+    "question": "Is EES okay with a pacemaker?",
+    "answer": "Centers report no known contraindications in EES rooms for pacemakers. If you have an implanted device or medical concern, consult your clinician before visiting."
   },
 
   {
     "id": "rlt-what",
-    "category": "Sessions",
+    "category": "RLT",
     "question": "Red Light Therapy: What is it?",
-    "answer": "A non-invasive light exposure using visible red and near-infrared wavelengths to support general wellness and recovery."
+    "answer": "A non-invasive treatment using visible red and near-infrared (NIR) light to support cellular repair, reduce inflammation, and promote overall recovery. It is non-UV and downtime-free."
   },
   {
-    "id": "rlt-tanning",
-    "category": "Sessions",
-    "question": "RLT: Is it a tanning bed?",
-    "answer": "No. There’s no UV and no tanning effect."
+    "id": "rlt-how-it-works",
+    "category": "RLT",
+    "question": "How does it work?",
+    "answer": "Red/NIR light is absorbed by mitochondria, boosting ATP (cellular energy) and supporting the body’s natural recovery processes in skin, muscles, and other tissues."
+  },
+  {
+    "id": "rlt-uses",
+    "category": "RLT",
+    "question": "What can it help with?",
+    "answer": "Common goals include skin concerns (tone, texture, fine lines, acne, scars), pain and inflammation, muscle recovery, hair-thinning support, mood and sleep support, and general wellness."
+  },
+  {
+    "id": "rlt-safety",
+    "category": "RLT",
+    "question": "Is it safe?",
+    "answer": "Generally safe, non-invasive, and non-UV. Side effects are uncommon and mild. If you’re pregnant, photosensitive, or have medical conditions, consult your clinician first."
   },
   {
     "id": "rlt-length",
-    "category": "Sessions",
-    "question": "RLT: How long is a session?",
-    "answer": "Typically 10–20 minutes per area. Multi-area sessions can be stacked."
+    "category": "RLT",
+    "question": "How long is a session?",
+    "answer": "Typically 10–20 minutes per area, depending on goals and device parameters."
   },
   {
-    "id": "rlt-frequency",
-    "category": "Sessions",
-    "question": "RLT: How often should I come?",
-    "answer": "For best results, many start at 2–5×/week for 4–6 weeks, then move to maintenance (1–2×/week). You can scale to your goals."
+    "id": "rlt-how-many",
+    "category": "RLT",
+    "question": "How many sessions will I need?",
+    "answer": "Plans vary by person and concern. Some notice benefits after a few sessions; others need a longer, tailored program for lasting results."
   },
   {
-    "id": "rlt-wear-bring",
-    "category": "Sessions",
-    "question": "RLT: What should I wear/bring?",
-    "answer": "Expose the area you want to target. Come with clean, dry skin (no makeup, sunscreen, or heavy lotions). We provide eye protection if needed."
+    "id": "rlt-side-effects",
+    "category": "RLT",
+    "question": "Are there side effects?",
+    "answer": "Rare and usually mild—temporary redness, warmth, or tightness that settles quickly. Tell your provider if anything feels uncomfortable."
+  },
+  {
+    "id": "rlt-eligibility",
+    "category": "RLT",
+    "question": "Who can use it?",
+    "answer": "Suitable for most people. Those with active photosensitivity, certain eye/skin conditions, or on photosensitizing medications should get medical guidance first."
+  },
+  {
+    "id": "rlt-results-timeline",
+    "category": "RLT",
+    "question": "How soon will I see results?",
+    "answer": "Timelines vary. Many see early improvements within a few sessions; consistency over several weeks typically yields better outcomes."
+  },
+  {
+    "id": "rlt-wear",
+    "category": "RLT",
+    "question": "What should I wear?",
+    "answer": "Comfortable clothing that allows access to the treatment area. Modesty is maintained for larger areas."
+  },
+  {
+    "id": "rlt-red-vs-nir",
+    "category": "RLT",
+    "question": "What’s the difference between red and near-infrared (NIR) light?",
+    "answer": "Red targets surface to mid-depth tissues (great for skin), while NIR penetrates deeper (helpful for muscles and joints). Many protocols use both."
   },
   {
     "id": "rlt-feel",
-    "category": "Sessions",
-    "question": "RLT: What will I feel?",
-    "answer": "Gentle warmth at most. Skin may appear slightly flushed for a few minutes afterward."
+    "category": "RLT",
+    "question": "Does it hurt or feel hot?",
+    "answer": "No—most people feel gentle warmth or nothing at all. It’s non-invasive with no downtime."
   },
   {
-    "id": "rlt-clearance",
-    "category": "Policies",
-    "question": "RLT: Who should avoid or get medical clearance first?",
-    "answer": "Photosensitive conditions (e.g., lupus, porphyria); photosensitizing meds (certain antibiotics, isotretinoin, high-dose retinoids); active malignancy; pregnancy (especially direct abdominal exposure); recent eye surgery/retinal conditions (avoid direct eye exposure). If unsure, bring your clinician’s guidance."
+    "id": "rlt-eyes",
+    "category": "RLT",
+    "question": "Is eye protection required?",
+    "answer": "Yes. We provide appropriate eye shields when treating the face or when lights are near your eyes."
   },
   {
-    "id": "rlt-tattoos",
-    "category": "Sessions",
-    "question": "RLT: Tattoos & cosmetics",
-    "answer": "Tattoos can warm up; let us know so we can adjust time/distance. Remove reflective cosmetics on the area before treatment."
+    "id": "rlt-combine",
+    "category": "RLT",
+    "question": "Can I combine it with other treatments?",
+    "answer": "Often yes—RLT is frequently paired with peels, microneedling, massage, or physiotherapy to support healing. Your provider will sequence treatments appropriately."
+  },
+  {
+    "id": "rlt-medications",
+    "category": "RLT",
+    "question": "Can I use it if I’m on medications?",
+    "answer": "Many can, but some drugs or supplements increase light sensitivity (e.g., certain antibiotics, isotretinoin, high-dose retinoids, St. John’s wort). Share your medication list during consultation."
+  },
+  {
+    "id": "rlt-contraindications",
+    "category": "RLT",
+    "question": "Any conditions where it’s not recommended?",
+    "answer": "Use caution with active cancer in the treatment area, uncontrolled epilepsy, active fever/infection, or severe photosensitivity disorders. Always consult a clinician."
+  },
+  {
+    "id": "rlt-uv-tan",
+    "category": "RLT",
+    "question": "Will it tan my skin or increase hyperpigmentation?",
+    "answer": "No—there’s no UV. It typically does not cause tanning. If you’re prone to melasma or PIH, we may adjust settings and monitor closely."
+  },
+  {
+    "id": "rlt-skin-hair-types",
+    "category": "RLT",
+    "question": "Is it suitable for all skin tones and hair types?",
+    "answer": "Yes. Red/NIR light is color-blind and considered safe across all Fitzpatrick skin types and hair types."
+  },
+  {
+    "id": "rlt-frequency",
+    "category": "RLT",
+    "question": "How often should I come in?",
+    "answer": "Common plans start at 2–3 sessions per week for 4–6 weeks, then taper to weekly or maintenance as results stabilize."
+  },
+  {
+    "id": "rlt-duration-of-results",
+    "category": "RLT",
+    "question": "How long do results last?",
+    "answer": "Benefits are cumulative but not permanent. Maintenance sessions help sustain results—similar to a fitness routine."
+  },
+  {
+    "id": "rlt-pro-vs-home",
+    "category": "RLT",
+    "question": "Clinic device vs. at-home device—what’s the difference?",
+    "answer": "Professional systems typically have higher power density, larger coverage, and precise dosing—often requiring fewer, shorter sessions for comparable results."
+  },
+  {
+    "id": "rlt-prep",
+    "category": "RLT",
+    "question": "Do I need to prepare my skin or scalp beforehand?",
+    "answer": "Arrive with clean, dry skin/scalp—no heavy makeup, SPF, oils, or occlusive products over the treatment area."
+  },
+  {
+    "id": "rlt-aftercare",
+    "category": "RLT",
+    "question": "What aftercare is needed?",
+    "answer": "Minimal. Hydrate, use gentle skincare, and follow any product guidance from your provider. You can resume normal activities immediately."
+  },
+  {
+    "id": "rlt-tattoos-fillers",
+    "category": "RLT",
+    "question": "Can I do it if I have tattoos or fillers?",
+    "answer": "Tattoos are generally fine (you may feel mild warmth). Dermal fillers are usually compatible; we may adjust timing around recent injections."
+  },
+  {
+    "id": "rlt-burn-risk",
+    "category": "RLT",
+    "question": "Is there a risk of burns?",
+    "answer": "Very low with proper equipment and trained providers. You’ll be monitored and dosing is controlled."
+  },
+  {
+    "id": "rlt-wearables",
+    "category": "RLT",
+    "question": "Will it interfere with photos or sensors (e.g., wearable trackers)?",
+    "answer": "No. It won’t harm wearables, but you may be asked to remove accessories from the treatment area for comfort and access."
+  },
+  {
+    "id": "rlt-teens",
+    "category": "RLT",
+    "question": "Can teenagers use it?",
+    "answer": "Often yes for specific concerns (e.g., acne) with parental consent and professional guidance."
+  },
+  {
+    "id": "rlt-dosing",
+    "category": "RLT",
+    "question": "How is dosing decided?",
+    "answer": "We set wavelength(s), intensity (irradiance), and exposure time based on your goals, skin type, and area size to ensure safe, effective energy dosing."
+  },
+  {
+    "id": "rlt-realistic-outcomes",
+    "category": "RLT",
+    "question": "What outcomes are realistic?",
+    "answer": "Common improvements include tone, texture, redness, breakouts, and recovery times. Deeper wrinkles or chronic pain may require longer plans and maintenance."
+  },
+  {
+    "id": "rlt-tanning",
+    "category": "RLT",
+    "question": "Is it a tanning bed?",
+    "answer": "No. There is no UV and no tanning effect. For hyperpigmentation concerns, see our UV/pigmentation FAQ."
   },
 
   {
     "id": "hrw-what",
-    "category": "Sessions",
+    "category": "HW",
     "question": "Hydrogen Water: What is it?",
-    "answer": "Purified water infused with dissolved molecular hydrogen (H₂). It’s different from alkaline or flavored waters."
+    "answer": "Purified water infused with dissolved molecular hydrogen (H₂). It is different from alkaline or flavored waters."
   },
   {
     "id": "hrw-served",
-    "category": "Sessions",
+    "category": "HW",
     "question": "Hydrogen Water: How is it served?",
-    "answer": "By-the-glass in the studio or in sealed take-home bottles. Please bring a clean, airtight bottle if you prefer refills."
+    "answer": "By the glass in the studio or in sealed take-home bottles. Please bring a clean, airtight bottle if you prefer refills."
   },
   {
     "id": "hrw-when",
-    "category": "Sessions",
+    "category": "HW",
     "question": "Hydrogen Water: When should I drink it?",
     "answer": "Hydrogen dissipates over time. For best experience, drink soon after dispensing or within the same day. Keep sealed and refrigerated if not consumed immediately."
   },
   {
     "id": "hrw-how-much",
-    "category": "Sessions",
+    "category": "HW",
     "question": "Hydrogen Water: How much should I drink?",
-    "answer": "Commonly 250–500 mL per serving, 1–2×/day. Adjust to your preference and hydration needs (this is not medical advice)."
+    "answer": "Commonly 250–500 mL per serving, 1–2 times per day. Adjust to your preference and hydration needs (this is not medical advice)."
   },
   {
     "id": "hrw-safety",
-    "category": "Policies",
+    "category": "HW",
     "question": "Hydrogen Water: Taste & safety",
-    "answer": "Tastes like regular water. Generally well-tolerated; if you are pregnant, breastfeeding, have kidney issues, or complex medical conditions, consult your clinician."
+    "answer": "Tastes like regular water. Generally well tolerated; if you are pregnant, breastfeeding, have kidney issues, or complex medical conditions, consult your clinician."
   },
   {
     "id": "hrw-meds",
-    "category": "Policies",
-    "question": "Hydrogen Water: Can I mix it with supplements/meds?",
+    "category": "HW",
+    "question": "Hydrogen Water: Can I mix it with supplements or meds?",
     "answer": "Separate from medications unless your clinician says otherwise. Avoid mixing with oxidizing agents."
   },
   {
     "id": "hrw-quality",
-    "category": "Policies",
+    "category": "HW",
     "question": "Hydrogen Water: Quality checks",
     "answer": "We maintain our system per manufacturer guidance and perform routine checks. Ask staff about our latest maintenance log."
   },

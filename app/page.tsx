@@ -25,9 +25,9 @@ type Service = {
 export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
 
-  // Prefix assets so it works on GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
+  // Assets you already use
   const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
@@ -41,25 +41,25 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // --- EE benefits (inline SVG icons; no images) ---
+  // EE System benefits (no images; inline SVG icons)
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
-    { id: 'regen', label: 'Cells Regenerate', Icon: SparkleIcon },
-    { id: 'oxygen', label: 'Oxygenates Blood\n& Improves Circulation', Icon: DropO2Icon },
-    { id: 'alkaline', label: 'Balances Alkalinity (pH)', Icon: BalancePHIcon },
-    { id: 'detox', label: 'Eliminates Toxins', Icon: DetoxIcon },
-    { id: 'mental', label: 'Improved Mental Health\n& Elevated Mood', Icon: SmileIcon },
-    { id: 'focus', label: 'Improved Concentration\nAnd Focus', Icon: FocusIcon },
-    { id: 'inflammation', label: 'Reduces Inflammation', Icon: InflammationIcon },
-    { id: 'cell-reg', label: 'Stimulates Cell Regeneration', Icon: CellIcon },
-    { id: 'immune', label: 'Improves Immune Function', Icon: ShieldIcon },
-    { id: 'pain', label: 'Relieves Pain', Icon: ReliefIcon },
-    { id: 'stress', label: 'Alleviates Stress', Icon: StressIcon },
-    { id: 'sleep', label: 'Improves Sleep', Icon: MoonIcon },
-    { id: 'homeostasis', label: 'Dynamic Homeostasis', Icon: HomeostasisIcon },
-    { id: 'telomeres', label: 'Lengthen Telomeres', Icon: DNAIcon },
-    { id: 'stem', label: 'Mobilizes Stem Cells', Icon: StemIcon },
-    { id: 'brain', label: 'Brain Hemisphere\nSynchronization', Icon: BrainIcon },
-    { id: 'energy', label: 'Increases Energy\n& Physical Stamina', Icon: BoltIcon },
+    { id: 'regen',       label: 'Cells Regenerate',                          Icon: SparkleIcon },
+    { id: 'oxygen',      label: 'Oxygenates Blood\n& Improves Circulation',  Icon: DropO2Icon },
+    { id: 'alkaline',    label: 'Balances Alkalinity (pH)',                  Icon: BalancePHIcon },
+    { id: 'detox',       label: 'Eliminates Toxins',                         Icon: DetoxIcon },
+    { id: 'mental',      label: 'Improved Mental Health\n& Elevated Mood',   Icon: SmileIcon },
+    { id: 'focus',       label: 'Improved Concentration\nAnd Focus',         Icon: FocusIcon },
+    { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
+    { id: 'cell-reg',    label: 'Stimulates Cell Regeneration',              Icon: CellIcon },
+    { id: 'immune',      label: 'Improves Immune Function',                  Icon: ShieldIcon },
+    { id: 'pain',        label: 'Relieves Pain',                             Icon: ReliefIcon },
+    { id: 'stress',      label: 'Alleviates Stress',                         Icon: StressIcon },
+    { id: 'sleep',       label: 'Improves Sleep',                            Icon: MoonIcon },
+    { id: 'homeostasis', label: 'Dynamic Homeostasis',                       Icon: HomeostasisIcon },
+    { id: 'telomeres',   label: 'Lengthen Telomeres',                        Icon: DNAIcon },
+    { id: 'stem',        label: 'Mobilizes Stem Cells',                      Icon: StemIcon },
+    { id: 'brain',       label: 'Brain Hemisphere Synchronization',          Icon: BrainIcon },
+    { id: 'energy',      label: 'Increases Energy\n& Physical Stamina',      Icon: BoltIcon },
   ]
 
   return (
@@ -73,20 +73,20 @@ export default function AboutPage() {
           loading="eager"
           decoding="async"
         />
-        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/50 via-slate-900/25 to-white/0" aria-hidden />
+        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/55 via-slate-900/25 to-white/0" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0 -z-10 motion-safe:animate-pulse"
           aria-hidden
           style={{
             background:
-              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.75) 0%, rgba(249,250,248,.35) 40%, rgba(249,250,248,0) 100%)',
-            animationDuration: '6s',
+              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.70) 0%, rgba(249,250,248,.35) 42%, rgba(249,250,248,0) 100%)',
+            animationDuration: '7s',
           }}
         />
 
         <Container className="relative py-24 md:py-32">
-          <div className="mx-auto max-w-5xl rounded-[22px] p-[1px] shadow-[0_10px_28px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
-            <div className="rounded-[22px] bg-white/70 p-8 md:p-14 backdrop-blur">
+          <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
+            <div className="rounded-[24px] bg-white/75 p-8 md:p-14 backdrop-blur">
               <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
                 Holistic • Human • Kind
               </p>
@@ -149,7 +149,9 @@ export default function AboutPage() {
       {/* ===== Pillars ==================================================== */}
       <section className="py-16" aria-labelledby="pillars">
         <Container>
-          <h2 id="pillars" className="sr-only">Why choose us</h2>
+          <h2 id="pillars" className="mx-auto mb-6 max-w-3xl text-center text-2xl font-semibold text-slate-900">
+            Care that’s practical, kind, and grounded
+          </h2>
           <div className="grid gap-6 md:grid-cols-3">
             {[
               { title: 'Licensed & evidence-informed', body: 'Care grounded in research and real-world practice.' },
@@ -162,7 +164,7 @@ export default function AboutPage() {
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/30 via-transparent to-emerald-500/30" />
-                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[12px] bg-emerald-50">
+                <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[12px] bg-emerald-50">
                   <LeafIcon className="h-5 w-5 text-emerald-700" />
                 </div>
                 <h3 className="text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
@@ -173,7 +175,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== EE System Environment – SQUARE TILE GRID =================== */}
+      {/* ===== EE System – SQUARE TILE GRID (larger icons, cohesive) ====== */}
       <section className="bg-[var(--surface)] py-16" id="ee-environment" aria-labelledby="ee-title">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
@@ -181,33 +183,36 @@ export default function AboutPage() {
               The EE System Creates an Environment Where Health Can Flourish
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              Big, clear tiles with centered icons and labels—fully responsive and perfectly aligned.
+              Large, unified tiles with centered icons and labels—fully responsive and crisp.
             </p>
           </div>
 
-          {/* frame */}
-          <div className="mt-8 rounded-3xl border border-emerald-600/10 bg-white p-4 shadow-sm ring-1 ring-white">
-            <ul
-              role="list"
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            >
-              {eeBenefits.map((b, i) => (
-                <li
-                  key={b.id}
-                  className="group aspect-square rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
-                  style={{ transitionDelay: `${(i % 8) * 20}ms` }}
-                >
-                  <div className="flex h-full flex-col items-center justify-center text-center">
-                    <div className="mb-3 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-300 group-hover:scale-105">
-                      <b.Icon className="h-8 w-8 text-emerald-700" />
+          {/* Outer frame with soft gradient border */}
+          <div className="mt-8 rounded-[28px] p-[1px] bg-gradient-to-br from-emerald-200/70 via-teal-200/60 to-emerald-100/60 shadow-[0_10px_26px_rgba(16,24,40,.10)]">
+            <div className="rounded-[27px] border border-emerald-600/10 bg-white p-5">
+              <ul
+                role="list"
+                className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              >
+                {eeBenefits.map((b, i) => (
+                  <li
+                    key={b.id}
+                    className="group aspect-square rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)]"
+                    style={{ transitionDelay: `${(i % 8) * 20}ms` }}
+                  >
+                    <div className="flex h-full flex-col items-center justify-center text-center">
+                      {/* Larger icon container (but balanced for cohesion) */}
+                      <div className="mb-3 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-600/10 transition-transform duration-300 group-hover:scale-[1.06]">
+                        <b.Icon className="h-10 w-10 text-emerald-700" />
+                      </div>
+                      <p className="whitespace-pre-line text-[15.5px] font-medium leading-snug text-slate-800">
+                        {b.label}
+                      </p>
                     </div>
-                    <p className="whitespace-pre-line text-[15px] font-medium leading-snug text-slate-800">
-                      {b.label}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </section>
@@ -282,7 +287,7 @@ export default function AboutPage() {
         <Container>
           <h2 id="visit" className="text-2xl font-semibold text-slate-900">Visit Us</h2>
 
-          <div className="mt-6 grid gap-8 md:grid-cols-2">
+        <div className="mt-6 grid gap-8 md:grid-cols-2">
             <div className="relative">
               <div className="overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
@@ -343,7 +348,7 @@ export default function AboutPage() {
       {/* ===== CTA ======================================================== */}
       <section className="py-16" aria-labelledby="cta">
         <Container>
-          <div className="relative overflow-hidden rounded-[20px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
+          <div className="relative overflow-hidden rounded-[22px] border border-emerald-500/20 bg-gradient-to-br from-[#0C8D69] to-[#19B6AE] text-white shadow-[0_10px_24px_rgba(16,24,40,.08)]">
             <div className="pointer-events-none absolute -top-16 left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
             <div className="pointer-events-none absolute -bottom-24 right-10 h-56 w-56 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
             <div className="relative grid gap-6 p-6 md:grid-cols-[1.5fr,1fr] md:p-10">
