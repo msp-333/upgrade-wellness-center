@@ -113,13 +113,18 @@ export default function PrivacyPolicyPage() {
           </div>
         </nav>
 
-        {/* Main content */}
-        {/* prose: tighter line-length, consistent vertical rhythm, nice heading offsets */}
-        <article className="prose prose-slate max-w-none prose-headings:scroll-mt-28 prose-h2:mt-12 prose-h2:mb-3 prose-h3:mt-6 prose-h3:mb-2 prose-p:leading-relaxed prose-li:leading-relaxed dark:prose-invert print:prose-lg">
-          {/* Divider before content for visual separation on desktop */}
-          <hr className="my-0 hidden lg:block border-transparent" />
-
-          <section id="who-we-are" className="scroll-mt-28">
+        {/* Main content with refined section spacing */}
+        <article
+          className="
+            prose prose-slate max-w-none dark:prose-invert print:prose-lg
+            prose-h2:mb-2 prose-h3:mt-5 prose-h3:mb-1 prose-p:leading-relaxed prose-li:leading-relaxed
+            [&>section]:scroll-mt-28
+            [&>section+section]:mt-14 [&>section+section]:pt-6 [&>section+section]:border-t [&>section+section]:border-slate-200/70
+            md:[&>section+section]:mt-16 md:[&>section+section]:pt-8
+            [&>section:first-of-type]:mt-0 [&>section:first-of-type]:pt-0 [&>section:first-of-type]:border-t-0
+          "
+        >
+          <section id="who-we-are">
             <h2>1) Who We Are &amp; Scope</h2>
             <p>
               Upgrade Wellness Center Puerto Rico (“Upgrade Wellness Center PR,” “we,” “us,” or “our”) respects your
@@ -139,7 +144,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="info-we-collect" className="scroll-mt-28">
+          <section id="info-we-collect">
             <h2>2) Information We Collect</h2>
             <p>We collect information in three main ways: (A) you provide it to us, (B) we collect it automatically, and (C) we receive it from third parties.</p>
             <h3 id="collect-a">A. Information You Provide</h3>
@@ -169,7 +174,7 @@ export default function PrivacyPolicyPage() {
             <p><strong>Only share what you’re comfortable with.</strong> If you submit info about others, you must have the legal right to do so.</p>
           </section>
 
-          <section id="sensitive-info" className="scroll-mt-28">
+          <section id="sensitive-info">
             <h2>3) Sensitive Information &amp; Health Information</h2>
             <p>
               We are a wellness center and may receive wellness-related details you choose to share (e.g., goals,
@@ -180,7 +185,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="why-we-use" className="scroll-mt-28">
+          <section id="why-we-use">
             <h2>4) Why We Use Your Information</h2>
             <ul className="space-y-1">
               <li><strong>Provide and operate</strong> the Services (scheduling, delivery, personalization).</li>
@@ -199,7 +204,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="cookies" className="scroll-mt-28">
+          <section id="cookies">
             <h2>5) Cookies &amp; Tracking</h2>
             <p>We use cookies, pixels, and similar technologies:</p>
             <ul>
@@ -213,7 +218,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="payments" className="scroll-mt-28">
+          <section id="payments">
             <h2>6) Payments</h2>
             <p>
               We use trusted <strong>third-party payment processors</strong> (e.g., WordPress.com/Automattic payments,
@@ -222,7 +227,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="sharing" className="scroll-mt-28">
+          <section id="sharing">
             <h2>7) How We Share Information</h2>
             <p>We do <strong>not</strong> sell or rent personal information. We share only with:</p>
             <ul>
@@ -233,7 +238,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
 
-          <section id="hosting" className="scroll-mt-28">
+          <section id="hosting">
             <h2>8) Data Hosting &amp; International Transfers</h2>
             <p>
               Our site may be hosted on <strong>WordPress.com</strong> (Automattic) or similar; data may be stored in
@@ -242,7 +247,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="retention" className="scroll-mt-28">
+          <section id="retention">
             <h2>9) Data Retention</h2>
             <p>
               We keep personal information as long as needed to provide Services, meet legal obligations, resolve
@@ -250,7 +255,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="security" className="scroll-mt-28">
+          <section id="security">
             <h2>10) Security</h2>
             <p>
               We implement administrative, technical, and physical safeguards to protect personal information. However,
@@ -259,7 +264,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="rights" className="scroll-mt-28">
+          <section id="rights">
             <h2>11) Your Privacy Rights &amp; Choices</h2>
             <h3>General Choices</h3>
             <ul>
@@ -288,7 +293,7 @@ export default function PrivacyPolicyPage() {
             <p>To exercise rights, contact us (see <a href="#contact">Contact Us</a>). We may verify identity/location.</p>
           </section>
 
-          <section id="children" className="scroll-mt-28">
+          <section id="children">
             <h2>12) Children’s Privacy</h2>
             <p>
               Our Services are not directed to children under 13, and we do not knowingly collect personal information
@@ -296,7 +301,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="third-party" className="scroll-mt-28">
+          <section id="third-party">
             <h2>13) Third-Party Links &amp; Features</h2>
             <p>
               The Services may link to third-party websites, apps, or features. We are not responsible for their
@@ -304,7 +309,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="changes" className="scroll-mt-28">
+          <section id="changes">
             <h2>14) Changes to This Policy</h2>
             <p>
               We may update this Policy. The updated version will be indicated by an updated “Effective date” and is
@@ -312,7 +317,7 @@ export default function PrivacyPolicyPage() {
             </p>
           </section>
 
-          <section id="contact" className="scroll-mt-28">
+          <section id="contact">
             <h2>15) Contact Us</h2>
             <p>If you have questions, concerns, or requests about this Policy or our data practices, contact us:</p>
             <ul>
@@ -328,7 +333,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
 
-          <section id="additional" className="scroll-mt-28">
+          <section id="additional">
             <h2>16) Additional Notices</h2>
             <ul>
               <li><strong>GDPR Notice:</strong> Where we rely on consent, you may withdraw anytime. For legitimate interests, you may object to direct marketing.</li>
@@ -336,7 +341,7 @@ export default function PrivacyPolicyPage() {
             </ul>
           </section>
 
-          <section id="summary" className="scroll-mt-28">
+          <section id="summary">
             <h2>Summary of Key Points</h2>
             <ul>
               <li>We collect info you provide, automatic data, and third-party info.</li>
