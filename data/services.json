@@ -6,7 +6,7 @@
     "tagline": "Gentle, restorative lounge sessions.",
     "summary": "A calm, reclined experience that helps you unplug and reset.",
     "duration": "1–3 hours",
-    "image": "/images/ees.svg"
+    "image": "/images/ees-lounge.png"
   },
   {
     "id": "svc-red-light",
@@ -15,7 +15,7 @@
     "tagline": "Low-level red & near-infrared light.",
     "summary": "Short, comfortable sessions that are easy to add to your routine.",
     "duration": "10–20 minutes",
-    "image": "/images/red-light.svg"
+    "image": "/images/red-light.png"
   },
   {
     "id": "svc-h2o",
@@ -23,6 +23,6 @@
     "slug": "hydrogen-water",
     "tagline": "Water infused with molecular hydrogen.",
     "summary": "A refreshing add-on before or after sessions.",
-    "image": "/images/hydrogen-water.svg"
+    "image": "/images/hydrogen-water.png"
   }
 ]
