@@ -45,7 +45,7 @@ export default function ServiceCard({ item }: { item: ServiceItem }) {
           {item.duration && <span className={pill}>{item.duration}</span>}
         </div>
         <Link
-          href={`/services/#${item.slug}`}
+          href={`/services/${item.slug}`}
           className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow transition-colors hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
         >
           Learn more →
