@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
         {/* Quick summary collapsible */}
         <details className="group mt-5 rounded-xl border border-emerald-200/80 bg-emerald-50/70 p-4 open:bg-emerald-50">
           <summary className="cursor-pointer select-none text-sm font-semibold text-emerald-900">
-            Quick summary (tap to expand)
+            Quick Summary of Key Points
           </summary>
           <ul className="mt-2 list-disc pl-5 text-sm text-emerald-900">
             <li>We collect information you provide, automatic data, and info from third parties.</li>
