@@ -119,8 +119,8 @@ export default function PrivacyPolicyPage() {
             prose prose-slate max-w-none dark:prose-invert print:prose-lg
             prose-h2:mb-2 prose-h3:mt-5 prose-h3:mb-1 prose-p:leading-relaxed prose-li:leading-relaxed
             [&>section]:scroll-mt-28
-            [&>section+section]:mt-14 [&>section+section]:pt-6 [&>section+section]:border-t [&>section+section]:border-slate-200/70
-            md:[&>section+section]:mt-16 md:[&>section+section]:pt-8
+            [&>section+section]:mt-20 [&>section+section]:pt-8 [&>section+section]:border-t [&>section+section]:border-slate-200/70
+            md:[&>section+section]:mt-16 md:[&>section+section]:pt-10
             [&>section:first-of-type]:mt-0 [&>section:first-of-type]:pt-0 [&>section:first-of-type]:border-t-0
           "
         >
