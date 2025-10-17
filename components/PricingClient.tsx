@@ -46,8 +46,7 @@ function sortFor(tab: keyof PricingData, arr: Item[]) {
   return [...arr].sort((a, b) => {
     const br = badgeRank(a.badge) - badgeRank(b.badge)
     if (br !== 0) return br
-    const pa = parsePrice(a.price),
-      pb = parsePrice(b.price)
+    const pa = parsePrice(a.price), pb = parsePrice(b.price)
     if (pa !== pb) return pa - pb
     return (a.title || '').localeCompare(b.title || '')
   })
@@ -77,20 +76,16 @@ export default function PricingClient({ data }: { data: PricingData }) {
     sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  /* Reusable container spacing (harmonized with other pages) */
   const wrap = 'mx-auto max-w-6xl px-4 sm:px-6 lg:px-8'
 
   return (
-    <div className="bg-surface text-text-primary">
-      {/* ===== Header — soft grid wash + staggered reveal ================ */}
+    <div className="bg-surface text-text-primary overflow-x-hidden">
+      {/* ===== Header — NO GRID BG, soft brand glows, Reveal ============ */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-emerald-50 via-surface to-surface" aria-hidden />
-        <div
-          className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] md:bg-[size:28px_28px]"
-          aria-hidden
-        />
-        <div className="absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
-        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
+        <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-emerald-50 via-surface to-surface" />
+        {/* removed grid wash */}
+        <div className="pointer-events-none absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
+        <div className="pointer-events-none absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
 
         <div className={`${wrap} pt-14 sm:pt-16 md:pt-20 pb-6 sm:pb-8`}>
           <Reveal delay={80}>
@@ -147,7 +142,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="Choose a plan" tone="lavender" />
 
-      {/* ===== Membership notice — emphasized, dismissible feel ========== */}
+      {/* ===== Membership notice ======================================== */}
       <section className={`${wrap} mt-6 sm:mt-8`}>
         <Reveal delay={110}>
           <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 sm:p-6 shadow-soft">
@@ -191,13 +186,9 @@ export default function PricingClient({ data }: { data: PricingData }) {
             </div>
           </Reveal>
         ) : (
-          <ul
-            role="list"
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6"
-          >
+          <ul role="list" className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
             {sorted.map((it, idx) => {
-              const specifics =
-                it.details && it.details.length > 0 ? it.details : it.description?.slice(1) ?? []
+              const specifics = it.details && it.details.length > 0 ? it.details : it.description?.slice(1) ?? []
               return (
                 <Reveal key={`${it.title}-${idx}`} delay={120 + (idx % 9) * 70}>
                   <li>
@@ -253,7 +244,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
         )}
       </section>
 
-      {/* ===== Tiny policy strip (harmonized lavender) =================== */}
+      {/* ===== Policy strip ============================================== */}
       <section className="pb-10 sm:pb-12">
         <Reveal delay={90}>
           <div className={`${wrap}`}>
@@ -267,7 +258,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
   )
 }
 
-/* ---------------- Section divider (matches other pages) ---------------- */
+/* ---------------- Section divider ---------------- */
 function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'emerald' | 'lavender' }) {
   const line =
     tone === 'lavender'
@@ -287,7 +278,6 @@ function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'em
 }
 
 /* ---------------- UI helpers ---------------- */
-
 function cardClass(tone: Item['tone']) {
   const base =
     'relative flex h-full flex-col rounded-card border p-5 sm:p-6 shadow-soft bg-white transition hover:shadow-md focus-within:ring-2 focus-within:ring-brand-300/60'
@@ -300,8 +290,6 @@ function cardClass(tone: Item['tone']) {
       return `${base} border-brand-300/40`
   }
 }
-
-/* Inline badge chip */
 function chipClass(tone: Item['tone']) {
   const base =
     'rounded-pill px-3 py-1 text-[11px] font-semibold leading-tight border text-center shadow-[0_0_0_1px_rgba(16,185,129,0.12)]'
@@ -314,15 +302,13 @@ function chipClass(tone: Item['tone']) {
       return `${base} bg-brand-50 text-brand-800 border-brand-200`
   }
 }
-
-/* CTA — consistent, prominent */
 function ctaClass(_: Item['tone']) {
   const base =
     'block w-full rounded-pill px-4 py-2 text-center text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
   return `${base} bg-lavender-600 text-white hover:bg-lavender-500 focus-visible:ring-lavender-300`
 }
 
-/* Icons */
+/* ---------------- Icons ---------------- */
 function InfoIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
