@@ -27,10 +27,9 @@ export default function ServicesPage() {
   const list = services as ServiceItem[]
 
   return (
-    <main>
-      {/* ===== Intro Hero (clean, no grid background) =================== */}
+    <main className="overflow-x-hidden">
+      {/* ===== Intro (no grid bg, gentle brand glows) ================== */}
       <section className="relative isolate">
-        {/* soft washes only */}
         <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-emerald-50 via-white to-white" />
         <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#F3EDFF]/70 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-emerald-100/70 blur-3xl" />
@@ -49,27 +48,10 @@ export default function ServicesPage() {
               </p>
             </header>
           </Reveal>
-
-          {/* chips moved into a subtle glass bar under the header */}
-          <Reveal delay={140}>
-            <div className="mt-5 rounded-[16px] border border-slate-200/70 bg-white/70 p-2 shadow-sm backdrop-blur">
-              <div className="flex flex-wrap gap-2">
-                {['All', 'EE System', 'Red Light', 'Hydrogen Water'].map((t, i) => (
-                  <span
-                    key={t}
-                    className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 shadow-sm transition-transform duration-500 hover:-translate-y-0.5"
-                    style={{ transitionDelay: `${i * 50}ms` }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </Reveal>
         </Container>
       </section>
 
-      {/* ===== Cards Grid (pulled up closer; no extra divider text) ====== */}
+      {/* ===== Cards (staggered reveal, no horizontal scroll) =========== */}
       <section className="pt-6 pb-12 sm:pt-8 sm:pb-16 md:pt-10 md:pb-20" aria-labelledby="services-heading">
         <Container>
           <h2 id="services-heading" className="sr-only">All services</h2>
@@ -89,7 +71,7 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      {/* ===== Footer CTA (unchanged style, harmonized colors) ========== */}
+      {/* ===== CTA (harmonized with site, animated soft glows) ========= */}
       <section className="pb-14 sm:pb-16 md:pb-20">
         <Container>
           <Reveal delay={150}>
