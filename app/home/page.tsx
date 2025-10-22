@@ -174,9 +174,10 @@ export default function AboutPage() {
 
         {/* Readability scrim */}
         <div className="absolute inset-0 -z-10" aria-hidden>
-          <div className="absolute inset-0 bg-white/70 md:bg-white/55" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-transparent to-white/80" />
+          <div className="absolute inset-0 bg-slate-900/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/55 via-transparent to-slate900/45" />
         </div>
+        
 
         {/* Soft accents (optional) */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
