@@ -44,22 +44,9 @@
     },
     "disclaimer": "Wellness information is educational and not medical advice. Experiences vary.",
     "media": {
-      "slots": [
-        {
-          "key": "room-hero",
-          "src": "/images/ees-room-hero.jpg",
-          "caption": "EES lounge (1:1–16:9 crop safe)",
-          "aspectHint": "16:9",
-          "maxHeight": "320px"
-        },
-        {
-          "key": "calm-detail",
-          "src": "/images/ees-calm-detail.jpg",
-          "caption": "Calm details (small, subtle)",
-          "aspectHint": "4:3",
-          "maxHeight": "220px"
-        }
-      ]
+      "youtubeId": "EES_VIDEO_ID",
+      "title": "Energy Enhancement System — What to expect",
+      "aspect": "16:9"
     },
     "microCopy": "Soft blankets, low light, and a true phone-free zone. Treat it like a mini-retreat for your nervous system.",
     "faq": [
@@ -146,22 +133,9 @@
       ]
     },
     "media": {
-      "slots": [
-        {
-          "key": "helmet-hero",
-          "src": "/images/pbm-helmet-hero.jpg",
-          "caption": "NIR Helmet (810 nm) — compact visual",
-          "aspectHint": "1:1",
-          "maxHeight": "280px"
-        },
-        {
-          "key": "panel-close",
-          "src": "/images/red-panel-close.jpg",
-          "caption": "Panel detail (keep small)",
-          "aspectHint": "4:3",
-          "maxHeight": "200px"
-        }
-      ]
+      "youtubeId": "PBM_VIDEO_ID",
+      "title": "Photobiomodulation — How it works",
+      "aspect": "16:9"
     },
     "microCopy": "We’ll help you choose panel vs. helmet, then dial in time and distance for your goal.",
     "faq": [
@@ -227,15 +201,9 @@
       ]
     },
     "media": {
-      "slots": [
-        {
-          "key": "h2-glass",
-          "src": "/images/h2-glass.jpg",
-          "caption": "Chilled H₂ water (tight crop)",
-          "aspectHint": "4:5",
-          "maxHeight": "240px"
-        }
-      ]
+      "youtubeId": "H2_VIDEO_ID",
+      "title": "Hydrogen Water — Quick overview",
+      "aspect": "16:9"
     },
     "microCopy": "Served cold and fresh—best enjoyed soon after pouring.",
     "faq": [

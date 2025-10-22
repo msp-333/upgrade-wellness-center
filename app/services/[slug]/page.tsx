@@ -6,7 +6,7 @@ import cards from '@/data/services.json'
 import details from '@/data/service-details.json'
 import * as React from 'react' // types only
 
-/** ---------- Types (extended to match enriched JSON) ---------- */
+/** ---------- Types ---------- */
 type Card = {
   id: string
   name: string
@@ -32,7 +32,6 @@ type Detail = {
   safety?: { notes?: string[] }
   sources?: Source[]
 
-  // Optional blocks
   howItWorks?: {
     summary?: string
     details?: string[]
@@ -54,7 +53,12 @@ type Detail = {
   microCopy?: string
   faq?: { q: string; a: string }[]
   media?: {
-    slots?: { key: string; src: string; caption?: string; aspectHint?: string; maxHeight?: string }[]
+    /** NEW: use one of these to show the YouTube player in the right rail */
+    youtubeId?: string
+    youtubeUrl?: string
+    title?: string
+    aspect?: '16:9' | '4:3' | '1:1'
+    /** legacy fields like slots are ignored now */
   }
 }
 
@@ -74,8 +78,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const title = `${d.name} | Services`
   const description = d.overview
   const base = process.env.NEXT_PUBLIC_SITE_URL || ''
-  const canonical = `${base}/services/${d.slug}`
-
   return {
     title,
     description,
@@ -84,7 +86,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: `${base}/services/${d.slug}`,
       type: 'article',
       images: d.heroImage ? [{ url: prefixAsset(d.heroImage), alt: d.name }] : undefined,
     },
@@ -97,7 +99,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-/** Credible fallback sources by slug (used only if detail.sources is empty) */
+/** ---------- Fallback sources (only if none provided) ---------- */
 const PRESET_SOURCES: Record<string, Source[]> = {
   'red-light-therapy': [
     { label: 'Cleveland Clinic — Red Light Therapy overview', href: 'https://my.clevelandclinic.org/health/articles/22114-red-light-therapy' },
@@ -115,7 +117,7 @@ const PRESET_SOURCES: Record<string, Source[]> = {
   ],
 }
 
-/** ---------- Small UI helpers (no external deps) ---------- */
+/** ---------- Small UI helpers ---------- */
 function Pill({
   children,
   tone = 'emerald',
@@ -176,8 +178,13 @@ function InfoCallout({ title, children }: { title: string; children: React.React
   )
 }
 
-/** Uncontrolled accordion */
-function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
+function Accordion({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
   return (
     <details className="group mt-4 rounded-xl border border-slate-200 bg-white/70 p-4 open:bg-white">
       <summary className="cursor-pointer select-none text-sm font-semibold text-slate-900 outline-none">
@@ -189,65 +196,15 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
   )
 }
 
-function MediaRail({
-  hero,
-  slots = [],
-  microCopy,
-}: {
-  hero?: string
-  slots?: { key: string; src: string; caption?: string; aspectHint?: string; maxHeight?: string }[]
-  microCopy?: string
-}) {
-  if (!hero && (!slots || slots.length === 0) && !microCopy) return null
-  return (
-    <aside className="order-1 md:order-2 md:col-span-4">
-      <div className="sticky top-20 space-y-4">
-        {hero ? (
-          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={prefixAsset(hero)} alt="" className="w-full" />
-          </figure>
-        ) : null}
-
-        {slots?.slice(0, 3).map((m) => (
-          <figure
-            key={m.key}
-            className="overflow-hidden rounded-xl border border-slate-200 bg-white/80"
-            style={m.maxHeight ? { maxHeight: m.maxHeight } : undefined}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={prefixAsset(m.src)} alt={m.caption ?? ''} className="h-full w-full object-cover" />
-            {m.caption ? <figcaption className="px-3 py-2 text-xs text-slate-500">{m.caption}</figcaption> : null}
-          </figure>
-        ))}
-
-        {microCopy ? (
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">{microCopy}</div>
-        ) : null}
-      </div>
-    </aside>
-  )
-}
-
 function Breadcrumbs({ name }: { name: string }) {
   return (
     <nav aria-label="Breadcrumb" className="text-sm text-slate-600">
       <ol className="flex flex-wrap items-center gap-1">
-        <li>
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>
-        </li>
+        <li><Link href="/" className="hover:underline">Home</Link></li>
         <li aria-hidden>›</li>
-        <li>
-          <Link href="/services" className="hover:underline">
-            Services
-          </Link>
-        </li>
+        <li><Link href="/services" className="hover:underline">Services</Link></li>
         <li aria-hidden>›</li>
-        <li aria-current="page" className="text-slate-900 font-medium">
-          {name}
-        </li>
+        <li aria-current="page" className="text-slate-900 font-medium">{name}</li>
       </ol>
     </nav>
   )
@@ -257,17 +214,87 @@ function TableOfContents({ sections }: { sections: { id: string; label: string }
   if (!sections.length) return null
   return (
     <div className="mt-4 rounded-xl border border-slate-200 bg-white/70 p-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">On this page</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">On this page</p>
       <ul className="mt-2 space-y-1 text-sm">
         {sections.map((s) => (
           <li key={s.id}>
-            <a href={`#${s.id}`} className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900">
+            <a
+              href={`#${s.id}`}
+              className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-emerald-700"
+            >
               {s.label}
             </a>
           </li>
         ))}
       </ul>
     </div>
+  )
+}
+
+/** ---------- New: Video rail (replaces attachments/images) ---------- */
+function parseYouTubeId(url: string): string | null {
+  try {
+    const u = new URL(url)
+    if (u.hostname === 'youtu.be') return u.pathname.slice(1) || null
+    if (u.hostname.includes('youtube.com')) {
+      if (u.pathname.startsWith('/embed/')) return u.pathname.split('/embed/')[1] || null
+      const v = u.searchParams.get('v')
+      return v || null
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
+function VideoRail({
+  media,
+  hero,
+  microCopy,
+}: {
+  media?: Detail['media']
+  hero?: string
+  microCopy?: string
+}) {
+  // Prefer YouTube if provided; otherwise fall back to hero image; otherwise nothing.
+  const id = media?.youtubeId ?? (media?.youtubeUrl ? parseYouTubeId(media.youtubeUrl) : null)
+  const aspect = media?.aspect ?? '16:9'
+  const pad =
+    aspect === '1:1' ? 'pt-[100%]' : aspect === '4:3' ? 'pt-[75%]' : 'pt-[56.25%]' // 16:9 default
+  const title = media?.title ?? 'Video'
+
+  if (!id && !hero && !microCopy) return null
+
+  return (
+    <aside className="order-1 md:order-2 md:col-span-4">
+      <div className="sticky top-20 space-y-4">
+        {id ? (
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-black/5">
+            <div className={`relative ${pad}`}>
+              <iframe
+                className="absolute inset-0 h-full w-full rounded-2xl"
+                src={`https://www.youtube-nocookie.com/embed/${id}`}
+                title={title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        ) : hero ? (
+          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={prefixAsset(hero)} alt="" className="w-full" />
+          </figure>
+        ) : null}
+
+        {microCopy ? (
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
+            {microCopy}
+          </div>
+        ) : null}
+      </div>
+    </aside>
   )
 }
 
@@ -315,7 +342,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
   const sources = (data.sources?.length ? data.sources : PRESET_SOURCES[data.slug]) ?? []
 
-  // Which sections exist? -> used by TOC
+  // Build TOC from present sections
   const toc: { id: string; label: string }[] = []
   if (data.overview) toc.push({ id: 'overview', label: 'Overview' })
   if (data.whatItIs) toc.push({ id: 'what-it-is', label: 'What it is' })
@@ -333,42 +360,8 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   if (data.faq?.length) toc.push({ id: 'faqs', label: 'FAQs' })
   toc.push({ id: 'sources', label: 'Sources & references' })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
-  const canonical = `${siteUrl}/services/${data.slug}`
-
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: data.name,
-    description: data.overview,
-    serviceType: data.name,
-    areaServed: 'Puerto Rico',
-    provider: {
-      '@type': 'LocalBusiness',
-      name: 'Upgrade Wellness Center Puerto Rico',
-      url: siteUrl || 'https://example.com',
-    },
-    url: canonical,
-    image: data.heroImage ? [prefixAsset(data.heroImage)] : undefined,
-    sameAs: sources?.map((s) => s.href),
-  }
-
-  const breadcrumbsJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteUrl}/services` },
-      { '@type': 'ListItem', position: 3, name: data.name, item: canonical },
-    ],
-  }
-
   return (
     <>
-      {/* SEO JSON-LD */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }} />
-
       {/* Header */}
       <section className="relative isolate">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white" />
@@ -404,13 +397,12 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </Link>
             </div>
 
-            {/* Dynamic TOC */}
             <TableOfContents sections={toc} />
           </div>
         </Container>
       </section>
 
-      {/* Body — 2-column: content + slim media rail */}
+      {/* Body — 2-column: content + video rail */}
       <section className="py-8 md:py-10">
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
@@ -453,97 +445,60 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 {data.howToPrepare?.length ? (
                   <>
                     <SectionHeader id="how-to-prepare">How to prepare</SectionHeader>
-                    <Accordion title="Preparation checklist">
-                      <DotList items={data.howToPrepare} />
-                    </Accordion>
+                    <DotList items={data.howToPrepare} />
                   </>
                 ) : null}
 
-                {/* Red Light therapy — Helmet 810 block */}
                 {data.helmet810 && (data.helmet810.title || data.helmet810.deviceSpecs?.length || data.helmet810.mechanisms?.length || data.helmet810.why810?.length || data.helmet810.timeAndFrequency?.length) ? (
                   <>
                     <SectionHeader id="helmet-810">{data.helmet810.title ?? 'Near-Infrared Light Therapy Helmet (810 nm)'}</SectionHeader>
-
-                    {data.helmet810.deviceSpecs?.length ? (
-                      <Accordion title="Device specs">
-                        <DotList items={data.helmet810.deviceSpecs} />
-                      </Accordion>
-                    ) : null}
-
-                    {data.helmet810.why810?.length ? (
-                      <Accordion title="Why 810 nm?">
-                        <DotList items={data.helmet810.why810} />
-                      </Accordion>
-                    ) : null}
-
-                    {data.helmet810.mechanisms?.length ? (
-                      <Accordion title="Mechanisms (snapshot)">
-                        <DotList items={data.helmet810.mechanisms} />
-                      </Accordion>
-                    ) : null}
-
-                    {data.helmet810.timeAndFrequency?.length ? (
-                      <Accordion title="Time & frequency">
-                        <DotList items={data.helmet810.timeAndFrequency} />
-                      </Accordion>
-                    ) : null}
+                    {data.helmet810.deviceSpecs?.length ? <InfoCallout title="Device specs"><DotList items={data.helmet810.deviceSpecs} /></InfoCallout> : null}
+                    {data.helmet810.why810?.length ? <Accordion title="Why 810 nm?"><DotList items={data.helmet810.why810} /></Accordion> : null}
+                    {data.helmet810.mechanisms?.length ? <Accordion title="Mechanisms (snapshot)"><DotList items={data.helmet810.mechanisms} /></Accordion> : null}
+                    {data.helmet810.timeAndFrequency?.length ? <Accordion title="Time & frequency"><DotList items={data.helmet810.timeAndFrequency} /></Accordion> : null}
                   </>
                 ) : null}
 
-                {/* Hydrogen Water — moreAboutH2 */}
                 {data.moreAboutH2 &&
                   (data.moreAboutH2.mechanismSnapshot?.length ||
                     data.moreAboutH2.bestUseTips?.length ||
                     data.moreAboutH2.storageAndPrep?.length) && (
                     <>
                       <SectionHeader id="more-about-h2">More about H₂</SectionHeader>
-                      {data.moreAboutH2.mechanismSnapshot?.length ? (
-                        <Accordion title="Mechanism snapshot">
-                          <DotList items={data.moreAboutH2.mechanismSnapshot} />
-                        </Accordion>
-                      ) : null}
-                      {data.moreAboutH2.bestUseTips?.length ? (
-                        <Accordion title="Best-use tips">
-                          <DotList items={data.moreAboutH2.bestUseTips} />
-                        </Accordion>
-                      ) : null}
-                      {data.moreAboutH2.storageAndPrep?.length ? (
-                        <Accordion title="Storage & prep">
-                          <DotList items={data.moreAboutH2.storageAndPrep} />
-                        </Accordion>
-                      ) : null}
+                      {data.moreAboutH2.mechanismSnapshot?.length ? <Accordion title="Mechanism snapshot"><DotList items={data.moreAboutH2.mechanismSnapshot} /></Accordion> : null}
+                      {data.moreAboutH2.bestUseTips?.length ? <Accordion title="Best-use tips"><DotList items={data.moreAboutH2.bestUseTips} /></Accordion> : null}
+                      {data.moreAboutH2.storageAndPrep?.length ? <Accordion title="Storage & prep"><DotList items={data.moreAboutH2.storageAndPrep} /></Accordion> : null}
                     </>
                   )}
 
-                {/* Safety */}
                 {data.safety?.notes?.length ? (
                   <>
                     <SectionHeader id="safety">Safety notes</SectionHeader>
                     <InfoCallout title="Please read">
                       <ul className="list-disc pl-5">
-                        {data.safety.notes.map((n) => (
-                          <li key={n}>{n}</li>
-                        ))}
+                        {data.safety.notes.map((n) => <li key={n}>{n}</li>)}
                       </ul>
                     </InfoCallout>
                   </>
                 ) : null}
 
-                {/* FAQ */}
                 {data.faq?.length ? (
                   <>
                     <SectionHeader id="faqs">FAQs</SectionHeader>
                     <div className="mt-2 space-y-2">
                       {data.faq.map((f) => (
-                        <Accordion key={f.q} title={f.q}>
-                          <p>{f.a}</p>
-                        </Accordion>
+                        <details key={f.q} className="group rounded-xl border border-slate-200 bg-white/70 p-4 open:bg-white">
+                          <summary className="cursor-pointer select-none text-sm font-semibold text-slate-900 outline-none">
+                            {f.q}
+                            <span className="ml-2 text-slate-400 transition group-open:rotate-180">▾</span>
+                          </summary>
+                          <div className="mt-3 text-slate-700"><p>{f.a}</p></div>
+                        </details>
                       ))}
                     </div>
                   </>
                 ) : null}
 
-                {/* Sources */}
                 <div className="mt-6">
                   <SectionHeader id="sources">Sources & references</SectionHeader>
                   <ul className="mt-2 space-y-1">
@@ -556,8 +511,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                           rel="noreferrer noopener"
                           className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
                         >
-                          {s.label}
-                          <span aria-hidden className="ml-1">↗</span>
+                          {s.label}<span aria-hidden className="ml-1">↗</span>
                         </a>
                       </li>
                     ))}
@@ -570,13 +524,12 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                   </p>
                 </div>
 
-                {/* Prev/Next */}
                 <PrevNext slug={data.slug} />
               </div>
             </article>
 
-            {/* Media / Quick info rail */}
-            <MediaRail hero={data.heroImage} slots={data.media?.slots} microCopy={data.microCopy} />
+            {/* Right column video rail */}
+            <VideoRail media={data.media} hero={data.heroImage} microCopy={data.microCopy} />
           </div>
 
           {/* Footer actions */}
