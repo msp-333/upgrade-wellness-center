@@ -31,7 +31,7 @@ export default function AboutPage() {
   const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
-  // Autoplay video assets (put your files in /public)
+  // Background video for "Why Upgrade" (put your files in /public)
   const VIDEO_MP4 = '/videos/home-hero.mp4'
   const VIDEO_WEBM = '/videos/home-hero.webm' // optional
   const VIDEO_POSTER = '/images/home-video-poster.jpg' // optional
@@ -143,41 +143,45 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Autoplay Video Band ====================================== */}
-      <section aria-labelledby="intro-video" className="relative py-8 sm:py-10 md:py-12">
-        <Container>
-          <Reveal delay={120}>
-            <div className="rounded-[24px] border border-slate-200/80 bg-white/70 p-2 shadow-[0_8px_22px_rgba(16,24,40,.06)] backdrop-blur">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
-                <video
-                  key="home-hero-video"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  poster={asset(VIDEO_POSTER)}
-                  aria-label="A quick look inside Upgrade Wellness Center"
-                >
-                  <source src={asset(VIDEO_WEBM)} type="video/webm" />
-                  <source src={asset(VIDEO_MP4)} type="video/mp4" />
-                  Your browser does not support the video tag.{' '}
-                  <a href={asset(VIDEO_MP4)}>Watch the video</a>.
-                </video>
-              </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="Why Upgrade" tone="emerald" />
 
-      {/* ===== WHY UPGRADE =============================================== */}
+      {/* ===== WHY UPGRADE — with background video ====================== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
+        {/* Background video (with reduced-motion fallback) */}
+        <div className="absolute inset-0 -z-20 pointer-events-none">
+          <img
+            src={asset(VIDEO_POSTER)}
+            alt=""
+            aria-hidden
+            className="hidden h-full w-full object-cover motion-reduce:block"
+          />
+          <video
+            key="why-upgrade-bg"
+            className="h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={asset(VIDEO_POSTER)}
+            aria-hidden
+          >
+            <source src={asset(VIDEO_WEBM)} type="video/webm" />
+            <source src={asset(VIDEO_MP4)} type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Readability scrim */}
+        <div className="absolute inset-0 -z-10" aria-hidden>
+          <div className="absolute inset-0 bg-white/70 md:bg-white/55" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-transparent to-white/80" />
+        </div>
+
+        {/* Soft accents (optional) */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/60 blur-3xl" />
+
         <Container>
           <Reveal delay={120}>
             <SectionHeader
@@ -196,7 +200,7 @@ export default function AboutPage() {
               { title: 'Community & accountability', body: 'Events, groups, and gentle check-ins to keep momentum going.' },
             ].map((c, i) => (
               <Reveal key={c.title} delay={160 + i * 90}>
-                <div className="group relative rounded-[18px] border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+                <div className="group relative rounded-[18px] border border-slate-200 bg-white/90 backdrop-blur-sm p-5 sm:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/30 via-transparent to-emerald-500/30" />
                   <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/15">
                     <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
@@ -281,21 +285,9 @@ export default function AboutPage() {
 
           <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 md:grid-cols-3">
             {[
-              {
-                step: '1',
-                title: 'Arrive & settle',
-                body: 'Check in, sip water, and set a gentle intention for your time here.',
-              },
-              {
-                step: '2',
-                title: 'Restore',
-                body: 'Unwind while your body does its best healing work—no effort required.',
-              },
-              {
-                step: '3',
-                title: 'Integrate',
-                body: 'Leave with one or two doable actions to extend benefits into your week.',
-              },
+              { step: '1', title: 'Arrive & settle', body: 'Check in, sip water, and set a gentle intention for your time here.' },
+              { step: '2', title: 'Restore', body: 'Unwind while your body does its best healing work—no effort required.' },
+              { step: '3', title: 'Integrate', body: 'Leave with one or two doable actions to extend benefits into your week.' },
             ].map((card, i) => (
               <Reveal key={card.step} delay={150 + i * 90}>
                 <div className="relative overflow-hidden rounded-[18px] sm:rounded-[22px] border border-[#E4DAFF] bg-[linear-gradient(135deg,#FCFBFF,#F3EDFF)] p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
@@ -458,7 +450,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== YouTube Embeds (NEW) – placed before the final CTA ======= */}
+      {/* ===== YouTube Embeds — before the final CTA ===================== */}
       <section className="relative py-10 sm:py-12 md:py-14" aria-labelledby="yt-title">
         <Container>
           <Reveal delay={110}>
