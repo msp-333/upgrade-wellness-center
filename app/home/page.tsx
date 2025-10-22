@@ -148,7 +148,7 @@ export default function AboutPage() {
 
       {/* ===== WHY UPGRADE — with background video ====================== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
-        {/* Background video (with reduced-motion fallback) */}
+        {/* Background video (with reduced-motion + poster fallback) */}
         <div className="absolute inset-0 -z-20 pointer-events-none">
           <img
             src={asset(VIDEO_POSTER)}
@@ -172,16 +172,16 @@ export default function AboutPage() {
           </video>
         </div>
 
-        {/* Readability scrim */}
+        {/* Readability scrim (darker + soft vignette) */}
         <div className="absolute inset-0 -z-10" aria-hidden>
-          <div className="absolute inset-0 bg-slate-900/40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/55 via-transparent to-slate900/45" />
+          <div className="absolute inset-0 bg-slate-950/55" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-slate-950/60" />
+          <div className="absolute inset-0 bg-black/20 [mask-image:radial-gradient(120%_90%_at_50%_40%,#000_40%,transparent_85%)]" />
         </div>
-        
 
         {/* Soft accents (optional) */}
-        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/60 blur-3xl" />
+        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
 
         <Container>
           <Reveal delay={120}>
@@ -191,6 +191,7 @@ export default function AboutPage() {
               subtitle="Evidence-led methods, human-friendly guidance, and community that helps you stay consistent."
               tone="lavender"
               align="left"
+              onDark
             />
           </Reveal>
 
@@ -201,9 +202,9 @@ export default function AboutPage() {
               { title: 'Community & accountability', body: 'Events, groups, and gentle check-ins to keep momentum going.' },
             ].map((c, i) => (
               <Reveal key={c.title} delay={160 + i * 90}>
-                <div className="group relative rounded-[18px] border border-slate-200 bg-white/90 backdrop-blur-sm p-5 sm:p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/30 via-transparent to-emerald-500/30" />
-                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/15">
+                <div className="group relative rounded-[18px] border border-white/20 bg-white/90 backdrop-blur-md p-5 sm:p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/40 via-transparent to-emerald-400/40" />
+                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/25">
                     <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
                   </div>
                   <h3 className="text-base sm:text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
@@ -514,25 +515,34 @@ function SectionHeader({
   subtitle,
   tone = 'emerald',
   align = 'left',
+  onDark = false,
 }: {
   kicker: string
   title: string
   subtitle?: string
   tone?: 'emerald' | 'lavender'
   align?: 'left' | 'center'
+  onDark?: boolean
 }) {
   const alignCls = align === 'center' ? 'text-center mx-auto' : ''
-  const pillColor =
-    tone === 'lavender'
+
+  const pillColor = (() => {
+    if (onDark) return 'bg-white/10 text-white border-white/30'
+    return tone === 'lavender'
       ? 'bg-white text-[#7C6FB0] border-[#E4DAFF]'
       : 'bg-white text-emerald-700 border-emerald-600/20'
+  })()
+
+  const titleColor = onDark ? 'text-white' : 'text-slate-900'
+  const subColor = onDark ? 'text-white/80' : 'text-slate-700'
+
   return (
     <div className={`max-w-3xl ${alignCls}`}>
       <span className={`inline-block rounded-full border px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider ${pillColor}`}>
         {kicker}
       </span>
-      <h2 className="mt-3 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight text-slate-900">{title}</h2>
-      {subtitle && <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-700">{subtitle}</p>}
+      <h2 className={`mt-3 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight ${titleColor}`}>{title}</h2>
+      {subtitle && <p className={`mt-2 text-sm sm:text-[15px] leading-relaxed ${subColor}`}>{subtitle}</p>}
     </div>
   )
 }
