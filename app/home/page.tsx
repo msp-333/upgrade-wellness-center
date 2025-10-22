@@ -27,9 +27,17 @@ export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets (hero unchanged)
+  // Assets
   const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
+
+  // Autoplay video assets (put your files in /public)
+  const VIDEO_MP4 = '/videos/home-hero.mp4'
+  const VIDEO_WEBM = '/videos/home-hero.webm' // optional
+  const VIDEO_POSTER = '/images/home-video-poster.jpg' // optional
+
+  // YouTube video IDs (swap with your own)
+  const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'uu857hjy4CQ'] as const
 
   const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
   const phone = '(123) 456-7890'
@@ -41,7 +49,7 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE benefits (no images; inline SVG icons)
+  // EE benefits
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen',       label: 'Cells Regenerate',                          Icon: SparkleIcon },
     { id: 'oxygen',      label: 'Oxygenates Blood\n& Improves Circulation',  Icon: DropO2Icon },
@@ -61,7 +69,6 @@ export default function AboutPage() {
     { id: 'energy',      label: 'Increases Energy\n& Physical Stamina',      Icon: BoltIcon },
   ]
 
-  // Alternating icon pods (lavender blended with emerald)
   const iconBgVariants = [
     'bg-emerald-50 ring-emerald-600/10',
     'bg-[#F3EDFF] ring-[#7C6FB0]/10',
@@ -71,7 +78,7 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* ===== Hero (UNCHANGED) ========================================== */}
+      {/* ===== Hero ====================================================== */}
       <section className="relative isolate" aria-labelledby="about-hero-title">
         <img
           src={asset(HERO)}
@@ -136,12 +143,39 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== Autoplay Video Band ====================================== */}
+      <section aria-labelledby="intro-video" className="relative py-8 sm:py-10 md:py-12">
+        <Container>
+          <Reveal delay={120}>
+            <div className="rounded-[24px] border border-slate-200/80 bg-white/70 p-2 shadow-[0_8px_22px_rgba(16,24,40,.06)] backdrop-blur">
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
+                <video
+                  key="home-hero-video"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  poster={asset(VIDEO_POSTER)}
+                  aria-label="A quick look inside Upgrade Wellness Center"
+                >
+                  <source src={asset(VIDEO_WEBM)} type="video/webm" />
+                  <source src={asset(VIDEO_MP4)} type="video/mp4" />
+                  Your browser does not support the video tag.{' '}
+                  <a href={asset(VIDEO_MP4)}>Watch the video</a>.
+                </video>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="Why Upgrade" tone="emerald" />
 
       {/* ===== WHY UPGRADE =============================================== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
-        {/* soft accents */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/60 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/60 blur-3xl" />
         <Container>
@@ -196,7 +230,6 @@ export default function AboutPage() {
           <Reveal delay={160}>
             <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
               <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-3 sm:p-5">
-                {/* mobile-first: 2 columns, grows to 3/4 on larger screens */}
                 <ul role="list" className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 md:grid-cols-3 xl:grid-cols-4">
                   {eeBenefits.map((b, i) => {
                     const iconVariant = iconBgVariants[i % iconBgVariants.length]
@@ -207,13 +240,10 @@ export default function AboutPage() {
                           role="group"
                           className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 md:p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
                         >
-                          {/* conic halo */}
                           <div className="pointer-events-none absolute -inset-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                             <div className="absolute inset-0 rounded-[16px] sm:rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(124,111,176,0.12),rgba(16,185,129,0.10),rgba(124,111,176,0.12))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)]" />
                           </div>
-                          {/* inner light */}
                           <div className="pointer-events-none absolute inset-0 rounded-[16px] sm:rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(124,111,176,0.10),transparent_60%)]" aria-hidden />
-                          {/* content */}
                           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
                             <div className={`mb-2 sm:mb-3 inline-flex h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-xl sm:rounded-2xl ring-1 transition-transform duration-300 group-hover:scale-[1.06] ${iconVariant}`}>
                               <b.Icon className="h-8 w-8 sm:h-9 sm:w-9 md:h-12 md:w-12 text-emerald-700" />
@@ -428,6 +458,33 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== YouTube Embeds (NEW) – placed before the final CTA ======= */}
+      <section className="relative py-10 sm:py-12 md:py-14" aria-labelledby="yt-title">
+        <Container>
+          <Reveal delay={110}>
+            <SectionHeader
+              kicker="Videos"
+              title="Learn more on YouTube"
+              subtitle="Quick tours, how-tos, and community stories."
+              tone="lavender"
+              align="center"
+            />
+          </Reveal>
+
+          <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-5 lg:grid-cols-3">
+            {YT_IDS.map((id, i) => (
+              <Reveal key={id} delay={140 + i * 90}>
+                <article className="overflow-hidden rounded-[16px] border border-slate-200 bg-white shadow-sm">
+                  <div className="relative aspect-[16/9]">
+                    <YouTubeFrame id={id} title={`YouTube video ${i + 1}`} />
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* ===== CTA ======================================================== */}
       <section className="py-14 sm:py-16 md:py-20" aria-labelledby="cta">
         <Container>
@@ -505,6 +562,20 @@ function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'em
   )
 }
 
+/* ------------------------------ YouTube helper ------------------------------ */
+function YouTubeFrame({ id, title }: { id: string; title: string }) {
+  return (
+    <iframe
+      className="absolute inset-0 h-full w-full"
+      src={`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    />
+  )
+}
+
 /* ------------------------------ Icons ------------------------------ */
 function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -536,8 +607,6 @@ function MailIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
-/* ------- EE Grid Icons (inline SVG – lightweight) --------- */
 function SparkleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
