@@ -142,10 +142,7 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="Why Upgrade" tone="emerald" />
-
+      
       {/* ===== WHY UPGRADE — with background video ====================== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
         {/* Background video (with reduced-motion + poster fallback) */}
