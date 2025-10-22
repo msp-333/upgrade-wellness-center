@@ -210,27 +210,6 @@ function Breadcrumbs({ name }: { name: string }) {
   )
 }
 
-function TableOfContents({ sections }: { sections: { id: string; label: string }[] }) {
-  if (!sections.length) return null
-  return (
-    <div className="mt-4 rounded-xl border border-slate-200 bg-white/70 p-4">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">On this page</p>
-      <ul className="mt-2 space-y-1 text-sm">
-        {sections.map((s) => (
-          <li key={s.id}>
-            <a
-              href={`#${s.id}`}
-              className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-emerald-700"
-            >
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
 /** ---------- New: Video rail (replaces attachments/images) ---------- */
 function parseYouTubeId(url: string): string | null {
   try {
@@ -396,8 +375,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 Contact us
               </Link>
             </div>
-
-            <TableOfContents sections={toc} />
+            
           </div>
         </Container>
       </section>
