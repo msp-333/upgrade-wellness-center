@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation'
 import Container from '@/components/Container'
 import cards from '@/data/services.json'
 import details from '@/data/service-details.json'
-import * as React from 'react' // for React.ReactNode types
+import * as React from 'react' // types only
 
-/** ---------- Types (extended to match your enriched JSON) ---------- */
+/** ---------- Types (extended to match enriched JSON) ---------- */
 type Card = {
   id: string
   name: string
@@ -15,6 +15,7 @@ type Card = {
   summary: string
   duration?: string
   image?: string
+  intensity?: 'Gentle' | 'Moderate' | 'Focused'
 }
 
 type Source = { label: string; href: string }
@@ -31,7 +32,7 @@ type Detail = {
   safety?: { notes?: string[] }
   sources?: Source[]
 
-  // New optional blocks
+  // Optional blocks
   howItWorks?: {
     summary?: string
     details?: string[]
@@ -62,6 +63,7 @@ const allCards = cards as Card[]
 const allDetails = details as Detail[]
 const findDetail = (slug: string) => allDetails.find((d) => d.slug === slug)
 
+/** ---------- Build-time params/metadata ---------- */
 export async function generateStaticParams() {
   return allCards.map((c) => ({ slug: c.slug }))
 }
@@ -69,53 +71,47 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const d = findDetail(params.slug)
   if (!d) return {}
+  const title = `${d.name} | Services`
+  const description = d.overview
+  const base = process.env.NEXT_PUBLIC_SITE_URL || ''
+  const canonical = `${base}/services/${d.slug}`
+
   return {
-    title: `${d.name} | Services`,
-    description: d.overview,
+    title,
+    description,
     alternates: { canonical: `/services/${d.slug}` },
     robots: { index: true, follow: true },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'article',
+      images: d.heroImage ? [{ url: prefixAsset(d.heroImage), alt: d.name }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: d.heroImage ? [prefixAsset(d.heroImage)] : undefined,
+    },
   }
 }
 
 /** Credible fallback sources by slug (used only if detail.sources is empty) */
 const PRESET_SOURCES: Record<string, Source[]> = {
   'red-light-therapy': [
-    {
-      label: 'Cleveland Clinic — Red Light Therapy overview',
-      href: 'https://my.clevelandclinic.org/health/articles/22114-red-light-therapy',
-    },
-    {
-      label: 'JAAD (2025) — Consensus on photobiomodulation in clinical practice',
-      href: 'https://www.jaad.org/article/S0190-9622%2825%2900659-0/fulltext',
-    },
-    {
-      label: 'Mass General — Brain Photobiomodulation Clinic',
-      href: 'https://www.massgeneral.org/psychiatry/treatments-and-services/brain-photobiomodulation-clinic',
-    },
+    { label: 'Cleveland Clinic — Red Light Therapy overview', href: 'https://my.clevelandclinic.org/health/articles/22114-red-light-therapy' },
+    { label: 'JAAD (2025) — Consensus on photobiomodulation in clinical practice', href: 'https://www.jaad.org/article/S0190-9622%2825%2900659-0/fulltext' },
+    { label: 'Mass General — Brain Photobiomodulation Clinic', href: 'https://www.massgeneral.org/psychiatry/treatments-and-services/brain-photobiomodulation-clinic' },
   ],
   'hydrogen-water': [
-    {
-      label: 'PubMed (2024) — Systematic review: Hydrogen water, benefits & evidence',
-      href: 'https://pubmed.ncbi.nlm.nih.gov/38256045/',
-    },
-    {
-      label: 'Pharmaceuticals (2023) — Meta-analysis: HRW & blood lipid profiles',
-      href: 'https://www.mdpi.com/1424-8247/16/2/142',
-    },
+    { label: 'PubMed (2024) — Systematic review: Hydrogen water, benefits & evidence', href: 'https://pubmed.ncbi.nlm.nih.gov/38256045/' },
+    { label: 'Pharmaceuticals (2023) — Meta-analysis: HRW & blood lipid profiles', href: 'https://www.mdpi.com/1424-8247/16/2/142' },
   ],
   'energy-enhancement-system': [
-    {
-      label: 'FTC — Health Products Compliance Guidance (claims must be substantiated)',
-      href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf',
-    },
-    {
-      label: 'NCCIH — Know the Science: Finding reliable health info online',
-      href: 'https://www.nccih.nih.gov/health/know-science/finding-and-evaluating-online-resources/finding-health-information-online/introduction',
-    },
-    {
-      label: 'FDA — Warning Letters database (how FDA enforces claims)',
-      href: 'https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters',
-    },
+    { label: 'FTC — Health Products Compliance Guidance (claims must be substantiated)', href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf' },
+    { label: 'NCCIH — Know the Science: Finding reliable health info online', href: 'https://www.nccih.nih.gov/health/know-science/finding-and-evaluating-online-resources/finding-health-information-online/introduction' },
+    { label: 'FDA — Warning Letters database (how FDA enforces claims)', href: 'https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters' },
   ],
 }
 
@@ -125,12 +121,13 @@ function Pill({
   tone = 'emerald',
 }: {
   children: React.ReactNode
-  tone?: 'emerald' | 'slate' | 'amber'
+  tone?: 'emerald' | 'slate' | 'amber' | 'sky'
 }) {
   const tones = {
     emerald: 'border-emerald-200 bg-emerald-50 text-emerald-900',
     slate: 'border-slate-200 bg-white text-slate-700',
     amber: 'border-amber-300 bg-amber-50 text-amber-900',
+    sky: 'border-sky-200 bg-sky-50 text-sky-900',
   } as const
   return (
     <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium ${tones[tone]}`}>
@@ -139,8 +136,12 @@ function Pill({
   )
 }
 
-function SectionHeader({ children }: { children: React.ReactNode }) {
-  return <h3 className="mt-6 text-base font-semibold text-slate-900">{children}</h3>
+function SectionHeader({ id, children }: { id: string; children: React.ReactNode }) {
+  return (
+    <h3 id={id} className="mt-8 scroll-mt-24 text-base font-semibold text-slate-900">
+      {children}
+    </h3>
+  )
 }
 
 function DotList({ items }: { items: string[] }) {
@@ -175,14 +176,8 @@ function InfoCallout({ title, children }: { title: string; children: React.React
   )
 }
 
-/** Uncontrolled accordion (no defaultOpen prop; stays type-safe) */
-function Accordion({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
+/** Uncontrolled accordion */
+function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <details className="group mt-4 rounded-xl border border-slate-200 bg-white/70 p-4 open:bg-white">
       <summary className="cursor-pointer select-none text-sm font-semibold text-slate-900 outline-none">
@@ -200,7 +195,7 @@ function MediaRail({
   microCopy,
 }: {
   hero?: string
-  slots?: { key: string; src: string; caption?: string; maxHeight?: string }[]
+  slots?: { key: string; src: string; caption?: string; aspectHint?: string; maxHeight?: string }[]
   microCopy?: string
 }) {
   if (!hero && (!slots || slots.length === 0) && !microCopy) return null
@@ -210,7 +205,7 @@ function MediaRail({
         {hero ? (
           <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={hero} alt="" className="w-full" />
+            <img src={prefixAsset(hero)} alt="" className="w-full" />
           </figure>
         ) : null}
 
@@ -221,7 +216,7 @@ function MediaRail({
             style={m.maxHeight ? { maxHeight: m.maxHeight } : undefined}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={m.src} alt={m.caption ?? ''} className="h-full w-full object-cover" />
+            <img src={prefixAsset(m.src)} alt={m.caption ?? ''} className="h-full w-full object-cover" />
             {m.caption ? <figcaption className="px-3 py-2 text-xs text-slate-500">{m.caption}</figcaption> : null}
           </figure>
         ))}
@@ -234,6 +229,84 @@ function MediaRail({
   )
 }
 
+function Breadcrumbs({ name }: { name: string }) {
+  return (
+    <nav aria-label="Breadcrumb" className="text-sm text-slate-600">
+      <ol className="flex flex-wrap items-center gap-1">
+        <li>
+          <Link href="/" className="hover:underline">
+            Home
+          </Link>
+        </li>
+        <li aria-hidden>›</li>
+        <li>
+          <Link href="/services" className="hover:underline">
+            Services
+          </Link>
+        </li>
+        <li aria-hidden>›</li>
+        <li aria-current="page" className="text-slate-900 font-medium">
+          {name}
+        </li>
+      </ol>
+    </nav>
+  )
+}
+
+function TableOfContents({ sections }: { sections: { id: string; label: string }[] }) {
+  if (!sections.length) return null
+  return (
+    <div className="mt-4 rounded-xl border border-slate-200 bg-white/70 p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">On this page</p>
+      <ul className="mt-2 space-y-1 text-sm">
+        {sections.map((s) => (
+          <li key={s.id}>
+            <a href={`#${s.id}`} className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900">
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function PrevNext({ slug }: { slug: string }) {
+  const idx = allCards.findIndex((c) => c.slug === slug)
+  if (idx === -1) return null
+  const prev = allCards[idx - 1]
+  const next = allCards[idx + 1]
+  if (!prev && !next) return null
+  return (
+    <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+      {prev ? (
+        <Link
+          href={`/services/${prev.slug}`}
+          className="inline-flex items-center rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-white"
+        >
+          ← {prev.name}
+        </Link>
+      ) : <span />}
+      {next ? (
+        <Link
+          href={`/services/${next.slug}`}
+          className="inline-flex items-center rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-white"
+        >
+          {next.name} →
+        </Link>
+      ) : <span />}
+    </div>
+  )
+}
+
+/** ---------- Utils ---------- */
+function prefixAsset(p?: string) {
+  if (!p) return ''
+  if (/^https?:\/\//i.test(p)) return p
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+  return `${base}${p}`
+}
+
 /** ---------- Page ---------- */
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
   const data = findDetail(params.slug)
@@ -242,28 +315,81 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
   const sources = (data.sources?.length ? data.sources : PRESET_SOURCES[data.slug]) ?? []
 
+  // Which sections exist? -> used by TOC
+  const toc: { id: string; label: string }[] = []
+  if (data.overview) toc.push({ id: 'overview', label: 'Overview' })
+  if (data.whatItIs) toc.push({ id: 'what-it-is', label: 'What it is' })
+  if (data.howItWorks?.summary || data.howItWorks?.details?.length || data.howItWorks?.plainLanguage) {
+    toc.push({ id: 'how-it-works', label: 'How it works' })
+  }
+  if (data.benefits?.length) toc.push({ id: 'benefits', label: 'Potential benefits' })
+  if (data.sessionFlow?.length) toc.push({ id: 'session-flow', label: 'Session flow' })
+  if (data.howToPrepare?.length) toc.push({ id: 'how-to-prepare', label: 'How to prepare' })
+  if (data.helmet810 && (data.helmet810.title || data.helmet810.deviceSpecs?.length || data.helmet810.mechanisms?.length || data.helmet810.why810?.length))
+    toc.push({ id: 'helmet-810', label: data.helmet810.title ?? 'Near-Infrared Helmet (810 nm)' })
+  if (data.moreAboutH2 && (data.moreAboutH2.mechanismSnapshot?.length || data.moreAboutH2.bestUseTips?.length || data.moreAboutH2.storageAndPrep?.length))
+    toc.push({ id: 'more-about-h2', label: 'More about H₂' })
+  if (data.safety?.notes?.length) toc.push({ id: 'safety', label: 'Safety notes' })
+  if (data.faq?.length) toc.push({ id: 'faqs', label: 'FAQs' })
+  toc.push({ id: 'sources', label: 'Sources & references' })
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+  const canonical = `${siteUrl}/services/${data.slug}`
+
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: data.name,
+    description: data.overview,
+    serviceType: data.name,
+    areaServed: 'Puerto Rico',
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Upgrade Wellness Center Puerto Rico',
+      url: siteUrl || 'https://example.com',
+    },
+    url: canonical,
+    image: data.heroImage ? [prefixAsset(data.heroImage)] : undefined,
+    sameAs: sources?.map((s) => s.href),
+  }
+
+  const breadcrumbsJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteUrl}/services` },
+      { '@type': 'ListItem', position: 3, name: data.name, item: canonical },
+    ],
+  }
+
   return (
     <>
+      {/* SEO JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }} />
+
       {/* Header */}
       <section className="relative isolate">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white" />
-        <Container className="pt-12 md:pt-16 pb-6">
+        <Container className="pt-10 md:pt-14 pb-6">
           <div className="flex flex-col gap-4">
+            <Breadcrumbs name={data.name} />
+
             <div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-700/70">Service</p>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-slate-900">
                 {data.name}
               </h1>
 
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(data.badges ?? []).map((b) => (
-                  <Pill key={b}>{b}</Pill>
-                ))}
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                {(data.badges ?? []).map((b) => <Pill key={b}>{b}</Pill>)}
+                {card.intensity && <Pill tone="sky">🎚 {card.intensity}</Pill>}
                 {card.duration && <Pill tone="slate">⏱ {card.duration}</Pill>}
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Link
                 href="/services"
                 className="inline-flex items-center rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
@@ -277,6 +403,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 Contact us
               </Link>
             </div>
+
+            {/* Dynamic TOC */}
+            <TableOfContents sections={toc} />
           </div>
         </Container>
       </section>
@@ -288,53 +417,52 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             {/* Main content */}
             <article className="order-2 md:order-1 md:col-span-8">
               <div className="mx-auto rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
-                <h2 className="text-lg font-semibold text-slate-900">Overview</h2>
+                <h2 id="overview" className="text-lg font-semibold text-slate-900 scroll-mt-24">Overview</h2>
                 <p className="mt-2 text-slate-700">{data.overview}</p>
 
-                <SectionHeader>What it is</SectionHeader>
+                <SectionHeader id="what-it-is">What it is</SectionHeader>
                 <p className="mt-2 text-slate-700">{data.whatItIs}</p>
 
-                {data.howItWorks?.summary || data.howItWorks?.details?.length || data.howItWorks?.plainLanguage ? (
+                {(data.howItWorks?.summary || data.howItWorks?.details?.length || data.howItWorks?.plainLanguage) && (
                   <>
-                    <SectionHeader>How it works</SectionHeader>
-                    {data.howItWorks?.summary ? (
-                      <p className="mt-2 text-slate-700">{data.howItWorks.summary}</p>
-                    ) : null}
-
+                    <SectionHeader id="how-it-works">How it works</SectionHeader>
+                    {data.howItWorks?.summary && <p className="mt-2 text-slate-700">{data.howItWorks.summary}</p>}
                     {data.howItWorks?.details?.length ? <DotList items={data.howItWorks.details} /> : null}
-
-                    {data.howItWorks?.plainLanguage ? (
+                    {data.howItWorks?.plainLanguage && (
                       <InfoCallout title="In plain language">
                         <p>{data.howItWorks.plainLanguage}</p>
                       </InfoCallout>
-                    ) : null}
+                    )}
                   </>
-                ) : null}
+                )}
 
                 {data.benefits?.length ? (
                   <>
-                    <SectionHeader>Potential benefits</SectionHeader>
+                    <SectionHeader id="benefits">Potential benefits</SectionHeader>
                     <DotList items={data.benefits} />
                   </>
                 ) : null}
 
                 {data.sessionFlow?.length ? (
                   <>
-                    <SectionHeader>Session flow (what to expect)</SectionHeader>
+                    <SectionHeader id="session-flow">Session flow (what to expect)</SectionHeader>
                     <NumList items={data.sessionFlow} />
                   </>
                 ) : null}
 
                 {data.howToPrepare?.length ? (
-                  <Accordion title="How to prepare">
-                    <DotList items={data.howToPrepare} />
-                  </Accordion>
+                  <>
+                    <SectionHeader id="how-to-prepare">How to prepare</SectionHeader>
+                    <Accordion title="Preparation checklist">
+                      <DotList items={data.howToPrepare} />
+                    </Accordion>
+                  </>
                 ) : null}
 
                 {/* Red Light therapy — Helmet 810 block */}
-                {data.helmet810 && (data.helmet810.title || data.helmet810.deviceSpecs?.length || data.helmet810.mechanisms?.length) ? (
+                {data.helmet810 && (data.helmet810.title || data.helmet810.deviceSpecs?.length || data.helmet810.mechanisms?.length || data.helmet810.why810?.length || data.helmet810.timeAndFrequency?.length) ? (
                   <>
-                    <SectionHeader>{data.helmet810.title ?? 'Near-Infrared Light Therapy Helmet (810 nm)'}</SectionHeader>
+                    <SectionHeader id="helmet-810">{data.helmet810.title ?? 'Near-Infrared Light Therapy Helmet (810 nm)'}</SectionHeader>
 
                     {data.helmet810.deviceSpecs?.length ? (
                       <Accordion title="Device specs">
@@ -364,44 +492,47 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
                 {/* Hydrogen Water — moreAboutH2 */}
                 {data.moreAboutH2 &&
-                (data.moreAboutH2.mechanismSnapshot?.length ||
-                  data.moreAboutH2.bestUseTips?.length ||
-                  data.moreAboutH2.storageAndPrep?.length) ? (
-                  <>
-                    <SectionHeader>More about H₂</SectionHeader>
-                    {data.moreAboutH2.mechanismSnapshot?.length ? (
-                      <Accordion title="Mechanism snapshot">
-                        <DotList items={data.moreAboutH2.mechanismSnapshot} />
-                      </Accordion>
-                    ) : null}
-                    {data.moreAboutH2.bestUseTips?.length ? (
-                      <Accordion title="Best-use tips">
-                        <DotList items={data.moreAboutH2.bestUseTips} />
-                      </Accordion>
-                    ) : null}
-                    {data.moreAboutH2.storageAndPrep?.length ? (
-                      <Accordion title="Storage & prep">
-                        <DotList items={data.moreAboutH2.storageAndPrep} />
-                      </Accordion>
-                    ) : null}
-                  </>
-                ) : null}
+                  (data.moreAboutH2.mechanismSnapshot?.length ||
+                    data.moreAboutH2.bestUseTips?.length ||
+                    data.moreAboutH2.storageAndPrep?.length) && (
+                    <>
+                      <SectionHeader id="more-about-h2">More about H₂</SectionHeader>
+                      {data.moreAboutH2.mechanismSnapshot?.length ? (
+                        <Accordion title="Mechanism snapshot">
+                          <DotList items={data.moreAboutH2.mechanismSnapshot} />
+                        </Accordion>
+                      ) : null}
+                      {data.moreAboutH2.bestUseTips?.length ? (
+                        <Accordion title="Best-use tips">
+                          <DotList items={data.moreAboutH2.bestUseTips} />
+                        </Accordion>
+                      ) : null}
+                      {data.moreAboutH2.storageAndPrep?.length ? (
+                        <Accordion title="Storage & prep">
+                          <DotList items={data.moreAboutH2.storageAndPrep} />
+                        </Accordion>
+                      ) : null}
+                    </>
+                  )}
 
                 {/* Safety */}
                 {data.safety?.notes?.length ? (
-                  <InfoCallout title="Safety notes">
-                    <ul className="list-disc pl-5">
-                      {data.safety.notes.map((n) => (
-                        <li key={n}>{n}</li>
-                      ))}
-                    </ul>
-                  </InfoCallout>
+                  <>
+                    <SectionHeader id="safety">Safety notes</SectionHeader>
+                    <InfoCallout title="Please read">
+                      <ul className="list-disc pl-5">
+                        {data.safety.notes.map((n) => (
+                          <li key={n}>{n}</li>
+                        ))}
+                      </ul>
+                    </InfoCallout>
+                  </>
                 ) : null}
 
                 {/* FAQ */}
                 {data.faq?.length ? (
                   <>
-                    <SectionHeader>FAQs</SectionHeader>
+                    <SectionHeader id="faqs">FAQs</SectionHeader>
                     <div className="mt-2 space-y-2">
                       {data.faq.map((f) => (
                         <Accordion key={f.q} title={f.q}>
@@ -414,7 +545,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
                 {/* Sources */}
                 <div className="mt-6">
-                  <SectionHeader>Sources & references</SectionHeader>
+                  <SectionHeader id="sources">Sources & references</SectionHeader>
                   <ul className="mt-2 space-y-1">
                     {(sources ?? []).map((s) => (
                       <li key={s.label} className="flex items-start gap-2">
@@ -438,6 +569,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                     Wellness services are not medical treatment. This page is for general information and is not a substitute for professional advice.
                   </p>
                 </div>
+
+                {/* Prev/Next */}
+                <PrevNext slug={data.slug} />
               </div>
             </article>
 

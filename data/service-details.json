@@ -4,41 +4,45 @@
     "name": "Energy Enhancement System",
     "badges": ["General Wellness", "Unplug & Relax"],
     "heroImage": "/images/ees.svg",
-    "overview": "EES provides a quiet, restorative lounge experience. Many guests use it for deep rest, meditation, or reflective downtime.",
-    "whatItIs": "Screens are arranged to create a specific electromagnetic environment sometimes described as 'bio-scalar fields'. We frame EES as a relaxation modality—not a diagnosis or treatment.",
+    "overview": "A quiet, restorative lounge designed for deep rest. Many guests use EES to downshift from an ‘always-on’ day into a calm, reflective state—similar to meditation or a mindful nap.",
+    "whatItIs": "A set of screens arranged to create a specific electromagnetic environment sometimes described as “bio-scalar fields.” We present EES strictly as a relaxation modality—no diagnosis, treatment, or promises of medical outcomes.",
     "benefits": [
-      "Encourages a relaxed, restful state",
-      "Time away from devices and notifications",
-      "Pairs well with sleep and mindfulness habits"
+      "Encourages a relaxed, parasympathetic state",
+      "A deliberate break from screens and notifications",
+      "Pairs well with breathwork, meditation, or journaling",
+      "A gentle way to mark the transition from day to evening",
+      "Many guests report easier wind-down before bedtime"
     ],
     "sessionFlow": [
-      "Arrive a few minutes early and settle in.",
-      "Set a simple intention (rest, breathwork, quiet).",
-      "Recline with optional eye mask and blanket.",
-      "Hydrate after the session and notice how you feel."
+      "Arrive a few minutes early; store your phone and settle in.",
+      "Set a simple intention (rest, breathing, gratitude, or quiet).",
+      "Recline with an optional eye mask and blanket; let the room be still.",
+      "Hydrate after the session and notice how you feel for the rest of the day."
     ],
     "howItWorks": {
-      "summary": "Many guests are curious about the 'how'. A commonly discussed reference is the Schumann Resonance (~7.83 Hz), which overlaps with relaxed Alpha/Theta brainwave ranges associated with calm, meditative states.",
+      "summary": "Guests often ask about the “why it feels so calm.” A commonly referenced idea is the Schumann Resonance (~7.83 Hz), which overlaps with relaxed Alpha/Theta brainwave ranges associated with meditative, pre-sleep states.",
       "details": [
-        "Alpha/Theta states: Often linked with relaxed, dreamy, pre-sleep experiences—times when the body prioritizes repair and recovery.",
-        "Cellular charge: In simple terms, a relaxed state supports healthy cell membrane potentials (typically cited as ~70–90 mV).",
-        "Why 'Scalar'? Some use 'scalar waves' to describe fields created by anti-phase coherence (like noise-canceling: opposite waves flatten a signal). In concept analogies, the 'flat' result still carries energy redistributed in a different form."
+        "Alpha/Theta: Linked with relaxed, dreamy states—periods the body naturally favors for repair and integration.",
+        "Cellular charge: In simple terms, calm states support healthy cell-membrane potentials (often cited ~70–90 mV).",
+        "Why “Scalar”? Some describe anti-phase coherence—similar to noise-canceling, where opposite waves flatten a signal. The concept suggests the resulting field feels still and spacious."
       ],
-      "plainLanguage": "Think: a quiet room designed for deep calm—less 'doing', more 'allowing'."
+      "plainLanguage": "Think of a purpose-built quiet room: fewer distractions, gentle lighting, and permission to do nothing—so your system can exhale."
     },
     "howToPrepare": [
-      "Dress in comfortable, layered clothing (you may cool down as you relax).",
-      "Outdoor shoes off in the center—bring socks/slippers.",
-      "Arrive ~30 minutes early to unwind before your session.",
-      "Avoid heavy perfumes or oils (some guests are scent-sensitive)."
+      "Dress in comfortable, layered clothing (you might cool down as you relax).",
+      "Shoes off in the lounge—bring socks or slippers for comfort.",
+      "Arrive 10–15 minutes early to unwind before your session.",
+      "Avoid heavy perfumes or oils (some guests are scent-sensitive).",
+      "Consider a simple intention you’d like to rest into."
     ],
     "safety": {
       "notes": [
         "This is a general wellness session, not a medical therapy.",
-        "If you have implanted electronic devices or are pregnant, consult your clinician before trying new wellness practices."
+        "If you are pregnant or have implanted electronic devices, consult your clinician before new wellness practices.",
+        "If you feel lightheaded when standing after deep rest, pause and hydrate."
       ]
     },
-    "disclaimer": "Wellness information is educational, not medical advice. Experiences vary.",
+    "disclaimer": "Wellness information is educational and not medical advice. Experiences vary.",
     "media": {
       "slots": [
         {
@@ -57,14 +61,27 @@
         }
       ]
     },
+    "microCopy": "Soft blankets, low light, and a true phone-free zone. Treat it like a mini-retreat for your nervous system.",
     "faq": [
       {
-        "q": "How exactly does this system work?",
-        "a": "Guests often reference Earth's Schumann Resonance (~7.83 Hz), similar to relaxed Alpha/Theta brainwaves. In that state, people commonly report deep calm, rest, and a 'reset' feeling."
+        "q": "What might I feel during a session?",
+        "a": "Many guests feel warm, drowsy, or gently ‘floaty’. Others simply feel neutral but rested afterward. There’s no “right” experience—just give yourself permission to be still."
       },
       {
-        "q": "So why is it called 'Scalar Wave' therapy?",
-        "a": "The term comes from ideas about anti-phase coherence (imagine noise-canceling headphones). Two opposite waves cancel the oscillation but the energy is conserved and redistributed."
+        "q": "How many sessions should I try?",
+        "a": "If you’re new, try 1–3 sessions over 1–2 weeks and notice how your body responds. Some people book regular sessions as part of a broader relaxation routine."
+      },
+      {
+        "q": "Can I read or listen to music?",
+        "a": "You can, though many guests find the deepest rest by closing their eyes, slowing their breath, and letting the room be quiet."
+      },
+      {
+        "q": "How exactly does this system work?",
+        "a": "A common reference is Earth’s Schumann Resonance (~7.83 Hz), which overlaps with relaxed Alpha/Theta brainwaves. People often associate these states with calmer mood and easier wind-down."
+      },
+      {
+        "q": "Why is it sometimes called ‘scalar’?",
+        "a": "It comes from ideas about anti-phase coherence (think noise-canceling). The concept suggests oscillations are flattened, creating a field that feels still."
       }
     ],
     "sources": [
@@ -76,18 +93,25 @@
     "name": "Red Light Therapy (Photobiomodulation)",
     "badges": ["630–850nm", "Condition-specific evidence"],
     "heroImage": "/images/red-light.svg",
-    "overview": "Low-level red and near-infrared light aimed at supporting cellular energy processes and local circulation.",
-    "whatItIs": "PBM targets cellular photoacceptors (e.g., cytochrome-c oxidase) using non-ionizing light within the red/NIR optical window.",
+    "overview": "Non-ionizing red and near-infrared (NIR) light aimed at supporting cellular energy and local circulation in targeted areas.",
+    "whatItIs": "Photobiomodulation (PBM) delivers light in the red/NIR window to cellular photoacceptors (e.g., cytochrome-c oxidase). Sessions are parameter-based (wavelength, intensity, distance, and time).",
     "benefits": [
-      "Convenient, time-boxed sessions",
+      "Convenient, time-boxed sessions with no downtime",
       "Non-invasive and contact-free",
-      "Often paired with mobility or recovery work"
+      "Targeted application (skin, joints, scalp)",
+      "Pairs well with mobility, recovery, or PT routines",
+      "Parameter-driven: we set distance and time for consistency"
     ],
     "sessionFlow": [
-      "Choose a target area (skin, joints, scalp).",
-      "Clean skin; remove makeup/sunscreen on the target area.",
-      "10–20 minutes under the panel at a measured distance.",
+      "Choose a target area (e.g., skin, joints, scalp).",
+      "Clean skin; remove makeup/sunscreen from the target area.",
+      "Position at a measured distance; 10–20 minutes under the panel.",
       "Hydrate and resume normal activity."
+    ],
+    "howToPrepare": [
+      "Arrive with clean, product-free skin on the target area.",
+      "For scalp sessions, avoid heavy hair products before treatment.",
+      "Bring any questions about photosensitivity (meds, conditions) so we can adjust safely."
     ],
     "helmet810": {
       "title": "Near-Infrared Light Therapy Helmet (810 nm)",
@@ -98,27 +122,27 @@
       ],
       "why810": [
         "Penetration: can reach cortical structures through the skull (~3–4 cm in humans).",
-        "Optical window: lower absorption by water/hemoglobin—often called a 'sweet spot' in NIR.",
-        "Research: 810 nm is widely studied vs. some nearby wavelengths (e.g., 850 nm, 1070 nm)."
+        "Optical window: relatively lower absorption by water/hemoglobin—often considered a NIR ‘sweet spot’.",
+        "Research footprint: 810 nm is widely studied alongside nearby wavelengths (e.g., 850 nm, 1070 nm)."
       ],
       "mechanisms": [
-        "Mitochondria: Cytochrome-c oxidase absorption → supports ATP production.",
-        "Vascular: Nitric Oxide (NO) release → local vasodilation, blood flow, oxygenation.",
-        "Redox signaling: Controlled ROS modulation supports repair signaling.",
-        "Neuroinflammation: May shift microglia expression toward anti-inflammatory (M2).",
-        "Neurotrophic: Can stimulate BDNF, supporting neuronal survival, plasticity, and learning/memory pathways."
+        "Mitochondria: Cytochrome-c oxidase absorption can support ATP production.",
+        "Vascular: Nitric oxide (NO) signaling → local vasodilation and oxygenation.",
+        "Redox: Controlled ROS modulation that can nudge repair signaling.",
+        "Neuroinflammation: May shift microglia expression toward anti-inflammatory profiles.",
+        "Neurotrophic: Studies report BDNF upregulation supporting neuronal plasticity."
       ],
       "timeAndFrequency": [
         "Typical plans: 4–6 sessions/week for 4–12 weeks; each 6–30 minutes.",
-        "Acute protocols (e.g., TBI, stroke): sometimes daily in early stages (per protocol guidance).",
-        "Maintenance (cognition/mood): 1–2×/week longer-term."
+        "Acute protocols (e.g., early recovery): sometimes daily initially (per protocol guidance).",
+        "Maintenance (focus/mood/cognition themes): 1–2×/week longer-term."
       ]
     },
     "safety": {
       "notes": [
-        "Avoid shining directly into eyes; protective goggles provided.",
-        "Photosensitive conditions/medications, active cancer treatment, pregnancy, or recent procedures: consult your clinician.",
-        "Devices can be FDA-cleared for specific indications; ask about our device’s labeling."
+        "Avoid direct light into the eyes; protective goggles are provided.",
+        "If you are photosensitive or take photosensitizing medications, are pregnant, in active cancer treatment, or recently had procedures, consult your clinician first.",
+        "Temporary warmth or pinkness of the skin in the target area can occur and typically resolves shortly after."
       ]
     },
     "media": {
@@ -139,7 +163,21 @@
         }
       ]
     },
-    "microCopy": "We’ll help you choose panel vs. helmet and set time/distance for your goal.",
+    "microCopy": "We’ll help you choose panel vs. helmet, then dial in time and distance for your goal.",
+    "faq": [
+      {
+        "q": "Will I feel anything during red/NIR light?",
+        "a": "Most people feel gentle warmth. Some feel nothing during the session but notice the target area feels easier to move afterward."
+      },
+      {
+        "q": "How close should I be to the panel?",
+        "a": "Distance affects intensity (irradiance). We’ll set a measured distance for consistency and note it in your plan."
+      },
+      {
+        "q": "How long until I notice changes?",
+        "a": "Responses vary. Many protocols span several weeks. We recommend tracking how the target area feels and functions over time."
+      }
+    ],
     "sources": [
       { "label": "FDA — 510(k) device database", "href": "#" },
       { "label": "Reviews on PBM mechanisms & optical window", "href": "#" }
@@ -150,12 +188,13 @@
     "name": "Hydrogen-Rich Water",
     "badges": ["Emerging research", "Refresh & Hydrate"],
     "heroImage": "/images/hydrogen-water.svg",
-    "overview": "Water with dissolved molecular hydrogen (H₂); many enjoy it pre- or post-session.",
-    "whatItIs": "Prepared on site and served chilled. Early clinical research explores impacts on fatigue, oxidative stress markers, and specific metabolic markers.",
+    "overview": "Chilled water infused with dissolved molecular hydrogen (H₂). Many guests enjoy it as a light, crisp add-on before or after sessions.",
+    "whatItIs": "Prepared on site and served promptly. Early clinical research explores markers related to oxidative stress, fatigue, and select metabolic outcomes in specific contexts.",
     "benefits": [
-      "Pairs with daily hydration habits",
-      "Light, crisp taste",
-      "Easy add-on before or after sessions"
+      "Pairs naturally with daily hydration",
+      "Light, crisp taste that’s easy to sip",
+      "Simple add-on before or after sessions",
+      "Served fresh to preserve dissolved H₂"
     ],
     "sessionFlow": [
       "Served in reusable cups (typical 250–500 mL).",
@@ -163,22 +202,28 @@
     ],
     "moreAboutH2": {
       "mechanismSnapshot": [
-        "Molecular hydrogen (H₂) is a small, neutral gas that dissolves in water and is being studied for redox-signaling effects.",
-        "Research explores potential modulation of oxidative stress and inflammation markers, with mixed but growing findings in specific contexts."
+        "Molecular hydrogen (H₂) dissolves in water and is being studied for redox-signaling effects.",
+        "Research explores potential modulation of oxidative stress and inflammation markers with mixed but growing findings."
       ],
       "bestUseTips": [
-        "Fresh is best: dissolved H₂ slowly dissipates—consume soon after serving.",
-        "Chilled service helps palatability and retention."
+        "Fresh is best: dissolved H₂ slowly dissipates—drink soon after serving.",
+        "Chilled service supports palatability and retention.",
+        "If you track supplements or hydration, note H₂ water as part of your log."
       ],
       "storageAndPrep": [
         "Prepared in-house with a dedicated generator.",
-        "Served promptly to help preserve dissolved H₂."
+        "Poured and served promptly to help preserve dissolved H₂."
       ]
     },
+    "howToPrepare": [
+      "No special prep needed—simply arrive hydrated.",
+      "If you follow a medical plan, log H₂ water alongside your usual hydration."
+    ],
     "safety": {
       "notes": [
         "Generally well-tolerated in studies to date.",
-        "Not a treatment for medical conditions; consult your clinician for medical care."
+        "Not a treatment for medical conditions; for medical care, consult your clinician.",
+        "If you have fluid restrictions or specific dietary guidance, follow your clinician’s advice."
       ]
     },
     "media": {
@@ -192,6 +237,21 @@
         }
       ]
     },
+    "microCopy": "Served cold and fresh—best enjoyed soon after pouring.",
+    "faq": [
+      {
+        "q": "What does it taste like?",
+        "a": "Clean and crisp—like chilled still water. The hydrogen itself is tasteless."
+      },
+      {
+        "q": "When should I drink it?",
+        "a": "Anytime is fine. Many guests like it pre-session (to arrive refreshed) or post-session (to rehydrate)."
+      },
+      {
+        "q": "Is it carbonated?",
+        "a": "No. Molecular hydrogen is dissolved but does not make the water fizzy."
+      }
+    ],
     "sources": [
       { "label": "Frontiers — HRW trials & reviews", "href": "#" }
     ]
