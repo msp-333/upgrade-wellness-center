@@ -189,6 +189,8 @@ export default function PricingClient({ data }: { data: PricingData }) {
           <ul role="list" className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
             {sorted.map((it, idx) => {
               const specifics = it.details && it.details.length > 0 ? it.details : it.description?.slice(1) ?? []
+              const href = (it.ctaHref ?? '/contact').trim() || '/contact'
+              const label = it.ctaLabel ?? 'Book Appointment'
               return (
                 <Reveal key={`${it.title}-${idx}`} delay={120 + (idx % 9) * 70}>
                   <li>
@@ -229,10 +231,17 @@ export default function PricingClient({ data }: { data: PricingData }) {
                         </details>
                       )}
 
-                      {/* CTA */}
+                      {/* CTA — ALWAYS opens in new tab */}
                       <div className="mt-auto pt-6">
-                        <a href={it.ctaHref ?? '/contact'} className={ctaClass(it.tone)}>
-                          {it.ctaLabel ?? 'Book Appointment'}
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={ctaClass(it.tone)}
+                          aria-label={`${label} — opens in a new tab`}
+                        >
+                          {label}
+                          <ExternalIcon />
                         </a>
                       </div>
                     </article>
@@ -304,7 +313,8 @@ function chipClass(tone: Item['tone']) {
 }
 function ctaClass(_: Item['tone']) {
   const base =
-    'block w-full rounded-pill px-4 py-2 text-center text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+    'inline-flex w-full items-center justify-center gap-2 rounded-pill px-4 py-2 text-center text-sm font-semibold ' +
+    'transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
   return `${base} bg-lavender-600 text-white hover:bg-lavender-500 focus-visible:ring-lavender-300`
 }
 
@@ -321,6 +331,16 @@ function DotIcon() {
   return (
     <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="12" cy="12" r="4" fill="currentColor" />
+    </svg>
+  )
+}
+function ExternalIcon() {
+  return (
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" className="opacity-90">
+      <path
+        fill="currentColor"
+        d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"
+      />
     </svg>
   )
 }
