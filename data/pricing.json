@@ -22,7 +22,9 @@
       "description": [
         "Children 12 & under are free to accompany their parent.",
         "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833647",
+      "ctaLabel": "Book Appointment"
     },
     {
       "title": "3 Hour Session",
@@ -30,7 +32,9 @@
       "description": [
         "Children 12 & under are free to accompany their parent.",
         "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833656",
+      "ctaLabel": "Book Appointment"
     },
     {
       "title": "4 Hour Session",
@@ -38,7 +42,9 @@
       "description": [
         "Children 12 & under are free to accompany their parent.",
         "UNIFYD Members receive 10% off at checkout (code: Unifyd). Please email membership proof to services@upgradewellnesscenter.com."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833664",
+      "ctaLabel": "Book Appointment"
     },
     {
       "title": "2 Hour Veteran Session",
@@ -48,7 +54,9 @@
       "description": [
         "Welcome all Veterans and thank you for your service.",
         "Enjoy a $20 discount on each 2-hour session you book."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833582",
+      "ctaLabel": "Book Appointment"
     },
     {
       "title": "Pet Energy Session",
@@ -56,7 +64,9 @@
       "description": [
         "Dogs must be crated or leashed at all times. Cats must be crated.",
         "Please ensure they are well-behaved."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84624581",
+      "ctaLabel": "Book Appointment"
     }
   ],
   "overnight": [
@@ -68,7 +78,9 @@
       "description": [
         "Overnight 12-hour session.",
         "We offer a queen cabinet bed and several recliners that lay completely flat."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833693",
+      "ctaLabel": "Book Overnight"
     },
     {
       "title": "12 Hour Overnight Couples Energy Session",
@@ -78,7 +90,9 @@
       "description": [
         "Overnight stay for 12 hours for two.",
         "Includes cabinet bed and recliners that lay completely flat."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833697",
+      "ctaLabel": "Book Overnight"
     }
   ],
   "packages": [
@@ -88,11 +102,13 @@
       "badge": "Best Value",
       "tone": "brand",
       "description": [
-        "Unlimited hourly sessions up to 4 hours per session, Monday–Thursday only.",
+        "4 hours per session per day, Monday–Thursday only.",
         "Runs from the 1st to the last day of the month.",
         "**Packages are sold individually, not split between clients, and cannot be used on overnight sessions. Non-refundable.**",
         "A free journal to track your health journey is included."
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833728",
+      "ctaLabel": "Get Package"
     },
     {
       "title": "(5) 2 Hour Sessions",
@@ -102,7 +118,9 @@
       "description": [
         "Five 2-hour sessions at $45/hour — new customer promotion.",
         "**Packages are sold individually, not split between clients, and cannot be used on overnight sessions. Non-refundable.**"
-      ]
+      ],
+      "ctaHref": "https://app.acuityscheduling.com/schedule.php?owner=37246977&appointmentType=84833748",
+      "ctaLabel": "Get Package"
     }
   ]
 }
