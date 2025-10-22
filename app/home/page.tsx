@@ -32,7 +32,7 @@ export default function AboutPage() {
   const MAP = '/images/map-downtown.jpg'
 
   // Autoplay video assets (put your files in /public)
-  const VIDEO_MP4 = 'public/images/home-hero.mp4'
+  const VIDEO_MP4 = '/videos/home-hero.mp4'
   const VIDEO_WEBM = '/videos/home-hero.webm' // optional
   const VIDEO_POSTER = '/images/home-video-poster.jpg' // optional
 
