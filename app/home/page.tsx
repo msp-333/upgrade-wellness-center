@@ -128,7 +128,7 @@ export default function AboutPage() {
           <Reveal delay={100}>
             {/* Softer glass so background shows through more */}
             <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] ring-1 ring-white/40 backdrop-blur-md bg-white/10 shadow-[0_16px_44px_rgba(2,6,23,0.25)]">
-              <div className="rounded-[24px] bg-white/25 p-6 sm:p-8 md:p-14 backdrop-blur-md">
+              <div className="rounded-[24px] bg-white/50 p-6 sm:p-8 md:p-14 backdrop-blur-md">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-white/90">Holistic • Human • Kind</p>
 
                 <h1
@@ -183,8 +183,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="How It Works" tone="emerald" />
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
@@ -290,9 +288,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="EE System Benefits" tone="lavender" />
-
       {/* ===== EE SYSTEM BENEFITS ======================================== */}
       <section
         className={`relative bg-[var(--surface)] ${sectionY}`}
@@ -347,9 +342,6 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="Featured Services" tone="lavender" />
 
       {/* ===== FEATURED SERVICES ========================================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
@@ -422,9 +414,6 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="Visit Us" tone="emerald" />
 
       {/* ===== VISIT US =================================================== */}
       <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
