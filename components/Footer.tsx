@@ -14,9 +14,7 @@ export default function Footer() {
       {/* Top: columns */}
       <section className="py-12">
         <Container className="grid gap-10 md:grid-cols-4">
-          <h2 id="footer-title" className="sr-only">
-            Site footer
-          </h2>
+          <h2 id="footer-title" className="sr-only">Site footer</h2>
 
           {/* Brand (logo + short blurb) */}
           <div>
@@ -30,7 +28,6 @@ export default function Footer() {
                 loading="lazy"
                 className="h-10 w-10 object-contain"
               />
-              <span className="font-semibold text-slate-900">Upgrade Wellness Center</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm text-slate-600">
               Calm, evidence-informed care for everyday life.
@@ -69,9 +66,7 @@ export default function Footer() {
           {/* Newsletter */}
           <form className="text-sm" aria-label="Newsletter signup">
             <h3 className="mb-3 font-semibold text-slate-900">Newsletter</h3>
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email
-            </label>
+            <label htmlFor="newsletter-email" className="sr-only">Email</label>
             <div className="flex gap-2">
               <input
                 id="newsletter-email"
@@ -103,34 +98,28 @@ export default function Footer() {
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
             <li>
-              <Link href="/privacy-policy/" className="hover:underline">
-                Privacy Policy
-              </Link>
+              <Link href="/privacy-policy/" className="hover:underline">Privacy Policy</Link>
             </li>
             <li>
-              <Link href="/terms/" className="hover:underline">
-                Terms
-              </Link>
+              <Link href="/terms/" className="hover:underline">Terms</Link>
             </li>
             <li>
-              <a
-                href="mailto:hello@upgradewellness.com"
-                className="hover:underline"
-              >
-                Contact Support
-              </a>
+              <a href="mailto:hello@upgradewellness.com" className="hover:underline">Contact Support</a>
             </li>
           </ul>
         </Container>
       </section>
 
-      {/* Bottom: Disclaimer */}
-      <section className="border-t border-slate-200 bg-slate-50/60 py-6" aria-labelledby="site-disclaimer">
-        <Container>
-          <h3 id="site-disclaimer" className="mb-2 text-sm font-semibold text-slate-900">
+      {/* Bottom: Disclaimer — centered and full width of the section */}
+      <section
+        className="border-t border-slate-200 bg-slate-50/60 py-8"
+        aria-labelledby="site-disclaimer"
+      >
+        <Container className="text-center">
+          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-slate-900">
             Disclaimer
           </h3>
-          <p className="max-w-4xl text-xs leading-relaxed text-slate-600">
+          <p className="mx-auto w-full max-w-none text-xs leading-relaxed text-slate-600 md:text-sm">
             The content on this website—including text, graphics, PDFs, images, and videos—is for informational purposes only
             and does not constitute professional advice, diagnosis, or treatment. We do not claim to diagnose, treat, cure, or
             prevent any disease or condition. Always seek the advice of a qualified professional regarding questions about your
@@ -142,4 +131,3 @@ export default function Footer() {
     </footer>
   )
 }
-
