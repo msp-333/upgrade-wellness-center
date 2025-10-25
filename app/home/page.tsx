@@ -84,96 +84,90 @@ export default function AboutPage() {
 
   return (
     <>
-    <section className="relative isolate min-h-[68vh] sm:min-h-[72vh] md:min-h-[78vh]" aria-labelledby="about-hero-title">
-      {/* Video layer */}
-      <div className="absolute inset-0 -z-30 pointer-events-none">
-        <video
-          className="h-full w-full object-cover motion-reduce:hidden"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={asset(HERO_POSTER)}
-          aria-hidden
-        >
-          <source src={asset(HERO_MP4)} type="video/mp4" />
-        </video>
+      <section className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]" aria-labelledby="about-hero-title">
+        {/* Background video */}
+        <div className="absolute inset-0 -z-30 pointer-events-none">
+          <video
+            className="h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={asset(HERO_POSTER)}
+            aria-hidden
+          >
+            <source src={asset(HERO_MP4)} type="video/mp4" />
+          </video>
 
-        {/* Static poster for reduced-motion users */}
-        <img
-          src={asset(HERO_POSTER)}
-          alt=""
-          className="hidden h-full w-full object-cover motion-reduce:block"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+          {/* Reduced-motion fallback */}
+          <img
+            src={asset(HERO_POSTER)}
+            alt=""
+            className="hidden h-full w-full object-cover motion-reduce:block"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
 
-      {/* Light scrims so the footage pops but text stays readable */}
-      <div className="absolute inset-0 -z-20 bg-slate-950/25" aria-hidden />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/25 via-slate-900/10 to-transparent" aria-hidden />
+        {/* Very light scrim so the footage shows but content stays crisp */}
+        <div className="absolute inset-0 -z-20 bg-slate-950/15" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/15 via-transparent to-transparent" aria-hidden />
 
-      <Container className="relative py-24 sm:py-28 md:py-36">
-        <Reveal delay={90}>
-          {/* Larger glass card */}
-          <div className="mx-auto max-w-6xl rounded-[32px] bg-white/82 p-6 sm:p-10 md:p-14 shadow-[0_18px_52px_rgba(2,6,23,.22)] ring-1 ring-black/10 backdrop-blur-xl">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-900/80">
-              Holistic • Human • Kind
-            </p>
+        <Container className="relative py-28 sm:py-36 md:py-40">
+          <Reveal delay={80}>
+            {/* White card with subtle gradient border to make it pop */}
+            <div className="mx-auto max-w-6xl rounded-[34px] p-[1px] bg-[linear-gradient(135deg,rgba(16,185,129,.25),rgba(20,184,166,.18),rgba(6,182,212,.25))] shadow-[0_22px_60px_rgba(2,6,23,.18)] ring-1 ring-black/5">
+              <div className="rounded-[33px] bg-white p-7 sm:p-12 md:p-16">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
+                  Holistic • Human • Kind
+                </p>
 
-            <h1
-              id="about-hero-title"
-              className="mt-3 text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900"
-            >
-              Time for a{' '}
-              <span
-                className="
-                  bg-[linear-gradient(90deg,#34D399_0%,#10B981_45%,#06B6D4_100%)]
-                  bg-clip-text text-transparent
-                  [text-shadow:0_2px_12px_rgba(6,182,212,.25)]
-                "
-              >
-                Recharge
-              </span>
-            </h1>
-
-            <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-800">
-              Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
-            </p>
-
-            <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800">
-              {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                <li
-                  key={t}
-                  className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
-                  style={{ transitionDelay: `${i * 60}ms` }}
+                <h1
+                  id="about-hero-title"
+                  className="mt-3 text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900"
                 >
-                  <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
-                </li>
-              ))}
-            </ul>
+                  Time for a{' '}
+                  <span className="bg-[linear-gradient(90deg,#14B8A6_0%,#10B981_45%,#06B6D4_100%)] bg-clip-text text-transparent">
+                    Recharge
+                  </span>
+                </h1>
 
-            <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
-              <Link
-                href="/contact/"
-                className="inline-flex items-center justify-center rounded-[999px] bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40"
-              >
-                Contact Us
-              </Link>
-              <Link
-                href="/services/"
-                className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-800 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300/60"
-              >
-                Explore services
-              </Link>
+                <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-slate-800">
+                  Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
+                </p>
+
+                <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800">
+                  {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+                    <li
+                      key={t}
+                      className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
+                      style={{ transitionDelay: `${i * 60}ms` }}
+                    >
+                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+                  <Link
+                    href="/contact/"
+                    className="inline-flex items-center justify-center rounded-[999px] bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40"
+                  >
+                    Contact Us
+                  </Link>
+                  <Link
+                    href="/services/"
+                    className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-800 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                  >
+                    Explore services
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </Reveal>
-      </Container>
-    </section>
-
-
+          </Reveal>
+        </Container>
+      </section>
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
