@@ -22,8 +22,8 @@ export default function Footer() {
               <img
                 src={asset(LOGO)}
                 alt="Upgrade Wellness Center logo"
-                width={100}
-                height={100}
+                width={500}
+                height={500}
                 decoding="async"
                 loading="lazy"
                 className="h-10 w-10 object-contain"
@@ -116,7 +116,7 @@ export default function Footer() {
         aria-labelledby="site-disclaimer"
       >
         <Container className="text-center">
-          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-slate-900">
+          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-slate-950">
             Disclaimer
           </h3>
           <p className="mx-auto w-full max-w-none text-xs leading-relaxed text-slate-600 md:text-sm">
