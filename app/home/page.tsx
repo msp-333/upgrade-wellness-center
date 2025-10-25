@@ -28,9 +28,9 @@ export default function AboutPage() {
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets (hero animated background)
-  const HERO_MP4 = '/videos/home-hero.mp4'          // animated GIF
-  const HERO_WEBP = '/images/home-hero.webp'        // animated WebP (preferred where supported)
-  const HERO_POSTER = '/images/home-hero-poster.jpg'// static image for reduced-motion users
+  const HERO_MP4 = '/videos/home-hero.mp4' 
+  const HERO_WEBP = '/images/home-hero.webp'  
+  const HERO_POSTER = '/images/home-hero-poster.png'// static image for reduced-motion users
 
   // Other assets
   const HERO = '/images/about-hero.png'
@@ -56,22 +56,23 @@ export default function AboutPage() {
 
   // EE benefits
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
-    { id: 'regen',       label: 'Cells Regenerate',                          Icon: SparkleIcon },
-    { id: 'oxygen',      label: 'Oxygenates Blood\n& Improves Circulation',  Icon: DropO2Icon },
-    { id: 'alkaline',    label: 'Balances Alkalinity (pH)',                  Icon: BalancePHIcon },
-    { id: 'detox',       label: 'Eliminates Toxins',                         Icon: DetoxIcon },
-    { id: 'mental',      label: 'Improved Mental Health\n& Elevated Mood',   Icon: SmileIcon },
-    { id: 'focus',       label: 'Improved Concentration\nAnd Focus',         Icon: FocusIcon },
+    { id: 'regen',       label: 'Detoxification\nof the Body',               Icon: SparkleIcon },
     { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
+    { id: 'sleep',       label: 'Improved\nSleep Quality',                   Icon: MoonIcon },
+    { id: 'immune',      label: 'Better Immune Efficiency',                  Icon: ShieldIcon },
+    { id: 'pain',        label: 'Relief from Pain',                          Icon: ReliefIcon },
+    { id: 'oxygen',      label: 'Oxygenates Blood\n& Improves Circulation',  Icon: DropO2Icon },
     { id: 'cell-reg',    label: 'Stimulates Cell Regeneration',              Icon: CellIcon },
-    { id: 'immune',      label: 'Improves Immune Function',                  Icon: ShieldIcon },
-    { id: 'pain',        label: 'Relieves Pain',                             Icon: ReliefIcon },
-    { id: 'stress',      label: 'Alleviates Stress',                         Icon: StressIcon },
-    { id: 'sleep',       label: 'Improves Sleep',                            Icon: MoonIcon },
-    { id: 'homeostasis', label: 'Dynamic Homeostasis',                       Icon: HomeostasisIcon },
-    { id: 'stem',        label: 'Mobilizes Stem Cells',                      Icon: StemIcon },
-    { id: 'brain',       label: 'Brain Hemisphere Synchronization',          Icon: BrainIcon },
+    { id: 'focus',       label: 'Improved Concentration\nAnd Focus',         Icon: FocusIcon },
     { id: 'energy',      label: 'Increases Energy\n& Physical Stamina',      Icon: BoltIcon },
+    { id: 'mental',      label: 'Improved Mental Health\n& Elevated Mood',   Icon: SmileIcon },
+    { id: 'homeostasis', label: 'Faster Injury Recovery',                    Icon: HomeostasisIcon },
+    { id: 'stress',      label: 'Reduction in\nStress',                      Icon: StressIcon },
+    { id: 'alkaline',    label: 'Balances Alkalinity (pH)',                  Icon: BalancePHIcon },
+    { id: 'detox',       label: 'Skin Condition Relief',                     Icon: DetoxIcon },
+    { id: 'stem',        label: 'Mobilizes Stem Cells',                      Icon: StemIcon },
+    { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
+
   ]
 
   const iconBgVariants = [
@@ -93,7 +94,7 @@ export default function AboutPage() {
             {/* Fallback to animated GIF everywhere else */}
             <img
               src={asset(HERO_MP4)}
-              alt=""
+              alt="m"
               className="h-full w-full object-cover"
               loading="eager"
               decoding="async"
