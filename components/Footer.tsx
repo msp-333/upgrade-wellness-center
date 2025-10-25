@@ -10,84 +10,136 @@ export default function Footer() {
   const LOGO = '/images/logo.png' // ← place your logo at public/images/logo.png
 
   return (
-    <footer className="border-t border-slate-200 bg-white py-12" aria-labelledby="footer">
-      <Container className="grid gap-10 md:grid-cols-4">
-        <h2 id="footer" className="sr-only">Site footer</h2>
+    <footer className="border-t border-slate-200 bg-white" aria-labelledby="footer-title">
+      {/* Top: columns */}
+      <section className="py-12">
+        <Container className="grid gap-10 md:grid-cols-4">
+          <h2 id="footer-title" className="sr-only">
+            Site footer
+          </h2>
 
-        {/* Brand (logo image + name) */}
-        <div>
-          <Link href="/" className="flex items-center gap-3">
-            <img
-              src={asset(LOGO)}
-              alt="Upgrade Wellness Center logo"
-              width={100}
-              height={100}
-              decoding="async"
-              loading="lazy"
-              className="h-10 w-10 object-contain"
-            />
-          </Link>
-          <p className="mt-3 text-sm text-slate-600">
-            Calm, evidence-informed care for everyday life.
-          </p>
-        </div>
-
-        {/* Quick links */}
-        <nav aria-label="Quick links" className="text-sm">
-          <h3 className="mb-3 font-semibold text-slate-900">Quick links</h3>
-          <ul className="space-y-2">
-            <li><Link className="hover:underline" href="/services/">Services</Link></li>
-            <li><Link className="hover:underline" href="/events/">Events</Link></li>
-            <li><Link className="hover:underline" href="/about/">About</Link></li>
-            <li><Link className="hover:underline" href="/contact/">Contact</Link></li>
-            <li><Link className="hover:underline" href="/privacy-policy/">Privacy</Link></li>
-          </ul>
-        </nav>
-
-        {/* Visit */}
-        <div className="text-sm">
-          <h3 className="mb-3 font-semibold text-slate-900">Visit</h3>
-          <p className="text-slate-600">
-            123 Oak Street, Suite 204<br />City, ST 12345
-          </p>
-          <p className="mt-2 text-slate-600">
-            <a className="hover:underline" href="tel:+11234567890">(123) 456-7890</a>
-          </p>
-          <p className="mt-1 text-slate-600">
-            <a className="hover:underline" href="mailto:hello@upgradewellness.com">
-              hello@upgradewellness.com
-            </a>
-          </p>
-        </div>
-
-        {/* Newsletter */}
-        <form className="text-sm" aria-label="Newsletter signup">
-          <h3 className="mb-3 font-semibold text-slate-900">Newsletter</h3>
-          <label htmlFor="newsletter-email" className="sr-only">Email</label>
-          <div className="flex gap-2">
-            <input
-              id="newsletter-email"
-              name="email"
-              type="email"
-              required
-              placeholder="you@example.com"
-              className="min-w-0 flex-1 rounded-[999px] border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
-            />
-            <button
-              type="submit"
-              className="rounded-[999px] bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-500"
-            >
-              Sign up
-            </button>
+          {/* Brand (logo + short blurb) */}
+          <div>
+            <Link href="/" className="inline-flex items-center gap-3">
+              <img
+                src={asset(LOGO)}
+                alt="Upgrade Wellness Center logo"
+                width={100}
+                height={100}
+                decoding="async"
+                loading="lazy"
+                className="h-10 w-10 object-contain"
+              />
+              <span className="font-semibold text-slate-900">Upgrade Wellness Center</span>
+            </Link>
+            <p className="mt-3 max-w-xs text-sm text-slate-600">
+              Calm, evidence-informed care for everyday life.
+            </p>
           </div>
-        </form>
-      </Container>
 
-      <Container>
-        <p className="mt-10 text-xs text-slate-500">
-          © {year} Upgrade Wellness Center. All rights reserved.
-        </p>
-      </Container>
+          {/* Quick links */}
+          <nav aria-label="Quick links" className="text-sm">
+            <h3 className="mb-3 font-semibold text-slate-900">Quick links</h3>
+            <ul className="space-y-2">
+              <li><Link className="hover:underline" href="/services/">Services</Link></li>
+              <li><Link className="hover:underline" href="/events/">Events</Link></li>
+              <li><Link className="hover:underline" href="/about/">About</Link></li>
+              <li><Link className="hover:underline" href="/contact/">Contact</Link></li>
+              <li><Link className="hover:underline" href="/privacy-policy/">Privacy Policy</Link></li>
+            </ul>
+          </nav>
+
+          {/* Visit */}
+          <address className="not-italic text-sm">
+            <h3 className="mb-3 font-semibold text-slate-900">Visit</h3>
+            <p className="text-slate-600">
+              123 Oak Street, Suite 204<br />
+              City, ST 12345
+            </p>
+            <p className="mt-2 text-slate-600">
+              <a className="hover:underline" href="tel:+11234567890">(123) 456-7890</a>
+            </p>
+            <p className="mt-1 text-slate-600">
+              <a className="hover:underline" href="mailto:hello@upgradewellness.com">
+                hello@upgradewellness.com
+              </a>
+            </p>
+          </address>
+
+          {/* Newsletter */}
+          <form className="text-sm" aria-label="Newsletter signup">
+            <h3 className="mb-3 font-semibold text-slate-900">Newsletter</h3>
+            <label htmlFor="newsletter-email" className="sr-only">
+              Email
+            </label>
+            <div className="flex gap-2">
+              <input
+                id="newsletter-email"
+                name="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="min-w-0 flex-1 rounded-[999px] border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
+              />
+              <button
+                type="submit"
+                className="rounded-[999px] bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-500"
+              >
+                Sign up
+              </button>
+            </div>
+            <p className="mt-2 text-xs text-slate-500">
+              By subscribing, you consent to receive updates from us.
+            </p>
+          </form>
+        </Container>
+      </section>
+
+      {/* Middle: fine print row */}
+      <section className="border-t border-slate-200 py-6">
+        <Container className="flex flex-col items-start justify-between gap-3 sm:flex-row">
+          <p className="text-xs text-slate-500">
+            © {year} Upgrade Wellness Center. All rights reserved.
+          </p>
+          <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+            <li>
+              <Link href="/privacy-policy/" className="hover:underline">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms/" className="hover:underline">
+                Terms
+              </Link>
+            </li>
+            <li>
+              <a
+                href="mailto:hello@upgradewellness.com"
+                className="hover:underline"
+              >
+                Contact Support
+              </a>
+            </li>
+          </ul>
+        </Container>
+      </section>
+
+      {/* Bottom: Disclaimer */}
+      <section className="border-t border-slate-200 bg-slate-50/60 py-6" aria-labelledby="site-disclaimer">
+        <Container>
+          <h3 id="site-disclaimer" className="mb-2 text-sm font-semibold text-slate-900">
+            Disclaimer
+          </h3>
+          <p className="max-w-4xl text-xs leading-relaxed text-slate-600">
+            The content on this website—including text, graphics, PDFs, images, and videos—is for informational purposes only
+            and does not constitute professional advice, diagnosis, or treatment. We do not claim to diagnose, treat, cure, or
+            prevent any disease or condition. Always seek the advice of a qualified professional regarding questions about your
+            health. Never disregard professional advice or delay seeking it because of something you read here. If you think you
+            may be experiencing an emergency, call your local emergency number immediately.
+          </p>
+        </Container>
+      </section>
     </footer>
   )
 }
+
