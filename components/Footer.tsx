@@ -7,7 +7,7 @@ export default function Footer() {
 
   // Helper so images work on GitHub Pages subpaths
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
-  const LOGO = '/images/logo.png' // ← place your logo at public/images/logo.png
+  const LOGO = '/images/logo.png'
 
   return (
     <footer className="border-t border-slate-200 bg-white" aria-labelledby="footer-title">
@@ -16,7 +16,7 @@ export default function Footer() {
         <Container className="grid gap-10 md:grid-cols-4">
           <h2 id="footer-title" className="sr-only">Site footer</h2>
 
-          {/* Brand (logo + short blurb) */}
+          {/* Brand */}
           <div>
             <Link href="/" className="inline-flex items-center gap-3">
               <img
@@ -26,7 +26,6 @@ export default function Footer() {
                 height={500}
                 decoding="async"
                 loading="lazy"
-                /* Bigger logo */
                 className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
               />
             </Link>
@@ -98,29 +97,23 @@ export default function Footer() {
             © {year} Upgrade Wellness Center. All rights reserved.
           </p>
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
-            <li>
-              <Link href="/privacy-policy/" className="hover:underline">Privacy Policy</Link>
-            </li>
-            <li>
-              <Link href="/terms/" className="hover:underline">Terms</Link>
-            </li>
-            <li>
-              <a href="mailto:hello@upgradewellness.com" className="hover:underline">Contact Support</a>
-            </li>
+            <li><Link href="/privacy-policy/" className="hover:underline">Privacy Policy</Link></li>
+            <li><Link href="/terms/" className="hover:underline">Terms</Link></li>
+            <li><a href="mailto:hello@upgradewellness.com" className="hover:underline">Contact Support</a></li>
           </ul>
         </Container>
       </section>
 
-      {/* Bottom: Disclaimer — centered, full width, darker background */}
+      {/* Bottom: Disclaimer — darker, compact spacing */}
       <section
-        className="border-t border-slate-800 bg-slate-900 py-10"
+        className="border-t border-slate-800 bg-slate-900 py-6 sm:py-7"
         aria-labelledby="site-disclaimer"
       >
         <Container className="text-center">
-          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-white">
+          <h3 id="site-disclaimer" className="mb-2 text-sm font-semibold text-white">
             Disclaimer
           </h3>
-          <p className="mx-auto w-full max-w-none text-xs leading-relaxed text-slate-300 md:text-sm md:leading-7">
+          <p className="mx-auto w-full text-xs leading-snug text-slate-300 sm:text-sm sm:leading-normal">
             The content on this website—including text, graphics, PDFs, images, and videos—is for informational purposes only
             and does not constitute professional advice, diagnosis, or treatment. We do not claim to diagnose, treat, cure, or
             prevent any disease or condition. Always seek the advice of a qualified professional regarding questions about your

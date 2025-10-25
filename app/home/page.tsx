@@ -27,9 +27,12 @@ export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
+  // Reusable vertical spacing for sections (keeps layout rhythm consistent)
+  const sectionY = 'py-16 sm:py-20 md:py-24'
+
   // Hero background video (files must be under /public)
   const HERO_MP4 = '/videos/home-hero.mp4'
-  const HERO_POSTER = '/images/home-hero-poster.png' // shown for reduced-motion users
+  const HERO_POSTER = '/images/home-hero-poster.png'
 
   // Other assets
   const MAP = '/images/map-downtown.jpg'
@@ -39,7 +42,7 @@ export default function AboutPage() {
   const VIDEO_POSTER = '/images/home-ees.jpg'
 
   // YouTube video IDs (swap with your own)
-  const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'uu857hjy4CQ'] as const
+  const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'QBznjFbkDE4'] as const
 
   const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
   const phone = '(123) 456-7890'
@@ -71,17 +74,19 @@ export default function AboutPage() {
     { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
   ]
 
-  const iconBgVariants = [
-    'bg-emerald-50 ring-emerald-600/10',
-    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
-    'bg-teal-50 ring-teal-600/10',
-    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
+  // Gradient badges for the EE icons
+  const iconBadgeGradients = [
+    'bg-gradient-to-br from-emerald-500 to-teal-500',
+    'bg-gradient-to-br from-[#7C6FB0] to-[#9C8FE0]',
+    'bg-gradient-to-br from-teal-500 to-cyan-500',
+    'bg-gradient-to-br from-emerald-500 to-teal-500',
+    'bg-gradient-to-br from-[#7C6FB0] to-[#9C8FE0]',
   ] as const
 
   return (
     <>
       {/* ===== HERO — video background (autoplay, mobile-ready) ========= */}
-      <section className="relative isolate" aria-labelledby="about-hero-title">
+      <section className={`relative isolate ${sectionY}`} aria-labelledby="about-hero-title">
         {/* Video layer */}
         <div className="absolute inset-0 -z-30 pointer-events-none">
           <video
@@ -97,7 +102,7 @@ export default function AboutPage() {
             <source src={asset(HERO_MP4)} type="video/mp4" />
           </video>
 
-        {/* Static poster for users who prefer reduced motion */}
+          {/* Static poster for users who prefer reduced motion */}
           <img
             src={asset(HERO_POSTER)}
             alt=""
@@ -107,55 +112,67 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Readability scrims */}
-        <div className="absolute inset-0 -z-20 bg-slate-950/55" aria-hidden />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-transparent" aria-hidden />
+        {/* Lighter scrims so the video POPS */}
+        <div className="absolute inset-0 -z-20 bg-slate-950/25" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/25 via-slate-900/10 to-transparent" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0 -z-10"
           aria-hidden
           style={{
             background:
-              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.55) 0%, rgba(249,250,248,.25) 42%, rgba(249,250,248,0) 100%)',
+              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.35) 0%, rgba(249,250,248,.15) 42%, rgba(249,250,248,0) 100%)',
           }}
         />
 
-        <Container className="relative py-20 sm:py-24 md:py-32">
-          <Reveal delay={120}>
-            <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/30 backdrop-blur">
-              <div className="rounded-[24px] bg-white/70 p-6 sm:p-8 md:p-14 backdrop-blur">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
-                  Holistic • Human • Kind
-                </p>
-                <h1 id="about-hero-title" className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+        <Container className="relative">
+          <Reveal delay={100}>
+            {/* Softer glass so background shows through more */}
+            <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] ring-1 ring-white/40 backdrop-blur-md bg-white/10 shadow-[0_16px_44px_rgba(2,6,23,0.25)]">
+              <div className="rounded-[24px] bg-white/25 p-6 sm:p-8 md:p-14 backdrop-blur-md">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-white/90">Holistic • Human • Kind</p>
+
+                <h1
+                  id="about-hero-title"
+                  className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl"
+                >
                   Time for a{' '}
-                  <span className="bg-gradient-to-r from-[#0C8D69] via-emerald-500 to-[#19B6AE] bg-clip-text text-transparent">
+                  <span
+                    className="bg-gradient-to-r from-emerald-200 via-teal-200 to-cyan-200 bg-clip-text text-transparent
+                               drop-shadow-[0_2px_8px_rgba(6,182,212,0.35)]"
+                  >
                     Recharge
                   </span>
                 </h1>
-                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
+
+                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/90">
                   Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
                 </p>
-                <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-700">
+
+                <ul
+                  aria-label="Trust points"
+                  className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/90"
+                >
                   {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
                     <li
                       key={t}
                       className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
                       style={{ transitionDelay: `${i * 60}ms` }}
                     >
-                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                      <CheckIcon className="h-4 w-4 text-emerald-200" /> {t}
                     </li>
                   ))}
                 </ul>
+
                 <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
                   <Link
                     href="/contact/"
-                    className="inline-flex items-center justify-center rounded-[999px] bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                    className="inline-flex items-center justify-center rounded-[999px] bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow transition-all hover:-translate-y-0.5 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50"
                   >
                     Contact Us
                   </Link>
                   <Link
                     href="/services/"
-                    className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                    className="inline-flex items-center justify-center rounded-[999px] border border-white/70 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40"
                   >
                     Explore services
                   </Link>
@@ -166,136 +183,11 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== WHY UPGRADE — section with background video ============== */}
-      <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
-        <div className="absolute inset-0 -z-20 pointer-events-none">
-          <img
-            src={asset(VIDEO_POSTER)}
-            alt=""
-            aria-hidden
-            className="hidden h-full w-full object-cover motion-reduce:block"
-          />
-          <video
-            key="why-upgrade-bg"
-            className="h-full w-full object-cover motion-reduce:hidden"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={asset(VIDEO_POSTER)}
-            aria-hidden
-          >
-            <source src={asset(VIDEO_MP4)} type="video/mp4" />
-          </video>
-        </div>
-
-        {/* Darker scrim + vignette */}
-        <div className="absolute inset-0 -z-10" aria-hidden>
-          <div className="absolute inset-0 bg-slate-950/55" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-slate-950/60" />
-          <div className="absolute inset-0 bg-black/20 [mask-image:radial-gradient(120%_90%_at_50%_40%,#000_40%,transparent_85%)]" />
-        </div>
-
-        {/* Soft accents (optional) */}
-        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
-
-        <Container>
-          <Reveal delay={120}>
-            <SectionHeader
-              kicker="Our Approach"
-              title="Care that’s practical, kind, and grounded"
-              subtitle="Evidence-led methods, human-friendly guidance, and community that helps you stay consistent."
-              tone="lavender"
-              align="left"
-              onDark
-            />
-          </Reveal>
-
-          <div className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {[
-              { title: 'Licensed & evidence-informed', body: 'Every recommendation is rooted in research and refined by practice.' },
-              { title: 'Human-friendly & doable', body: 'Tiny steps that fit your day—no overwhelm, just steady progress.' },
-              { title: 'Community & accountability', body: 'Events, groups, and gentle check-ins to keep momentum going.' },
-            ].map((c, i) => (
-              <Reveal key={c.title} delay={160 + i * 90}>
-                <div className="group relative rounded-[18px] border border-white/20 bg-white/90 backdrop-blur-md p-5 sm:p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/40 via-transparent to-emerald-400/40" />
-                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/25">
-                    <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
-                  </div>
-                  <h3 className="text-base sm:text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
-                  <p className="mt-1 text-sm text-slate-700">{c.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ===== Divider ==================================================== */}
-      <SectionDivider label="EE System Benefits" tone="lavender" />
-
-     {/* ===== EE SYSTEM BENEFITS ======================================== */}
-      <section
-        className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
-        id="ee-environment"
-        aria-labelledby="ee-title"
-      >
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] sm:bg-[size:28px_28px]" />
-        <Container>
-          <Reveal delay={110}>
-            <SectionHeader
-              kicker="EE System"
-              title="What the EE System supports"
-              subtitle="A multi-wave environment designed to encourage whole-body restoration."
-              tone="lavender"
-              align="center"
-            />
-          </Reveal>
-
-          <Reveal delay={160}>
-            {/* Outer frame kept for a premium feel; remove these two wrappers if you want a flat look */}
-            <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
-              <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-3 sm:p-5">
-
-                <ul
-                  role="list"
-                  className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4"
-                >
-                  {eeBenefits.map((b, i) => (
-                    <Reveal key={b.id} delay={140 + (i % 8) * 70}>
-                      <li
-                        tabIndex={0}
-                        role="group"
-                        className="group relative flex flex-col items-center justify-center gap-2 sm:gap-3 rounded-xl p-2 sm:p-3 outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
-                      >
-                        {/* Just the icon — no square background */}
-                        <b.Icon
-                          aria-hidden
-                          className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 text-emerald-700 transition-transform duration-300 group-hover:scale-[1.06] group-hover:drop-shadow"
-                        />
-
-                        <p className="whitespace-pre-line text-center text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
-                          {b.label}
-                        </p>
-                      </li>
-                    </Reveal>
-                  ))}
-                </ul>
-
-              </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="How It Works" tone="emerald" />
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
-      <section className="relative py-14 sm:py-16 md:py-20" aria-labelledby="how-title">
+      <section className={`relative ${sectionY}`} aria-labelledby="how-title">
         <Container>
           <Reveal delay={110}>
             <SectionHeader
@@ -307,7 +199,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-          <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 md:grid-cols-3">
+          <div className="mt-8 grid gap-5 sm:gap-6 md:grid-cols-3">
             {[
               { step: '1', title: 'Arrive & settle', body: 'Check in, sip water, and set a gentle intention for your time here.' },
               { step: '2', title: 'Restore', body: 'Unwind while your body does its best healing work—no effort required.' },
@@ -330,11 +222,137 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      {/* ===== WHY UPGRADE — section with background video ============== */}
+      <section className={`relative overflow-hidden ${sectionY}`} aria-labelledby="pillars">
+        <div className="absolute inset-0 -z-20 pointer-events-none">
+          <img
+            src={asset(VIDEO_POSTER)}
+            alt=""
+            aria-hidden
+            className="hidden h-full w-full object-cover motion-reduce:block"
+          />
+          <video
+            key="why-upgrade-bg"
+            className="h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={asset(VIDEO_POSTER)}
+            aria-hidden
+          >
+            <source src={asset(VIDEO_MP4)} type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Lightened scrim so footage is visible but content stays readable */}
+        <div className="absolute inset-0 -z-10" aria-hidden>
+          <div className="absolute inset-0 bg-slate-950/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-900/15 to-slate-950/30" />
+          <div className="absolute inset-0 bg-black/10 [mask-image:radial-gradient(120%_90%_at_50%_40%,#000_40%,transparent_85%)]" />
+        </div>
+
+        {/* Soft accents (optional) */}
+        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
+
+        <Container>
+          <Reveal delay={120}>
+            <SectionHeader
+              kicker="Our Approach"
+              title="Care that’s practical, kind, and grounded"
+              subtitle="Evidence-led methods, human-friendly guidance, and community that helps you stay consistent."
+              tone="lavender"
+              align="left"
+              onDark
+            />
+          </Reveal>
+
+          <div className="mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {[
+              { title: 'Licensed & evidence-informed', body: 'Every recommendation is rooted in research and refined by practice.' },
+              { title: 'Human-friendly & doable', body: 'Tiny steps that fit your day—no overwhelm, just steady progress.' },
+              { title: 'Community & accountability', body: 'Events, groups, and gentle check-ins to keep momentum going.' },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={160 + i * 90}>
+                <div className="group relative rounded-[18px] border border-white/20 bg-white/85 backdrop-blur-md p-5 sm:p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/40 via-transparent to-emerald-400/40" />
+                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/25">
+                    <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
+                  <p className="mt-1 text-sm text-slate-700">{c.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="EE System Benefits" tone="lavender" />
+
+      {/* ===== EE SYSTEM BENEFITS ======================================== */}
+      <section
+        className={`relative bg-[var(--surface)] ${sectionY}`}
+        id="ee-environment"
+        aria-labelledby="ee-title"
+      >
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] sm:bg-[size:28px_28px]" />
+        <Container>
+          <Reveal delay={110}>
+            <SectionHeader
+              kicker="EE System"
+              title="What the EE System supports"
+              subtitle="A multi-wave environment designed to encourage whole-body restoration."
+              tone="lavender"
+              align="center"
+            />
+          </Reveal>
+
+          <Reveal delay={160}>
+            <div className="mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
+              <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-4 sm:p-6">
+                <ul
+                  role="list"
+                  className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4"
+                >
+                  {eeBenefits.map((b, i) => {
+                    const badge = iconBadgeGradients[i % iconBadgeGradients.length]
+                    return (
+                      <Reveal key={b.id} delay={140 + (i % 8) * 70}>
+                        <li
+                          tabIndex={0}
+                          role="group"
+                          className="relative rounded-2xl border border-slate-100 bg-white p-4 sm:p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5"
+                        >
+                          <div className="flex flex-col items-center text-center">
+                            <div
+                              className={`mb-3 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl text-white ring-1 ring-white/50 ${badge}`}
+                            >
+                              <b.Icon className="h-8 w-8 sm:h-9 sm:w-9" />
+                            </div>
+                            <p className="whitespace-pre-line text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
+                              {b.label}
+                            </p>
+                          </div>
+                        </li>
+                      </Reveal>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="Featured Services" tone="lavender" />
 
       {/* ===== FEATURED SERVICES ========================================= */}
-      <section className="relative py-14 sm:py-16 md:py-20" id="featured-services" aria-labelledby="featured">
+      <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 -z-10 bg-gradient-to-b from-white to-transparent" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(50rem_30rem_at_100%_100%,rgba(124,111,176,0.10),transparent_60%)]" />
         <Container>
@@ -348,7 +366,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-          <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Service cards">
+          <div className="mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Service cards">
             {list.map((s, i) => {
               const headingId = `svc-${s.slug}-title`
               return (
@@ -393,7 +411,7 @@ export default function AboutPage() {
           </div>
 
           <Reveal delay={340}>
-            <div className="mt-6 sm:mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
               <Link href="/services/" className="w-full sm:w-auto rounded-[999px] bg-white px-4 py-2 text-center text-sm font-medium text-slate-800 ring-1 ring-slate-200 transition-colors hover:bg-slate-50">
                 Compare services
               </Link>
@@ -409,7 +427,7 @@ export default function AboutPage() {
       <SectionDivider label="Visit Us" tone="emerald" />
 
       {/* ===== VISIT US =================================================== */}
-      <section className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20" id="visit-us" aria-labelledby="visit">
+      <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70rem_30rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
         <Container>
           <Reveal delay={110}>
@@ -422,7 +440,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-          <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-8 md:grid-cols-2">
+          <div className="mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
             <Reveal delay={150}>
               <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
@@ -475,7 +493,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== YouTube Embeds — before the final CTA ===================== */}
-      <section className="relative py-10 sm:py-12 md:py-14" aria-labelledby="yt-title">
+      <section className={`relative ${sectionY}`} aria-labelledby="yt-title">
         <Container>
           <Reveal delay={110}>
             <SectionHeader
@@ -487,7 +505,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-          <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-5 lg:grid-cols-3">
+          <div className="mt-8 grid gap-5 sm:gap-6 lg:grid-cols-3">
             {YT_IDS.map((id, i) => (
               <Reveal key={id} delay={140 + i * 90}>
                 <article className="overflow-hidden rounded-[16px] border border-slate-200 bg-white shadow-sm">
@@ -502,7 +520,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== CTA ======================================================== */}
-      <section className="py-14 sm:py-16 md:py-20" aria-labelledby="cta">
+      <section className={`${sectionY}`} aria-labelledby="cta">
         <Container>
           <Reveal delay={150}>
             <div className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] border border-[#7C6FB0]/25 bg-[linear-gradient(135deg,#0C8D69,#19B6AE_55%,#7C6FB0)] text-white shadow-[0_8px_22px_rgba(16,24,40,.08)]">
@@ -575,7 +593,7 @@ function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'em
       ? 'from-[#7C6FB0]/30 via-transparent to-[#7C6FB0]/30'
       : 'from-emerald-500/30 via-transparent to-emerald-500/30'
   return (
-    <div className="py-6 sm:py-8">
+    <div className="py-8">
       <Container>
         <div className="mx-auto flex max-w-3xl items-center gap-3 sm:gap-4 px-1">
           <span className={`hidden sm:block h-px w-10 bg-gradient-to-r ${line}`} />
