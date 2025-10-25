@@ -27,14 +27,19 @@ export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets
+  // Assets (hero animated background)
+  const HERO_MP4 = '/images/home-hero.mp4'          // animated GIF
+  const HERO_WEBP = '/images/home-hero.webp'        // animated WebP (preferred where supported)
+  const HERO_POSTER = '/images/home-hero-poster.jpg'// static image for reduced-motion users
+
+  // Other assets
   const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
   // Background video for "Why Upgrade" (put your files in /public)
-  const VIDEO_MP4 = '/videos/home-hero.mp4'
-  const VIDEO_WEBM = '/videos/home-hero.webm' // optional
-  const VIDEO_POSTER = '/images/home-video-poster.jpg' // optional
+  const VIDEO_MP4 = '/videos/ees.mp4'
+  const VIDEO_WEBM = '/videos/ees.webm' // optional
+  const VIDEO_POSTER = '/images/home-ees.jpg' // optional
 
   // YouTube video IDs (swap with your own)
   const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'uu857hjy4CQ'] as const
@@ -78,48 +83,69 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* ===== Hero ====================================================== */}
+      {/* ===== Hero with animated GIF/WebP background =================== */}
       <section className="relative isolate" aria-labelledby="about-hero-title">
+        {/* Animated background (prefers-motion) */}
+        <div className="absolute inset-0 -z-30 motion-reduce:hidden" aria-hidden>
+          <picture>
+            {/* Use animated WebP when supported (smaller/faster) */}
+            <source srcSet={asset(HERO_WEBP)} type="image/webp" />
+            {/* Fallback to animated GIF everywhere else */}
+            <img
+              src={asset(HERO_MP4)}
+              alt=""
+              className="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+        </div>
+
+        {/* Static poster for users who prefer reduced motion */}
         <img
-          src={asset(HERO)}
-          alt="Soft, calming wellness environment"
-          className="absolute inset-0 -z-30 h-full w-full object-cover"
+          src={asset(HERO_POSTER)}
+          alt=""
+          className="absolute inset-0 -z-30 hidden h-full w-full object-cover motion-reduce:block"
           loading="eager"
           decoding="async"
         />
-        <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-900/55 via-slate-900/25 to-white/0" aria-hidden />
+
+        {/* Darker readability scrims over the animation */}
+        <div className="absolute inset-0 -z-20 bg-slate-950/55" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-transparent" aria-hidden />
         <div
-          className="pointer-events-none absolute inset-0 -z-10 motion-safe:animate-pulse"
+          className="pointer-events-none absolute inset-0 -z-10"
           aria-hidden
           style={{
             background:
-              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.70) 0%, rgba(249,250,248,.35) 42%, rgba(249,250,248,0) 100%)',
-            animationDuration: '7s',
+              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.55) 0%, rgba(249,250,248,.25) 42%, rgba(249,250,248,0) 100%)',
           }}
         />
 
         <Container className="relative py-20 sm:py-24 md:py-32">
           <Reveal delay={120}>
-            <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/40 backdrop-blur">
-              <div className="rounded-[24px] bg-white/75 p-6 sm:p-8 md:p-14 backdrop-blur">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">Holistic • Human • Kind</p>
-                <h1 id="about-hero-title" className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+            <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/30 backdrop-blur">
+              <div className="rounded-[24px] bg-white/70 p-6 sm:p-8 md:p-14 backdrop-blur">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-50/90">
+                  <span className="text-white/95">Holistic • Human • Kind</span>
+                </p>
+                <h1 id="about-hero-title" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   Time for a{' '}
-                  <span className="bg-gradient-to-r from-[#0C8D69] via-emerald-500 to-[#19B6AE] bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-emerald-200 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
                     Recharge
                   </span>
                 </h1>
-                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
+                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/90">
                   Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
                 </p>
-                <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-700">
+                <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/90">
                   {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
                     <li
                       key={t}
                       className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
                       style={{ transitionDelay: `${i * 60}ms` }}
                     >
-                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                      <CheckIcon className="h-4 w-4 text-emerald-200" /> {t}
                     </li>
                   ))}
                 </ul>
@@ -132,7 +158,7 @@ export default function AboutPage() {
                   </Link>
                   <Link
                     href="/services/"
-                    className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                    className="inline-flex items-center justify-center rounded-[999px] border border-white/40 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40"
                   >
                     Explore services
                   </Link>
@@ -142,7 +168,7 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-      
+
       {/* ===== WHY UPGRADE — with background video ====================== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
         {/* Background video (with reduced-motion + poster fallback) */}
@@ -397,7 +423,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-          <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-8 md:grid-cols-2">
+        <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-8 md:grid-cols-2">
             <Reveal delay={150}>
               <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
