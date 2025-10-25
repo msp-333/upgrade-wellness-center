@@ -27,10 +27,10 @@ export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Reusable vertical spacing for sections (keeps layout rhythm consistent)
+  // Shared vertical spacing to keep sections aligned
   const sectionY = 'py-16 sm:py-20 md:py-24'
 
-  // Hero background video (files must be under /public)
+  // Hero background video (under /public)
   const HERO_MP4 = '/videos/home-hero.mp4'
   const HERO_POSTER = '/images/home-hero-poster.png'
 
@@ -54,7 +54,7 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE benefits
+  // EE benefits (same list as before)
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen',       label: 'Detoxification\nof the Body',               Icon: SparkleIcon },
     { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
@@ -74,13 +74,12 @@ export default function AboutPage() {
     { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
   ]
 
-  // Gradient badges for the EE icons
-  const iconBadgeGradients = [
-    'bg-gradient-to-br from-emerald-500 to-teal-500',
-    'bg-gradient-to-br from-[#7C6FB0] to-[#9C8FE0]',
-    'bg-gradient-to-br from-teal-500 to-cyan-500',
-    'bg-gradient-to-br from-emerald-500 to-teal-500',
-    'bg-gradient-to-br from-[#7C6FB0] to-[#9C8FE0]',
+  // (Restored) square-tile variant backgrounds
+  const iconBgVariants = [
+    'bg-emerald-50 ring-emerald-600/10',
+    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
+    'bg-teal-50 ring-teal-600/10',
+    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
   ] as const
 
   return (
@@ -112,77 +111,66 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Lighter scrims so the video POPS */}
-        <div className="absolute inset-0 -z-20 bg-slate-950/25" aria-hidden />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/25 via-slate-900/10 to-transparent" aria-hidden />
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          aria-hidden
-          style={{
-            background:
-              'radial-gradient(60% 50% at 50% -10%, rgba(236,253,245,.35) 0%, rgba(249,250,248,.15) 42%, rgba(249,250,248,0) 100%)',
-          }}
-        />
+        {/* Light but present scrims for contrast */}
+        <div className="absolute inset-0 -z-20 bg-slate-950/30" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/35 via-slate-900/15 to-transparent" aria-hidden />
 
         <Container className="relative">
-          <Reveal delay={100}>
-            {/* Softer glass so background shows through more */}
-            <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] ring-1 ring-white/40 backdrop-blur-md bg-white/10 shadow-[0_16px_44px_rgba(2,6,23,0.25)]">
-              <div className="rounded-[24px] bg-white/50 p-6 sm:p-8 md:p-14 backdrop-blur-md">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-white/90">Holistic • Human • Kind</p>
+          <Reveal delay={90}>
+            {/* Denser glass card + dark text for readability */}
+            <div className="mx-auto max-w-5xl rounded-[28px] bg-white/80 p-6 sm:p-10 md:p-14 shadow-[0_16px_44px_rgba(2,6,23,.22)] ring-1 ring-black/10 backdrop-blur-xl">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-900/80">Holistic • Human • Kind</p>
 
-                <h1
-                  id="about-hero-title"
-                  className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl"
+              <h1
+                id="about-hero-title"
+                className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl"
+              >
+                Time for a{' '}
+                <span
+                  className="bg-gradient-to-r from-[#0EA5E9] via-[#22D3EE] to-[#10B981] bg-clip-text text-transparent"
+                  style={{ textShadow: '0 2px 12px rgba(32, 211, 238, 0.25)' }}
                 >
-                  Time for a{' '}
-                  <span
-                    className="bg-gradient-to-r from-emerald-200 via-teal-200 to-cyan-200 bg-clip-text text-transparent
-                               drop-shadow-[0_2px_8px_rgba(6,182,212,0.35)]"
+                  Recharge
+                </span>
+              </h1>
+
+              <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-800">
+                Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
+              </p>
+
+              <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800">
+                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+                  <li
+                    key={t}
+                    className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
+                    style={{ transitionDelay: `${i * 60}ms` }}
                   >
-                    Recharge
-                  </span>
-                </h1>
+                    <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                  </li>
+                ))}
+              </ul>
 
-                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/90">
-                  Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
-                </p>
-
-                <ul
-                  aria-label="Trust points"
-                  className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/90"
+              <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+                <Link
+                  href="/contact/"
+                  className="inline-flex items-center justify-center rounded-[999px] bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40"
                 >
-                  {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                    <li
-                      key={t}
-                      className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
-                      style={{ transitionDelay: `${i * 60}ms` }}
-                    >
-                      <CheckIcon className="h-4 w-4 text-emerald-200" /> {t}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
-                  <Link
-                    href="/contact/"
-                    className="inline-flex items-center justify-center rounded-[999px] bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow transition-all hover:-translate-y-0.5 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  >
-                    Contact Us
-                  </Link>
-                  <Link
-                    href="/services/"
-                    className="inline-flex items-center justify-center rounded-[999px] border border-white/70 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40"
-                  >
-                    Explore services
-                  </Link>
-                </div>
+                  Contact Us
+                </Link>
+                <Link
+                  href="/services/"
+                  className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-800 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300/60"
+                >
+                  Explore services
+                </Link>
               </div>
             </div>
           </Reveal>
         </Container>
       </section>
 
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="How It Works" tone="emerald" />
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
@@ -244,14 +232,14 @@ export default function AboutPage() {
           </video>
         </div>
 
-        {/* Lightened scrim so footage is visible but content stays readable */}
+        {/* Lightened scrim so footage reads, content stays legible */}
         <div className="absolute inset-0 -z-10" aria-hidden>
           <div className="absolute inset-0 bg-slate-950/30" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-900/15 to-slate-950/30" />
           <div className="absolute inset-0 bg-black/10 [mask-image:radial-gradient(120%_90%_at_50%_40%,#000_40%,transparent_85%)]" />
         </div>
 
-        {/* Soft accents (optional) */}
+        {/* Soft accents */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
 
@@ -288,12 +276,11 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== EE SYSTEM BENEFITS ======================================== */}
-      <section
-        className={`relative bg-[var(--surface)] ${sectionY}`}
-        id="ee-environment"
-        aria-labelledby="ee-title"
-      >
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="EE System Benefits" tone="lavender" />
+
+      {/* ===== EE SYSTEM BENEFITS (reverted design) ====================== */}
+      <section className={`relative bg-[var(--surface)] ${sectionY}`} id="ee-environment" aria-labelledby="ee-title">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] sm:bg-[size:28px_28px]" />
         <Container>
           <Reveal delay={110}>
@@ -308,25 +295,24 @@ export default function AboutPage() {
 
           <Reveal delay={160}>
             <div className="mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
-              <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-4 sm:p-6">
-                <ul
-                  role="list"
-                  className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4"
-                >
+              <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-3 sm:p-5">
+                <ul role="list" className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 md:grid-cols-3 xl:grid-cols-4">
                   {eeBenefits.map((b, i) => {
-                    const badge = iconBadgeGradients[i % iconBadgeGradients.length]
+                    const iconVariant = iconBgVariants[i % iconBgVariants.length]
                     return (
                       <Reveal key={b.id} delay={140 + (i % 8) * 70}>
                         <li
                           tabIndex={0}
                           role="group"
-                          className="relative rounded-2xl border border-slate-100 bg-white p-4 sm:p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5"
+                          className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 md:p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
                         >
-                          <div className="flex flex-col items-center text-center">
-                            <div
-                              className={`mb-3 inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl text-white ring-1 ring-white/50 ${badge}`}
-                            >
-                              <b.Icon className="h-8 w-8 sm:h-9 sm:w-9" />
+                          <div className="pointer-events-none absolute -inset-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <div className="absolute inset-0 rounded-[16px] sm:rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(124,111,176,0.12),rgba(16,185,129,0.10),rgba(124,111,176,0.12))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)]" />
+                          </div>
+                          <div className="pointer-events-none absolute inset-0 rounded-[16px] sm:rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(124,111,176,0.10),transparent_60%)]" aria-hidden />
+                          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
+                            <div className={`mb-2 sm:mb-3 inline-flex h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-xl sm:rounded-2xl ring-1 transition-transform duration-300 group-hover:scale-[1.06] ${iconVariant}`}>
+                              <b.Icon className="h-8 w-8 sm:h-9 sm:w-9 md:h-12 md:w-12 text-emerald-700" />
                             </div>
                             <p className="whitespace-pre-line text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
                               {b.label}
@@ -342,6 +328,9 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="Featured Services" tone="lavender" />
 
       {/* ===== FEATURED SERVICES ========================================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
@@ -414,6 +403,9 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
+
+      {/* ===== Divider ==================================================== */}
+      <SectionDivider label="Visit Us" tone="emerald" />
 
       {/* ===== VISIT US =================================================== */}
       <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
