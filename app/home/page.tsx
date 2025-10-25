@@ -28,7 +28,7 @@ export default function AboutPage() {
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
   // Assets (hero animated background)
-  const HERO_MP4 = '/images/home-hero.mp4'          // animated GIF
+  const HERO_MP4 = '/videos/home-hero.mp4'          // animated GIF
   const HERO_WEBP = '/images/home-hero.webp'        // animated WebP (preferred where supported)
   const HERO_POSTER = '/images/home-hero-poster.jpg'// static image for reduced-motion users
 
