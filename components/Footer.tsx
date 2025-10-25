@@ -26,7 +26,8 @@ export default function Footer() {
                 height={500}
                 decoding="async"
                 loading="lazy"
-                className="h-10 w-10 object-contain"
+                /* Bigger logo */
+                className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
               />
             </Link>
             <p className="mt-3 max-w-xs text-sm text-slate-600">
@@ -110,16 +111,16 @@ export default function Footer() {
         </Container>
       </section>
 
-      {/* Bottom: Disclaimer — centered and full width of the section */}
+      {/* Bottom: Disclaimer — centered, full width, darker background */}
       <section
-        className="border-t border-slate-200 bg-slate-50/60 py-8"
+        className="border-t border-slate-800 bg-slate-900 py-10"
         aria-labelledby="site-disclaimer"
       >
         <Container className="text-center">
-          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-slate-950">
+          <h3 id="site-disclaimer" className="mb-3 text-sm font-semibold text-white">
             Disclaimer
           </h3>
-          <p className="mx-auto w-full max-w-none text-xs leading-relaxed text-slate-600 md:text-sm">
+          <p className="mx-auto w-full max-w-none text-xs leading-relaxed text-slate-300 md:text-sm md:leading-7">
             The content on this website—including text, graphics, PDFs, images, and videos—is for informational purposes only
             and does not constitute professional advice, diagnosis, or treatment. We do not claim to diagnose, treat, cure, or
             prevent any disease or condition. Always seek the advice of a qualified professional regarding questions about your
