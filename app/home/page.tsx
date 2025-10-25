@@ -27,19 +27,16 @@ export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Assets (hero animated background)
-  const HERO_MP4 = '/videos/home-hero.mp4' 
-  const HERO_WEBP = '/images/home-hero.webp'  
-  const HERO_POSTER = '/images/home-hero-poster.png'// static image for reduced-motion users
+  // Hero background video (files must be under /public)
+  const HERO_MP4 = '/videos/home-hero.mp4'
+  const HERO_POSTER = '/images/home-hero-poster.png' // shown for reduced-motion users
 
   // Other assets
-  const HERO = '/images/about-hero.png'
   const MAP = '/images/map-downtown.jpg'
 
-  // Background video for "Why Upgrade" (put your files in /public)
+  // Background video for "Why Upgrade"
   const VIDEO_MP4 = '/videos/ees.mp4'
-  const VIDEO_WEBM = '/videos/ees.webm' // optional
-  const VIDEO_POSTER = '/images/home-ees.jpg' // optional
+  const VIDEO_POSTER = '/images/home-ees.jpg'
 
   // YouTube video IDs (swap with your own)
   const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'uu857hjy4CQ'] as const
@@ -72,7 +69,6 @@ export default function AboutPage() {
     { id: 'detox',       label: 'Skin Condition Relief',                     Icon: DetoxIcon },
     { id: 'stem',        label: 'Mobilizes Stem Cells',                      Icon: StemIcon },
     { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
-
   ]
 
   const iconBgVariants = [
@@ -84,34 +80,34 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* ===== Hero with animated GIF/WebP background =================== */}
+      {/* ===== HERO — video background (autoplay, mobile-ready) ========= */}
       <section className="relative isolate" aria-labelledby="about-hero-title">
-        {/* Animated background (prefers-motion) */}
-        <div className="absolute inset-0 -z-30 motion-reduce:hidden" aria-hidden>
-          <picture>
-            {/* Use animated WebP when supported (smaller/faster) */}
-            <source srcSet={asset(HERO_WEBP)} type="image/webp" />
-            {/* Fallback to animated GIF everywhere else */}
-            <img
-              src={asset(HERO_MP4)}
-              alt="m"
-              className="h-full w-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
-          </picture>
-        </div>
+        {/* Video layer */}
+        <div className="absolute inset-0 -z-30 pointer-events-none">
+          <video
+            className="h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={asset(HERO_POSTER)}
+            aria-hidden
+          >
+            <source src={asset(HERO_MP4)} type="video/mp4" />
+          </video>
 
         {/* Static poster for users who prefer reduced motion */}
-        <img
-          src={asset(HERO_POSTER)}
-          alt=""
-          className="absolute inset-0 -z-30 hidden h-full w-full object-cover motion-reduce:block"
-          loading="eager"
-          decoding="async"
-        />
+          <img
+            src={asset(HERO_POSTER)}
+            alt=""
+            className="hidden h-full w-full object-cover motion-reduce:block"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
 
-        {/* Darker readability scrims over the animation */}
+        {/* Readability scrims */}
         <div className="absolute inset-0 -z-20 bg-slate-950/55" aria-hidden />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-transparent" aria-hidden />
         <div
@@ -127,26 +123,26 @@ export default function AboutPage() {
           <Reveal delay={120}>
             <div className="mx-auto max-w-5xl rounded-[24px] p-[1px] shadow-[0_12px_32px_rgba(16,24,40,.18)] ring-1 ring-white/30 backdrop-blur">
               <div className="rounded-[24px] bg-white/70 p-6 sm:p-8 md:p-14 backdrop-blur">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-50/90">
-                  <span className="text-white/95">Holistic • Human • Kind</span>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
+                  Holistic • Human • Kind
                 </p>
-                <h1 id="about-hero-title" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+                <h1 id="about-hero-title" className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
                   Time for a{' '}
-                  <span className="bg-gradient-to-r from-emerald-200 via-emerald-300 to-teal-200 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#0C8D69] via-emerald-500 to-[#19B6AE] bg-clip-text text-transparent">
                     Recharge
                   </span>
                 </h1>
-                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-white/90">
+                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
                   Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
                 </p>
-                <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/90">
+                <ul aria-label="Trust points" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-700">
                   {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
                     <li
                       key={t}
                       className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
                       style={{ transitionDelay: `${i * 60}ms` }}
                     >
-                      <CheckIcon className="h-4 w-4 text-emerald-200" /> {t}
+                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
                     </li>
                   ))}
                 </ul>
@@ -159,7 +155,7 @@ export default function AboutPage() {
                   </Link>
                   <Link
                     href="/services/"
-                    className="inline-flex items-center justify-center rounded-[999px] border border-white/40 bg-white/10 px-5 py-3 text-sm font-medium text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40"
+                    className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white/80 px-5 py-3 text-sm font-medium text-slate-800 backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                   >
                     Explore services
                   </Link>
@@ -170,9 +166,8 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== WHY UPGRADE — with background video ====================== */}
+      {/* ===== WHY UPGRADE — section with background video ============== */}
       <section className="relative overflow-hidden py-14 sm:py-16 md:py-20" aria-labelledby="pillars">
-        {/* Background video (with reduced-motion + poster fallback) */}
         <div className="absolute inset-0 -z-20 pointer-events-none">
           <img
             src={asset(VIDEO_POSTER)}
@@ -191,12 +186,11 @@ export default function AboutPage() {
             poster={asset(VIDEO_POSTER)}
             aria-hidden
           >
-            <source src={asset(VIDEO_WEBM)} type="video/webm" />
             <source src={asset(VIDEO_MP4)} type="video/mp4" />
           </video>
         </div>
 
-        {/* Readability scrim (darker + soft vignette) */}
+        {/* Darker scrim + vignette */}
         <div className="absolute inset-0 -z-10" aria-hidden>
           <div className="absolute inset-0 bg-slate-950/55" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-900/35 to-slate-950/60" />
@@ -243,8 +237,12 @@ export default function AboutPage() {
       {/* ===== Divider ==================================================== */}
       <SectionDivider label="EE System Benefits" tone="lavender" />
 
-      {/* ===== EE SYSTEM BENEFITS ======================================== */}
-      <section className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20" id="ee-environment" aria-labelledby="ee-title">
+     {/* ===== EE SYSTEM BENEFITS ======================================== */}
+      <section
+        className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
+        id="ee-environment"
+        aria-labelledby="ee-title"
+      >
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px] sm:bg-[size:28px_28px]" />
         <Container>
           <Reveal delay={110}>
@@ -258,35 +256,35 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={160}>
+            {/* Outer frame kept for a premium feel; remove these two wrappers if you want a flat look */}
             <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
               <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-3 sm:p-5">
-                <ul role="list" className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 md:grid-cols-3 xl:grid-cols-4">
-                  {eeBenefits.map((b, i) => {
-                    const iconVariant = iconBgVariants[i % iconBgVariants.length]
-                    return (
-                      <Reveal key={b.id} delay={140 + (i % 8) * 70}>
-                        <li
-                          tabIndex={0}
-                          role="group"
-                          className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 md:p-5 shadow-sm outline-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(16,24,40,.08)] focus-visible:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
-                        >
-                          <div className="pointer-events-none absolute -inset-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                            <div className="absolute inset-0 rounded-[16px] sm:rounded-[20px] [background:conic-gradient(from_180deg_at_50%_50%,rgba(124,111,176,0.12),rgba(16,185,129,0.10),rgba(124,111,176,0.12))] [mask-image:radial-gradient(70%_70%_at_50%_50%,#000_0,transparent_70%)]" />
-                          </div>
-                          <div className="pointer-events-none absolute inset-0 rounded-[16px] sm:rounded-[20px] bg-[radial-gradient(60%_40%_at_50%_30%,rgba(124,111,176,0.10),transparent_60%)]" aria-hidden />
-                          <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
-                            <div className={`mb-2 sm:mb-3 inline-flex h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-xl sm:rounded-2xl ring-1 transition-transform duration-300 group-hover:scale-[1.06] ${iconVariant}`}>
-                              <b.Icon className="h-8 w-8 sm:h-9 sm:w-9 md:h-12 md:w-12 text-emerald-700" />
-                            </div>
-                            <p className="whitespace-pre-line text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
-                              {b.label}
-                            </p>
-                          </div>
-                        </li>
-                      </Reveal>
-                    )
-                  })}
+
+                <ul
+                  role="list"
+                  className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4"
+                >
+                  {eeBenefits.map((b, i) => (
+                    <Reveal key={b.id} delay={140 + (i % 8) * 70}>
+                      <li
+                        tabIndex={0}
+                        role="group"
+                        className="group relative flex flex-col items-center justify-center gap-2 sm:gap-3 rounded-xl p-2 sm:p-3 outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
+                      >
+                        {/* Just the icon — no square background */}
+                        <b.Icon
+                          aria-hidden
+                          className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 text-emerald-700 transition-transform duration-300 group-hover:scale-[1.06] group-hover:drop-shadow"
+                        />
+
+                        <p className="whitespace-pre-line text-center text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
+                          {b.label}
+                        </p>
+                      </li>
+                    </Reveal>
+                  ))}
                 </ul>
+
               </div>
             </div>
           </Reveal>
@@ -424,7 +422,7 @@ export default function AboutPage() {
             />
           </Reveal>
 
-        <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-8 md:grid-cols-2">
+          <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-8 md:grid-cols-2">
             <Reveal delay={150}>
               <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
