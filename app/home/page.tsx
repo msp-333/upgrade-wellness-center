@@ -84,7 +84,10 @@ export default function AboutPage() {
 
   return (
     <>
-      <section className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]" aria-labelledby="about-hero-title">
+      <section
+        className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
+        aria-labelledby="about-hero-title"
+      >
         {/* Background video */}
         <div className="absolute inset-0 -z-30 pointer-events-none">
           <video
@@ -95,7 +98,7 @@ export default function AboutPage() {
             playsInline
             preload="metadata"
             poster={asset(HERO_POSTER)}
-            aria-hidden
+            aria-hidden="true"
           >
             <source src={asset(HERO_MP4)} type="video/mp4" />
           </video>
@@ -110,22 +113,44 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Very light scrim so the footage shows but content stays crisp */}
-        <div className="absolute inset-0 -z-20 bg-slate-950/15" aria-hidden />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/15 via-transparent to-transparent" aria-hidden />
+        {/* Subtle overlays to keep text crisp */}
+        <div className="absolute inset-0 -z-20 bg-slate-950/15" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/20 via-transparent to-transparent" aria-hidden="true" />
 
-        <Container className="relative py-28 sm:py-36 md:py-40">
+        {/* Soft radial glow behind the card (nice depth, zero layout shift) */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-[5] opacity-70"
+          style={{
+            maskImage:
+              'radial-gradient(65% 55% at 50% 40%, black 0%, transparent 70%)',
+            WebkitMaskImage:
+              'radial-gradient(65% 55% at 50% 40%, black 0%, transparent 70%)',
+            background:
+              'radial-gradient(800px 420px at 50% 35%, rgba(255,255,255,.28), transparent 60%)',
+          }}
+        />
+
+        <Container className="relative py-24 sm:py-32 md:py-36">
           <Reveal delay={80}>
-            {/* White card with subtle gradient border to make it pop */}
+            {/* Gradient ring + glass card (with graceful fallback) */}
             <div className="mx-auto max-w-6xl rounded-[34px] p-[1px] bg-[linear-gradient(135deg,rgba(16,185,129,.25),rgba(20,184,166,.18),rgba(6,182,212,.25))] shadow-[0_22px_60px_rgba(2,6,23,.18)] ring-1 ring-black/5">
-              <div className="rounded-[33px] bg-white p-7 sm:p-12 md:p-16">
+              <div
+                className={[
+                  // fallback (no blur support): solid white
+                  'rounded-[33px] bg-white',
+                  // when blur is supported, soften the card so the video subtly shows through
+                  'supports-[backdrop-filter:blur(0)]:bg-white/90 supports-[backdrop-filter:blur(0)]:backdrop-blur-md',
+                  'p-6 sm:p-10 md:p-16',
+                ].join(' ')}
+              >
                 <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-800/80">
                   Holistic • Human • Kind
                 </p>
 
                 <h1
                   id="about-hero-title"
-                  className="mt-3 text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900"
+                  className="mt-2 text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900"
                 >
                   Time for a{' '}
                   <span className="bg-[linear-gradient(90deg,#14B8A6_0%,#10B981_45%,#06B6D4_100%)] bg-clip-text text-transparent">
@@ -133,41 +158,53 @@ export default function AboutPage() {
                   </span>
                 </h1>
 
-                <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-slate-800">
-                  Hydration, healing, and the harmony of health—blending nature, innovation, and evidence-informed care.
+                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-800">
+                  Hydration, healing, and the harmony of health—blending nature,
+                  innovation, and evidence-informed care.
                 </p>
 
-                <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800">
-                  {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                    <li
-                      key={t}
-                      className="inline-flex items-center gap-2 transition-transform duration-700 hover:-translate-y-0.5"
-                      style={{ transitionDelay: `${i * 60}ms` }}
-                    >
-                      <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
-                    </li>
-                  ))}
+                <ul
+                  aria-label="Trust points"
+                  className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800"
+                >
+                  {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map(
+                    (t, i) => (
+                      <li
+                        key={t}
+                        className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
+                        style={{ transitionDelay: `${i * 60}ms` }}
+                      >
+                        <CheckIcon className="h-4 w-4 text-emerald-600" /> {t}
+                      </li>
+                    ),
+                  )}
                 </ul>
 
-                <div className="mt-8 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+                {/* CTAs: use relative links for GitHub Pages unless you set <base href="/upgrade-wellness-center/"> */}
+                <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
                   <Link
-                    href="/contact/"
+                    href="contact/"
+                    aria-label="Contact us to schedule a session"
                     className="inline-flex items-center justify-center rounded-[999px] bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900/40"
                   >
                     Contact Us
                   </Link>
                   <Link
-                    href="/services/"
+                    href="services/"
                     className="inline-flex items-center justify-center rounded-[999px] border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-800 transition-all hover:-translate-y-0.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300/60"
                   >
                     Explore services
                   </Link>
                 </div>
+
+                {/* Optional trust strip (uncomment if you have reviews) */}
+                {/* <div className="mt-3 text-xs text-slate-600">★★★★★ Loved by our community • Same-day openings • Easy parking</div> */}
               </div>
             </div>
           </Reveal>
         </Container>
       </section>
+
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
