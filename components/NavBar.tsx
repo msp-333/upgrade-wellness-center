@@ -73,8 +73,8 @@ export default function NavBar() {
           <img
             src={asset('/images/logo.png')}
             alt="Upgrade Wellness"
-            width={160}
-            height={40}
+            width={180}
+            height={70}
             className="h-10 w-auto"
             loading="eager"
             fetchPriority="high"
