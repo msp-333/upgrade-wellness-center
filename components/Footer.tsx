@@ -106,14 +106,14 @@ export default function Footer() {
 
       {/* Bottom: Disclaimer — darker, compact spacing */}
       <section
-        className="border-t border-slate-800 bg-slate-900 py-6 sm:py-7"
+        className="border-t border-slate-100 bg-slate-100 py-6 sm:py-7"
         aria-labelledby="site-disclaimer"
       >
         <Container className="text-center">
-          <h3 id="site-disclaimer" className="mb-2 text-sm font-semibold text-white">
+          <h3 id="site-disclaimer" className="mb-2 text-sm font-semibold text-slate-900">
             Disclaimer
           </h3>
-          <p className="mx-auto w-full text-xs leading-snug text-slate-300 sm:text-sm sm:leading-normal">
+          <p className="mx-auto w-full text-xs leading-snug text-slate-800 sm:text-sm sm:leading-normal">
             The content on this website—including text, graphics, PDFs, images, and videos—is for informational purposes only
             and does not constitute professional advice, diagnosis, or treatment. We do not claim to diagnose, treat, cure, or
             prevent any disease or condition. Always seek the advice of a qualified professional regarding questions about your
