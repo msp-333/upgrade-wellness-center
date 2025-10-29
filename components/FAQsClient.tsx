@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type FAQ = {
   id: string;
@@ -18,13 +18,12 @@ function normalizeCategory(cat?: string): FinalCategory {
   const c = (cat ?? '').trim();
   if (!c) return 'General';
   if (/^sessions$/i.test(c)) return 'General';
-  // Pass through known categories; unknown falls back to General
   const known = CATEGORY_ORDER as readonly string[];
   return (known.includes(c) ? c : 'General') as FinalCategory;
 }
 
 export default function FAQsClient({ items }: { items: FAQ[] }) {
-  /* ---------- categories (ordered; no counts shown) ---------- */
+  /* ---------- categories (ordered; no counts) ---------- */
   const categories = useMemo(() => {
     const set = new Set<FinalCategory>();
     items.forEach((i) => set.add(normalizeCategory(i.category)));
@@ -77,7 +76,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
       <>
         {parts.map((p, i) =>
           p.toLowerCase() === q ? (
-            <mark key={i} className="bg-lavender-400/40 text-text-primary rounded-sm px-0.5">
+            <mark key={i} className="bg-brand-200/40 text-text-primary rounded-sm px-0.5">
               {p}
             </mark>
           ) : (
@@ -88,16 +87,62 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
     );
   };
 
+  /* ---------- deep-link: open/scroll to #id ---------- */
+  useEffect(() => {
+    const openFromHash = () => {
+      const hash = (typeof window !== 'undefined' && window.location.hash.replace('#', '')) || '';
+      if (!hash) return;
+      const found = items.find((i) => i.id === hash);
+      if (!found) return;
+      const cat = normalizeCategory(found.category);
+      setTab(cat);
+      // Allow tab switch to render, then open details
+      setTimeout(() => {
+        const el = document.getElementById(hash) as HTMLDetailsElement | null;
+        if (!el) return;
+        el.open = true;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    };
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, [items]);
+
+  /* ---------- keyboard: "/" to focus search, Esc clears ---------- */
+  const searchRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchRef.current) {
+        setQuery('');
+        searchRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  /* ---------- FAQPage JSON-LD (SEO) ---------- */
+  const jsonLd = useMemo(() => {
+    const all = items.map((i) => ({
+      '@type': 'Question',
+      name: i.question,
+      acceptedAnswer: { '@type': 'Answer', text: i.answer },
+    }));
+    return { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: all };
+  }, [items]);
+
   return (
     <div className="min-h-screen bg-surface text-text-primary">
-      {/* Header — softened green + balanced paddings */}
+      {/* Header — soft brand gradient, consistent with Services */}
       <section className="relative isolate overflow-hidden text-white">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand-700 via-brand-600 to-gradient-end" />
-        <div className="absolute inset-0 -z-10 bg-hero-radial opacity-90" />
-        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-[32px] bg-brand-100/60 blur-2xl" />
-        <div className="absolute -left-28 -bottom-28 h-80 w-80 rounded-[32px] bg-lavender-600/20 blur-3xl" />
-
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand-800 via-brand-700 to-brand-600" />
+        <div className="absolute inset-0 -z-10 bg-hero-radial opacity-80" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 md:py-20">
           <h1 className="text-center text-3xl md:text-4xl font-semibold tracking-tight">
             How can we help?
           </h1>
@@ -106,11 +151,12 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
           <div className="mt-6 md:mt-7 flex justify-center">
             <form onSubmit={(e) => e.preventDefault()} role="search" className="relative w-full max-w-2xl">
               <input
+                ref={searchRef}
                 aria-label="Search FAQs"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={`Search ${tab}`}
-                className="w-full rounded-pill bg-white text-text-primary placeholder:text-white/80 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-lavender-500/60"
+                placeholder={q ? 'Searching… (Esc to clear)' : `Search ${tab}  —  press /`}
+                className="w-full rounded-pill bg-white text-text-primary placeholder:text-slate-500 px-5 py-4 pr-12 shadow-soft outline-none ring-2 ring-transparent focus:ring-brand-400/70"
               />
               <button
                 aria-label="Search"
@@ -121,7 +167,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
             </form>
           </div>
 
-          {/* Category chips (no counts) — compact gap; mobile scroll */}
+          {/* Category chips — match site pills; mobile scroll */}
           <div className="mt-5 flex gap-2 overflow-x-auto px-1 sm:justify-center">
             {categories.map((name) => {
               const active = tab === name;
@@ -133,8 +179,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                   className={[
                     'whitespace-nowrap rounded-pill px-4 py-2 text-sm md:text-base transition',
                     active
-                      ? 'bg-white text-brand-800 shadow-soft ring-1 ring-white/50'
-                      : 'bg-white/10 text-white/90 hover:bg-white/15'
+                      ? 'bg-white text-brand-800 shadow-soft ring-1 ring-white/60'
+                      : 'bg-white/10 text-white/90 hover:bg-white/15',
                   ].join(' ')}
                 >
                   {name}
@@ -145,8 +191,8 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
         </div>
       </section>
 
-      {/* Results — tighter rhythm, more bottom space */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8 md:py-10 pb-32">
+      {/* Results — white cards like Services page */}
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8 md:py-10 pb-28">
         {q && autoExpanded && filtered.length > 0 && (
           <p className="mb-3 text-center text-sm text-text-secondary">
             No matches in <span className="font-medium">{tab}</span>. Showing matches from all categories.
@@ -165,7 +211,7 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
                 <details
                   key={f.id}
                   id={f.id}
-                  className="group rounded-card bg-white p-5 md:p-5 shadow-soft border border-slate-200/70 open:border-brand-300"
+                  className="group rounded-[20px] border border-slate-200 bg-white p-5 md:p-5 shadow-soft open:border-brand-300"
                 >
                   <summary className="cursor-pointer list-none">
                     <div className="flex items-start gap-3">
@@ -175,7 +221,16 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
 
                       <div className="flex-1 text-base md:text-lg">{mark(f.question)}</div>
 
-                      {/* Chevron button (visible + rotates on open) */}
+                      {/* Hash link (appears on hover for copy/share) */}
+                      <a
+                        href={`#${f.id}`}
+                        aria-label="Copy link to this question"
+                        className="opacity-0 group-hover:opacity-100 transition text-slate-400 hover:text-brand-700 mt-0.5"
+                      >
+                        <LinkIcon />
+                      </a>
+
+                      {/* Chevron */}
                       <span
                         aria-hidden="true"
                         className="ml-2 mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-transform group-open:rotate-180 group-open:bg-brand-50 group-open:text-brand-700"
@@ -214,6 +269,9 @@ export default function FAQsClient({ items }: { items: FAQ[] }) {
           </>
         )}
       </section>
+
+      {/* FAQPage JSON-LD for SEO */}
+      <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   );
 }
@@ -237,6 +295,13 @@ function ChevronDownIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+    </svg>
+  );
+}
+function LinkIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M3.9 12a5 5 0 0 1 5-5h3v2h-3a3 3 0 1 0 0 6h3v2h-3a5 5 0 0 1-5-5Zm6-1h4v2h-4v-2Zm5.1-4h3a5 5 0 0 1 0 10h-3v-2h3a3 3 0 1 0 0-6h-3V7Z"/>
     </svg>
   );
 }
