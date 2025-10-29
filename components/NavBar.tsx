@@ -14,9 +14,9 @@ const NAV_ITEMS = [
   { href: '/faqs/', label: 'FAQs' },
 ];
 
-// Larger type, no shadow, neutral focus ring
+// Less rounded CTA (no shadow), color-only nav states
 const CTA_BTN =
-  'inline-flex items-center justify-center rounded-pill px-5 md:px-6 py-2.5 md:py-3 text-base md:text-lg font-semibold text-white ' +
+  'inline-flex items-center justify-center rounded-lg px-5 md:px-6 py-2.5 md:py-3 text-base md:text-lg font-semibold text-white ' +
   'bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400 ' +
   'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 active:scale-[.98]';
 
@@ -59,7 +59,7 @@ export default function NavBar() {
       {/* Skip link */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-pill focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow-soft"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow-soft"
       >
         Skip to content
       </a>
@@ -97,11 +97,9 @@ export default function NavBar() {
                 aria-current={active ? 'page' : undefined}
                 className={clsx(
                   'relative inline-flex items-center px-3 md:px-4 h-12 md:h-14 text-base md:text-lg font-medium',
-                  // Color-only: default → hover → pressed; current route = brand color
                   active
                     ? 'text-teal-700'
                     : 'text-slate-700 hover:text-teal-700 active:text-teal-800',
-                  // A11y
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded-sm',
                   'transition-colors'
                 )}
@@ -112,7 +110,7 @@ export default function NavBar() {
           })}
         </nav>
 
-        {/* Desktop CTA (no shadow) */}
+        {/* Desktop CTA (less rounded) */}
         <div className="hidden md:block">
           <Link href="/contact/" className={CTA_BTN}>
             Contact Us
@@ -169,7 +167,7 @@ export default function NavBar() {
               );
             })}
 
-            {/* Mobile CTA */}
+            {/* Mobile CTA (less rounded) */}
             <Link href="/contact/" className={clsx('mt-3 w-full', CTA_BTN)}>
               Contact Us
             </Link>

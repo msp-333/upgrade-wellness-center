@@ -84,119 +84,122 @@ export default function AboutPage() {
 
   return (
     <>
-        <section
-      className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
-      aria-labelledby="about-hero-title"
-    >
-      {/* Background video */}
-      <div className="absolute inset-0 -z-30 pointer-events-none">
-        <video
-          className="h-full w-full object-cover motion-reduce:hidden"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={asset(HERO_POSTER)}
+      <section
+        className="relative isolate min-h-[80vh] md:min-h-[90vh]"
+        aria-labelledby="home-hero-title"
+      >
+        {/* Background video (decorative) */}
+        <div className="absolute inset-0 -z-30 pointer-events-none" aria-hidden="true">
+          <video
+            className="h-full w-full object-cover motion-reduce:hidden [@media_(prefers-reduced-data:reduce)]:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={asset(HERO_POSTER)}
+            aria-hidden="true"
+          >
+            {/* If you add a WebM variant later, put it above MP4:
+              <source src={asset(HERO_WEBM)} type="video/webm" /> */}
+            <source src={asset(HERO_MP4)} type="video/mp4" />
+          </video>
+
+          {/* Reduced-motion / reduced-data fallback */}
+          <img
+            src={asset(HERO_POSTER)}
+            alt=""
+            className="hidden h-full w-full object-cover motion-reduce:block [@media_(prefers-reduced-data:reduce)]:block"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+
+        {/* Left→right dark-teal scrim (over image, under text) */}
+        <div
+          className="absolute inset-0 -z-20
+                    [background:linear-gradient(90deg,rgba(7,32,33,.84)_0%,rgba(7,32,33,.60)_42%,rgba(7,32,33,0)_76%)]
+                    sm:[background:linear-gradient(90deg,rgba(7,32,33,.80)_0%,rgba(7,32,33,.55)_40%,rgba(7,32,33,0)_75%)]"
           aria-hidden="true"
-        >
-          <source src={asset(HERO_MP4)} type="video/mp4" />
-        </video>
-
-        {/* Reduced-motion fallback */}
-        <img
-          src={asset(HERO_POSTER)}
-          alt=""
-          className="hidden h-full w-full object-cover motion-reduce:block"
-          loading="eager"
-          decoding="async"
         />
-      </div>
 
-      {/* Light overlays so the video still pops */}
-      <div className="absolute inset-0 -z-20 bg-slate-950/10" aria-hidden="true" />
-      <div
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/20 via-slate-900/10 to-transparent"
-        aria-hidden="true"
-      />
+        {/* Subtle bottom vignette to preserve contrast on bright frames */}
+        <div
+          className="absolute inset-0 -z-10 pointer-events-none
+                    [mask-image:linear-gradient(to_bottom,black_80%,transparent)]"
+          aria-hidden="true"
+        />
 
-      <Container className="relative py-20 sm:py-28 md:py-32">
-        <Reveal delay={80}>
-          {/* Subtle gradient hairline, smaller radius, softer shadow */}
-          <div className="mx-auto max-w-6xl rounded-lg p-[1.25px] bg-[linear-gradient(135deg,rgba(13,148,136,.24),rgba(8,145,178,.18))] ring-1 ring-white/30 shadow-[0_20px_60px_rgba(2,6,23,.22)]">
-            <div
-              className={[
-                // Glass card
-                'rounded-md bg-white/30',
-                'supports-[backdrop-filter:blur(2px)]:bg-white/25 supports-[backdrop-filter:blur(2px)]:backdrop-blur-2xl supports-[backdrop-filter:blur(2px)]:backdrop-saturate-150',
-                'ring-1 ring-white/40',
-                'p-5 sm:p-8 md:p-12'
-              ].join(' ')}
-            >
-              {/* Kicker */}
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-100/90">
-                Holistic • Human • Kind
+        <Container
+          className="relative flex min-h-[80vh] md:min-h-[90vh] items-end md:items-center
+                    pb-20 sm:pb-28 md:pb-32 pt-[max(5rem,env(safe-area-inset-top))]"
+        >
+          <Reveal delay={80}>
+            <div className="max-w-[62rem] text-left">
+              {/* Eyebrow */}
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#94A3B8]">
+                HOLISTIC • HUMAN • KIND
               </p>
 
-              {/* Title */}
+              {/* H1 with fluid type + aqua gradient word */}
               <h1
-                id="about-hero-title"
-                className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] text-white drop-shadow-[0_1px_1px_rgba(0,0,0,.25)]"
+                id="home-hero-title"
+                className="mt-3 text-balance font-extrabold leading-[1.05] text-[#F8FAFC]
+                          text-[clamp(2.25rem,6vw,4.75rem)]"
               >
                 Time for a{' '}
-                <span className="bg-gradient-to-r from-cyan-300 via-teal-200 to-white bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,.15)]">
+                <span className="bg-[linear-gradient(90deg,#5EEAD4,#22D3EE)] bg-clip-text text-transparent [-webkit-text-fill-color:transparent]">
                   Recharge
                 </span>
               </h1>
 
-              {/* Body */}
-              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_1px_rgba(0,0,0,.15)]">
-                Hydration, healing, and the harmony of health—blending nature, innovation, and
-                evidence-informed care.
+              {/* Subhead */}
+              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-[#E2E8F0] text-pretty">
+                One serene space for hydration, recovery, and whole-body restoration.
               </p>
 
-              {/* Trust points */}
-              <ul
-                aria-label="Trust points"
-                className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/85"
-              >
-                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+              {/* Trust pills */}
+              <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-3">
+                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
                   <li
                     key={t}
-                    className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
-                    style={{ transitionDelay: `${i * 60}ms` }}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/26 bg-white/7
+                              px-3.5 py-2 text-sm font-medium text-[#F8FAFC]/92"
                   >
-                    <CheckIcon className="h-4 w-4 text-teal-200" /> {t}
+                    <CheckIcon className="h-4 w-4 text-[#5EEAD4]" />
+                    {t}
                   </li>
                 ))}
               </ul>
 
               {/* CTAs */}
-              <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+              <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   href="/contact/"
-                  aria-label="Contact us"
-                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white
-                            bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400
-                            ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)]
-                            transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]"
+                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
+                            text-white bg-[#0D9488] hover:bg-[#0F766E]
+                            focus:outline-none focus-visible:ring-4 focus-visible:ring-white/35
+                            focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
+                            transition-transform duration-150 hover:scale-[1.02] active:scale-[.99]"
                 >
-                  Contact Us
+                  Book an Appointment
                 </Link>
+
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/10 px-5 py-3 text-sm font-medium text-white
-                            hover:bg-white/15 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
+                            text-[#F8FAFC] border border-[rgba(255,255,255,.24)] bg-transparent
+                            hover:bg-[rgba(255,255,255,.08)]
+                            focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
+                            focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
                 >
                   Explore services
                 </Link>
               </div>
             </div>
-          </div>
-        </Reveal>
-      </Container>
-    </section>
-
+          </Reveal>
+        </Container>
+      </section>
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
