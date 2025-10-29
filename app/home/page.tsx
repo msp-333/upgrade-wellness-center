@@ -452,7 +452,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ============================== VISIT US (dark) ============================== */}
+{/* ============================== VISIT US (dark) ============================== */}
       <section className={`relative ${sectionY}`} id="visit-us" aria-labelledby="visit">
         {/* dark canvas + vignettes */}
         <div className="pointer-events-none absolute inset-0 -z-10">
@@ -475,8 +475,9 @@ export default function AboutPage() {
           </Reveal>
 
           <div className="mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
+            {/* Map card (kept) */}
             <Reveal delay={150}>
-              <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+              <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-700/50 bg-white/5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,.35)]">
                 <img
                   src={asset(MAP)}
                   width={960}
@@ -487,36 +488,65 @@ export default function AboutPage() {
                   decoding="async"
                 />
                 <div className="absolute inset-0 hidden items-end justify-between gap-3 p-4 sm:flex">
-                  <a className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white" href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white"
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Open in Google Maps
                   </a>
-                  <a className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white" href={appleMapsUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="rounded-[999px] bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow transition-colors hover:bg-white"
+                    href={appleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Open in Apple Maps
                   </a>
                 </div>
               </div>
             </Reveal>
 
+            {/* DETAILS — container removed, text on dark */}
             <Reveal delay={210}>
-              <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
-                <div className="pointer-events-none absolute -top-16 -right-12 h-36 w-36 rounded-full bg-[#EAFBF4] blur-3xl" />
-                <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
-                <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
+              <div className="space-y-4 sm:space-y-5 text-white">
+                <h3 className="text-xl font-semibold text-white">
+                  Upgrade Wellness Center – Downtown
+                </h3>
 
-                <div className="mt-4 sm:mt-5 grid gap-3 text-sm sm:flex sm:items-center sm:gap-6">
-                  <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`tel:+11234567890`}>
-                    <PhoneIcon className="h-4 w-4 text-emerald-700" /> {phone}
+                <p className="text-sm leading-relaxed text-white/80">
+                  {addressLine}
+                </p>
+
+                <div className="mt-2 grid gap-3 text-sm sm:flex sm:items-center sm:gap-6">
+                  <a
+                    className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-white"
+                    href={`tel:+11234567890`}
+                  >
+                    <PhoneIcon className="h-4 w-4 text-emerald-300" /> {phone}
                   </a>
-                  <a className="inline-flex items-center gap-2 text-slate-800 transition-colors hover:text-slate-900" href={`mailto:${email}`}>
-                    <MailIcon className="h-4 w-4 text-emerald-700" /> {email}
+                  <a
+                    className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-white"
+                    href={`mailto:${email}`}
+                  >
+                    <MailIcon className="h-4 w-4 text-emerald-300" /> {email}
                   </a>
                 </div>
 
-                <div className="mt-4 sm:mt-5 grid gap-3 sm:flex sm:items-center">
-                  <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto rounded-[999px] bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500">
+                <div className="grid gap-3 sm:flex sm:items-center">
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto rounded-[999px] bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500"
+                  >
                     Get Directions
                   </a>
-                  <Link href="/contact/" className="w-full sm:w-auto rounded-[999px] bg-[#7C6FB0] px-4 py-2 text-center text-sm font-semibold text-white shadow transition-colors hover:bg-[#6a60a0]">
+                  <Link
+                    href="/contact/"
+                    className="w-full sm:w-auto rounded-[999px] border border-white/40 bg-transparent px-4 py-2 text-center text-sm font-semibold text-white/90 shadow-sm transition-colors hover:text-white hover:border-white"
+                  >
                     Contact Us
                   </Link>
                 </div>
