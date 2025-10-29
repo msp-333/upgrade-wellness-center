@@ -27,7 +27,6 @@ export default function NavBar() {
 
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-
   const normPath =
     base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
 
@@ -71,7 +70,7 @@ export default function NavBar() {
           elevated ? 'min-h-[72px] md:min-h-[84px]' : 'min-h-[88px] md:min-h-[104px]'
         )}
       >
-        {/* Logo (drives scale for nav + CTA) */}
+        {/* Logo */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
           <img
             src={asset('/images/logo.png')}
@@ -87,7 +86,7 @@ export default function NavBar() {
           />
         </Link>
 
-        {/* Desktop nav — underline highlight, no pill */}
+        {/* Desktop nav — color-only states (no lines/pills) */}
         <nav aria-label="Primary" className="hidden items-stretch md:flex">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
@@ -97,17 +96,14 @@ export default function NavBar() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={clsx(
-                  // layout
-                  'relative inline-flex items-center px-3 md:px-4',
-                  // height and typography
-                  'h-12 md:h-14 text-base md:text-lg font-medium',
-                  // colors
-                  active ? 'text-slate-900' : 'text-slate-700 hover:text-slate-900',
-                  // underline indicator (bottom border)
-                  'border-b-2',
-                  active ? 'border-slate-900' : 'border-transparent hover:border-slate-300',
-                  // a11y focus
-                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded-sm'
+                  'relative inline-flex items-center px-3 md:px-4 h-12 md:h-14 text-base md:text-lg font-medium',
+                  // Color-only: default → hover → pressed; current route = brand color
+                  active
+                    ? 'text-teal-700'
+                    : 'text-slate-700 hover:text-teal-700 active:text-teal-800',
+                  // A11y
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded-sm',
+                  'transition-colors'
                 )}
               >
                 {item.label}
@@ -162,18 +158,18 @@ export default function NavBar() {
                   key={item.href}
                   href={item.href}
                   className={clsx(
-                    'flex items-center justify-between px-2 py-3 text-lg',
-                    active ? 'text-slate-900' : 'text-slate-700 hover:text-slate-900',
-                    'border-b border-slate-200 last:border-0'
+                    'flex items-center px-2 py-3 text-lg transition-colors',
+                    active
+                      ? 'text-teal-700'
+                      : 'text-slate-700 hover:text-teal-700 active:text-teal-800'
                   )}
                 >
                   {item.label}
-                  {active && <span className="ml-3 h-1 w-10 shrink-0 rounded bg-slate-900" />}
                 </Link>
               );
             })}
 
-            {/* Mobile CTA (no shadow) */}
+            {/* Mobile CTA */}
             <Link href="/contact/" className={clsx('mt-3 w-full', CTA_BTN)}>
               Contact Us
             </Link>
