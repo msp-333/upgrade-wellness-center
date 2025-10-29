@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useMemo, useRef, useState } from 'react'
 import Reveal from '@/components/Reveal'
 
@@ -46,7 +47,8 @@ function sortFor(tab: keyof PricingData, arr: Item[]) {
   return [...arr].sort((a, b) => {
     const br = badgeRank(a.badge) - badgeRank(b.badge)
     if (br !== 0) return br
-    const pa = parsePrice(a.price), pb = parsePrice(b.price)
+    const pa = parsePrice(a.price),
+      pb = parsePrice(b.price)
     if (pa !== pb) return pa - pb
     return (a.title || '').localeCompare(b.title || '')
   })
@@ -83,9 +85,8 @@ export default function PricingClient({ data }: { data: PricingData }) {
       {/* ===== Header — NO GRID BG, soft brand glows, Reveal ============ */}
       <section className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-emerald-50 via-surface to-surface" />
-        {/* removed grid wash */}
-        <div className="pointer-events-none absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-brand-100 opacity-60 blur-2xl" />
-        <div className="pointer-events-none absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-lavender-600/10 opacity-70 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 -top-20 h-64 w-64 rounded-[32px] bg-emerald-200 opacity-60 blur-2xl" />
+        <div className="pointer-events-none absolute -left-24 -bottom-24 h-64 w-64 rounded-[32px] bg-emerald-100 opacity-70 blur-3xl" />
 
         <div className={`${wrap} pt-14 sm:pt-16 md:pt-20 pb-6 sm:pb-8`}>
           <Reveal delay={80}>
@@ -104,11 +105,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
           {/* Tabs with counts */}
           <Reveal delay={140}>
-            <div
-              role="tablist"
-              aria-label="Pricing categories"
-              className="mt-6 flex flex-wrap justify-center gap-2"
-            >
+            <div role="tablist" aria-label="Pricing categories" className="mt-6 flex flex-wrap justify-center gap-2">
               {tabs.map((key, i) => {
                 const active = tab === key
                 return (
@@ -119,16 +116,16 @@ export default function PricingClient({ data }: { data: PricingData }) {
                     aria-controls={`pricing-panel-${key}`}
                     onClick={() => setTab(key)}
                     className={[
-                      'rounded-pill px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
-                      'shadow-soft ring-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300/60',
+                      'rounded-[999px] px-4 py-2 text-sm md:text-base transition inline-flex items-center gap-2',
+                      'shadow-soft ring-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60',
                       active
-                        ? 'bg-white text-brand-800 ring-brand-200'
+                        ? 'bg-white text-emerald-900 ring-emerald-200'
                         : 'bg-white/85 text-text-primary ring-slate-200 hover:bg-white',
                     ].join(' ')}
                     style={{ transitionDelay: `${i * 50}ms` }}
                   >
                     <span>{LABELS[key]}</span>
-                    <span className={active ? 'text-brand-700' : 'text-text-secondary'} aria-hidden>
+                    <span className={active ? 'text-emerald-700' : 'text-text-secondary'} aria-hidden>
                       · {counts[key]}
                     </span>
                   </button>
@@ -140,18 +137,18 @@ export default function PricingClient({ data }: { data: PricingData }) {
       </section>
 
       {/* ===== Divider ==================================================== */}
-      <SectionDivider label="Choose a plan" tone="lavender" />
+      <SectionDivider label="Choose a plan" tone="emerald" />
 
       {/* ===== Membership notice ======================================== */}
       <section className={`${wrap} mt-6 sm:mt-8`}>
         <Reveal delay={110}>
-          <div className="rounded-card border border-brand-300/40 bg-brand-100 p-5 sm:p-6 shadow-soft">
+          <div className="rounded-2xl border border-emerald-300/40 bg-emerald-50 p-5 sm:p-6 shadow-soft">
             <div className="grid items-center gap-4 sm:grid-cols-[auto,1fr,auto]">
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-white">
                 <InfoIcon />
               </div>
               <div>
-                <h2 className="text-base font-semibold text-brand-800 sm:text-lg">Membership Required</h2>
+                <h2 className="text-base font-semibold text-emerald-900 sm:text-lg">Membership Required</h2>
                 <p className="mt-1 text-sm text-text-secondary">
                   Add the PMA Membership to your cart first. After accepting the agreement, you’ll be able to book.
                 </p>
@@ -159,7 +156,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
               <div className="flex sm:justify-end">
                 <button
                   onClick={gotoMembership}
-                  className="w-full sm:w-auto rounded-pill bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700"
+                  className="w-full sm:w-auto rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
                 >
                   View Membership Options
                 </button>
@@ -181,7 +178,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
 
         {sorted.length === 0 ? (
           <Reveal delay={100}>
-            <div className="rounded-card border border-slate-200 bg-white p-8 text-center text-text-secondary">
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-text-secondary">
               No options yet for <span className="font-medium text-text-primary">{LABELS[tab]}</span>. Check back soon.
             </div>
           </Reveal>
@@ -189,8 +186,11 @@ export default function PricingClient({ data }: { data: PricingData }) {
           <ul role="list" className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 sm:gap-6">
             {sorted.map((it, idx) => {
               const specifics = it.details && it.details.length > 0 ? it.details : it.description?.slice(1) ?? []
-              const href = (it.ctaHref ?? '/contact').trim() || '/contact'
-              const label = it.ctaLabel ?? 'Book Appointment'
+              const baseHref = (it.ctaHref ?? '/contact').trim() || '/contact'
+              const label = (it.ctaLabel ?? 'Book Appointment').trim()
+              const isBook = /book/i.test(label) // any “Book …” label goes to the Opening Soon page
+              const href = isBook ? '/opening-soon' : baseHref
+
               return (
                 <Reveal key={`${it.title}-${idx}`} delay={120 + (idx % 9) * 70}>
                   <li>
@@ -215,13 +215,13 @@ export default function PricingClient({ data }: { data: PricingData }) {
                       {/* Details */}
                       {specifics.length > 0 && (
                         <details className="group mt-3">
-                          <summary className="cursor-pointer select-none text-sm font-medium text-brand-700 hover:underline">
+                          <summary className="cursor-pointer select-none text-sm font-medium text-emerald-700 hover:underline">
                             Details
                           </summary>
                           <ul className="mt-2 space-y-2 text-sm text-text-secondary">
                             {specifics.map((d, i) => (
                               <li key={i} className="flex items-start gap-2">
-                                <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                                <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
                                   <DotIcon />
                                 </span>
                                 <span>{d}</span>
@@ -231,18 +231,17 @@ export default function PricingClient({ data }: { data: PricingData }) {
                         </details>
                       )}
 
-                      {/* CTA — ALWAYS opens in new tab */}
+                      {/* CTA — “Book …” routes internally to /opening-soon (same tab) */}
                       <div className="mt-auto pt-6">
-                        <a
+                        <Link
                           href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className={ctaClass(it.tone)}
-                          aria-label={`${label} — opens in a new tab`}
+                          aria-label={label}
                         >
                           {label}
-                          <ExternalIcon />
-                        </a>
+                          {/* Show external arrow only for non-Book links */}
+                          {!isBook && <ExternalIcon />}
+                        </Link>
                       </div>
                     </article>
                   </li>
@@ -257,7 +256,7 @@ export default function PricingClient({ data }: { data: PricingData }) {
       <section className="pb-10 sm:pb-12">
         <Reveal delay={90}>
           <div className={`${wrap}`}>
-            <div className="mx-auto max-w-3xl rounded-2xl border border-[#E4DAFF] bg-[#F8F5FF] px-4 py-3 text-center text-sm text-slate-700">
+            <div className="mx-auto max-w-3xl rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-slate-700">
               Sessions are non-diagnostic and non-medical. For medical concerns, please consult your licensed provider.
             </div>
           </div>
@@ -289,33 +288,34 @@ function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'em
 /* ---------------- UI helpers ---------------- */
 function cardClass(tone: Item['tone']) {
   const base =
-    'relative flex h-full flex-col rounded-card border p-5 sm:p-6 shadow-soft bg-white transition hover:shadow-md focus-within:ring-2 focus-within:ring-brand-300/60'
+    'relative flex h-full flex-col rounded-2xl border p-5 sm:p-6 shadow-soft bg-white transition hover:shadow-md focus-within:ring-2 focus-within:ring-emerald-300/60'
   switch (tone) {
     case 'premium':
-      return `${base} border-lavender-600/40 bg-lavender-600/5`
+      return `${base} border-slate-300 bg-slate-50`
     case 'special':
-      return `${base} border-brand-200 bg-brand-50/40`
+      return `${base} border-emerald-200 bg-emerald-50/40`
     default:
-      return `${base} border-brand-300/40`
+      return `${base} border-emerald-200`
   }
 }
 function chipClass(tone: Item['tone']) {
   const base =
-    'rounded-pill px-3 py-1 text-[11px] font-semibold leading-tight border text-center shadow-[0_0_0_1px_rgba(16,185,129,0.12)]'
+    'rounded-[999px] px-3 py-1 text-[11px] font-semibold leading-tight border text-center shadow-[0_0_0_1px_rgba(16,185,129,0.12)]'
   switch (tone) {
     case 'premium':
-      return `${base} bg-lavender-600/10 text-lavender-600 border-lavender-600/30`
+      return `${base} bg-slate-100 text-slate-700 border-slate-300`
     case 'special':
-      return `${base} bg-brand-50 text-text-primary border-brand-200`
+      return `${base} bg-emerald-50 text-text-primary border-emerald-200`
     default:
-      return `${base} bg-brand-50 text-brand-800 border-brand-200`
+      return `${base} bg-emerald-50 text-emerald-800 border-emerald-200`
   }
 }
 function ctaClass(_: Item['tone']) {
+  // Switched to brand/emerald (no lavender)
   const base =
-    'inline-flex w-full items-center justify-center gap-2 rounded-pill px-4 py-2 text-center text-sm font-semibold ' +
-    'transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-  return `${base} bg-lavender-600 text-white hover:bg-lavender-500 focus-visible:ring-lavender-300`
+    'inline-flex w-full items-center justify-center gap-2 rounded-[999px] px-4 py-2 text-center text-sm font-semibold transition ' +
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+  return `${base} bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-300`
 }
 
 /* ---------------- Icons ---------------- */
