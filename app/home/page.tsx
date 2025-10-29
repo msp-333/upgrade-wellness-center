@@ -84,105 +84,115 @@ export default function AboutPage() {
 
   return (
     <>
-      <section
-        className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
-        aria-labelledby="about-hero-title"
-      >
-        {/* Background video */}
-        <div className="absolute inset-0 -z-30 pointer-events-none">
-          <video
-            className="h-full w-full object-cover motion-reduce:hidden"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={asset(HERO_POSTER)}
+        <section
+          className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
+          aria-labelledby="about-hero-title"
+        >
+          {/* Background video */}
+          <div className="absolute inset-0 -z-30 pointer-events-none">
+            <video
+              className="h-full w-full object-cover motion-reduce:hidden"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={asset(HERO_POSTER)}
+              aria-hidden="true"
+            >
+              <source src={asset(HERO_MP4)} type="video/mp4" />
+            </video>
+
+            {/* Reduced-motion fallback */}
+            <img
+              src={asset(HERO_POSTER)}
+              alt=""
+              className="hidden h-full w-full object-cover motion-reduce:block"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          {/* Overlays — lighter so the video pops */}
+          <div className="absolute inset-0 -z-20 bg-slate-950/15" aria-hidden="true" />
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/25 via-slate-900/10 to-transparent"
             aria-hidden="true"
-          >
-            <source src={asset(HERO_MP4)} type="video/mp4" />
-          </video>
-
-          {/* Reduced-motion fallback */}
-          <img
-            src={asset(HERO_POSTER)}
-            alt=""
-            className="hidden h-full w-full object-cover motion-reduce:block"
-            loading="eager"
-            decoding="async"
           />
-        </div>
 
-        {/* Overlays (slightly richer, still subtle) */}
-        <div className="absolute inset-0 -z-20 bg-slate-950/25" aria-hidden="true" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/35 via-slate-900/10 to-transparent" aria-hidden="true" />
-
-        <Container className="relative py-24 sm:py-32 md:py-36">
-          <Reveal delay={80}>
-            {/* Gradient ring tightened to teal/cyan; softer, deeper shadow */}
-            <div className="mx-auto max-w-6xl rounded-[34px] p-[2px] bg-[linear-gradient(135deg,rgba(13,148,136,.34),rgba(8,145,178,.28))] shadow-[0_28px_88px_rgba(3,7,18,.32)] ring-1 ring-white/20">
-              <div
-                className={[
-                  // glass when supported; solid white otherwise
-                  'rounded-[32px] bg-white',
-                  'supports-[backdrop-filter:blur(2px)]:bg-white/85 supports-[backdrop-filter:blur(2px)]:backdrop-blur-xl',
-                  'p-6 sm:p-10 md:p-16',
-                ].join(' ')}
-              >
-                <p className="text-[11px] uppercase tracking-[0.22em] text-teal-900/75">
-                  Holistic • Human • Kind
-                </p>
-
-                <h1
-                  id="about-hero-title"
-                  className="mt-2 text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.04] text-slate-900"
+          <Container className="relative py-20 sm:py-28 md:py-32">
+            <Reveal delay={80}>
+              {/* Subtle gradient hairline + softer shadow; reduced rounding */}
+              <div className="mx-auto max-w-6xl rounded-2xl p-[1.5px] bg-[linear-gradient(135deg,rgba(13,148,136,.28),rgba(8,145,178,.22))] shadow-[0_24px_72px_rgba(2,6,23,.28)] ring-1 ring-white/20">
+                <div
+                  className={[
+                    // Glass card: more transparent; falls back to solid white if no backdrop support
+                    'rounded-xl bg-white/60',
+                    'supports-[backdrop-filter:blur(2px)]:bg-white/40 supports-[backdrop-filter:blur(2px)]:backdrop-blur-xl',
+                    'p-6 sm:p-10 md:p-14',
+                    // subtle inner border for definition
+                    'ring-1 ring-white/30'
+                  ].join(' ')}
                 >
-                  Time for a{' '}
-                  <span className="bg-gradient-to-r from-teal-600 via-emerald-500 to-cyan-500 bg-clip-text text-transparent">
-                    Recharge
-                  </span>
-                </h1>
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-900/80">
+                    Holistic • Human • Kind
+                  </p>
 
-                <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-slate-700">
-                  Hydration, healing, and the harmony of health—blending nature,
-                  innovation, and evidence-informed care.
-                </p>
+                  <h1
+                    id="about-hero-title"
+                    className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-slate-900"
+                  >
+                    Time for a{' '}
+                    <span className="bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
+                      Recharge
+                    </span>
+                  </h1>
 
-                <ul
-                  aria-label="Trust points"
-                  className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-700"
-                >
-                  {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                    <li
-                      key={t}
-                      className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
-                      style={{ transitionDelay: `${i * 60}ms` }}
+                  <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-slate-800/90">
+                    Hydration, healing, and the harmony of health—blending nature, innovation, and
+                    evidence-informed care.
+                  </p>
+
+                  <ul
+                    aria-label="Trust points"
+                    className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800/90"
+                  >
+                    {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+                      <li
+                        key={t}
+                        className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
+                        style={{ transitionDelay: `${i * 60}ms` }}
+                      >
+                        <CheckIcon className="h-4 w-4 text-teal-600" /> {t}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+                    <Link
+                      href="/contact/"
+                      aria-label="Contact us"
+                      className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white
+                                bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400
+                                ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)]
+                                transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]"
                     >
-                      <CheckIcon className="h-4 w-4 text-teal-600" /> {t}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
-                  <Link
-                    href="contact/"
-                    aria-label="Contact us"
-                    className="inline-flex items-center justify-center rounded-[999px] bg-gradient-to-r from-teal-600 to-cyan-600 px-5 py-3 text-sm font-semibold text-white shadow transition-all hover:-translate-y-0.5 hover:from-teal-700 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-teal-600/40"
-                  >
-                    Contact Us
-                  </Link>
-                  <Link
-                    href="services/"
-                    className="inline-flex items-center justify-center rounded-[999px] border border-teal-200 bg-white px-5 py-3 text-sm font-medium text-teal-900 transition-all hover:-translate-y-0.5 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-200/70"
-                  >
-                    Explore services
-                  </Link>
+                      Contact Us
+                    </Link>
+                    <Link
+                      href="/services/"
+                      className="inline-flex items-center justify-center rounded-full border border-teal-200/70 bg-white/70 px-5 py-3 text-sm font-medium text-teal-900
+                                hover:bg-white/80 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-200/70"
+                    >
+                      Explore services
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+            </Reveal>
+          </Container>
+        </section>
+
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">

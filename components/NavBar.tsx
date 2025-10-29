@@ -14,6 +14,13 @@ const NAV_ITEMS = [
   { href: '/faqs/', label: 'FAQs' },
 ];
 
+// Gradient pill CTA (matches your screenshot)
+const CTA_BTN =
+  'inline-flex items-center justify-center rounded-pill px-5 py-2.5 text-sm font-semibold text-white ' +
+  'bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400 ' +
+  'ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)] ' +
+  'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]';
+
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -51,7 +58,6 @@ export default function NavBar() {
   return (
     <header
       className={clsx(
-        // slightly taller + softer bg
         'sticky top-0 z-50 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/80',
         'border-b border-lavender-400/30',
         'relative before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-lavender-500/40 before:to-transparent',
@@ -66,16 +72,24 @@ export default function NavBar() {
         Skip to content
       </a>
 
-      {/* Increased vertical height */}
-      <Container className="flex min-h-[72px] md:min-h-[84px] items-center justify-between">
-        {/* Logo — correct path under /images + base path */}
+      {/* Taller by default; compacts when scrolled */}
+      <Container
+        className={clsx(
+          'flex items-center justify-between transition-[min-height] duration-300',
+          elevated ? 'min-h-[72px] md:min-h-[84px]' : 'min-h-[88px] md:min-h-[104px]'
+        )}
+      >
+        {/* Logo — bigger + responsive, shrinks on scroll */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
           <img
             src={asset('/images/logo.png')}
             alt="Upgrade Wellness"
-            width={180}
-            height={70}
-            className="h-10 w-auto"
+            width={240}
+            height={90}
+            className={clsx(
+              'w-auto transition-[height] duration-300 ease-out will-change-[height]',
+              elevated ? 'h-12 md:h-14' : 'h-[60px] md:h-16'
+            )}
             loading="eager"
             fetchPriority="high"
           />
@@ -104,16 +118,9 @@ export default function NavBar() {
           })}
         </nav>
 
-        {/* Desktop CTA */}
+        {/* Desktop CTA (gradient pill) */}
         <div className="hidden md:block">
-          <Link
-            href="/contact/"
-            className={clsx(
-              'inline-flex items-center justify-center rounded-pill px-4 py-2 text-sm font-semibold text-white',
-              'bg-lavender-600 hover:bg-lavender-500',
-              'shadow-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500'
-            )}
-          >
+          <Link href="/contact/" className={CTA_BTN}>
             Contact Us
           </Link>
         </div>
@@ -144,7 +151,7 @@ export default function NavBar() {
       <div
         id="mobile-menu"
         className={clsx(
-          'md:hidden border-top border-lavender-400/30 bg-white/95 transition-all duration-200 overflow-hidden',
+          'md:hidden border-t border-lavender-400/30 bg-white/95 transition-all duration-200 overflow-hidden',
           open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         )}
       >
@@ -169,14 +176,8 @@ export default function NavBar() {
               );
             })}
 
-            <Link
-              href="/contact/"
-              className={clsx(
-                'mt-2 inline-flex w-full items-center justify-center rounded-pill px-4 py-2 text-sm font-semibold text-white',
-                'bg-lavender-600 hover:bg-lavender-500',
-                'shadow-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500'
-              )}
-            >
+            {/* Mobile CTA (full-width gradient pill) */}
+            <Link href="/contact/" className={clsx('mt-2 w-full', CTA_BTN)}>
               Contact Us
             </Link>
           </nav>
