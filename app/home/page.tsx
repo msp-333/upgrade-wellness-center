@@ -437,6 +437,7 @@ export default function AboutPage() {
             {/* CTA + attribution stacked */}
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <a
+                style={{ display: 'inline-block', marginBottom: '10px' }}
                 href="https://www.eesystem.com/testimonials-videos"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -444,6 +445,7 @@ export default function AboutPage() {
               >
                 Watch video testimonials
               </a>
+            
               <span className="text-xs text-slate-600">All testimonials are from the Energy Enhancement System.</span>
             </div>
           </div>
