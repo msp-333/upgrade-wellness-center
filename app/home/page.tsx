@@ -85,113 +85,114 @@ export default function AboutPage() {
   return (
     <>
         <section
-          className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
-          aria-labelledby="about-hero-title"
+      className="relative isolate min-h-[70vh] sm:min-h-[76vh] md:min-h-[82vh]"
+      aria-labelledby="about-hero-title"
+    >
+      {/* Background video */}
+      <div className="absolute inset-0 -z-30 pointer-events-none">
+        <video
+          className="h-full w-full object-cover motion-reduce:hidden"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={asset(HERO_POSTER)}
+          aria-hidden="true"
         >
-          {/* Background video */}
-          <div className="absolute inset-0 -z-30 pointer-events-none">
-            <video
-              className="h-full w-full object-cover motion-reduce:hidden"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={asset(HERO_POSTER)}
-              aria-hidden="true"
+          <source src={asset(HERO_MP4)} type="video/mp4" />
+        </video>
+
+        {/* Reduced-motion fallback */}
+        <img
+          src={asset(HERO_POSTER)}
+          alt=""
+          className="hidden h-full w-full object-cover motion-reduce:block"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      {/* Light overlays so the video still pops */}
+      <div className="absolute inset-0 -z-20 bg-slate-950/10" aria-hidden="true" />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/20 via-slate-900/10 to-transparent"
+        aria-hidden="true"
+      />
+
+      <Container className="relative py-20 sm:py-28 md:py-32">
+        <Reveal delay={80}>
+          {/* Subtle gradient hairline, smaller radius, softer shadow */}
+          <div className="mx-auto max-w-6xl rounded-lg p-[1.25px] bg-[linear-gradient(135deg,rgba(13,148,136,.24),rgba(8,145,178,.18))] ring-1 ring-white/30 shadow-[0_20px_60px_rgba(2,6,23,.22)]">
+            <div
+              className={[
+                // Glass card: more transparent with blur + slight saturation
+                'rounded-md bg-white/35',
+                'supports-[backdrop-filter:blur(2px)]:bg-white/30 supports-[backdrop-filter:blur(2px)]:backdrop-blur-2xl supports-[backdrop-filter:blur(2px)]:backdrop-saturate-150',
+                // inner hairline for definition
+                'ring-1 ring-white/40',
+                // spacing tuned down a notch
+                'p-5 sm:p-8 md:p-12'
+              ].join(' ')}
             >
-              <source src={asset(HERO_MP4)} type="video/mp4" />
-            </video>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-900/80">
+                Holistic • Human • Kind
+              </p>
 
-            {/* Reduced-motion fallback */}
-            <img
-              src={asset(HERO_POSTER)}
-              alt=""
-              className="hidden h-full w-full object-cover motion-reduce:block"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
+              <h1
+                id="about-hero-title"
+                className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] text-slate-900"
+              >
+                Time for a{' '}
+                <span className="bg-gradient-to-r from-teal-500 via-teal-400 to-cyan-500 bg-clip-text text-transparent">
+                  Recharge
+                </span>
+              </h1>
 
-          {/* Overlays — lighter so the video pops */}
-          <div className="absolute inset-0 -z-20 bg-slate-950/15" aria-hidden="true" />
-          <div
-            className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/25 via-slate-900/10 to-transparent"
-            aria-hidden="true"
-          />
+              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-slate-800/90">
+                Hydration, healing, and the harmony of health—blending nature, innovation, and
+                evidence-informed care.
+              </p>
 
-          <Container className="relative py-20 sm:py-28 md:py-32">
-            <Reveal delay={80}>
-              {/* Subtle gradient hairline + softer shadow; reduced rounding */}
-              <div className="mx-auto max-w-6xl rounded-2xl p-[1.5px] bg-[linear-gradient(135deg,rgba(13,148,136,.28),rgba(8,145,178,.22))] shadow-[0_24px_72px_rgba(2,6,23,.28)] ring-1 ring-white/20">
-                <div
-                  className={[
-                    // Glass card: more transparent; falls back to solid white if no backdrop support
-                    'rounded-xl bg-white/60',
-                    'supports-[backdrop-filter:blur(2px)]:bg-white/40 supports-[backdrop-filter:blur(2px)]:backdrop-blur-xl',
-                    'p-6 sm:p-10 md:p-14',
-                    // subtle inner border for definition
-                    'ring-1 ring-white/30'
-                  ].join(' ')}
+              <ul
+                aria-label="Trust points"
+                className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800/90"
+              >
+                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
+                  <li
+                    key={t}
+                    className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
+                    style={{ transitionDelay: `${i * 60}ms` }}
+                  >
+                    <CheckIcon className="h-4 w-4 text-teal-500" /> {t}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
+                <Link
+                  href="/contact/"
+                  aria-label="Contact us"
+                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white
+                            bg-gradient-to-r from-teal-600 to-ccyan-500 hover:from-teal-500 hover:to-cyan-400
+                            ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)]
+                            transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]"
                 >
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-900/80">
-                    Holistic • Human • Kind
-                  </p>
-
-                  <h1
-                    id="about-hero-title"
-                    className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-slate-900"
-                  >
-                    Time for a{' '}
-                    <span className="bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                      Recharge
-                    </span>
-                  </h1>
-
-                  <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-slate-800/90">
-                    Hydration, healing, and the harmony of health—blending nature, innovation, and
-                    evidence-informed care.
-                  </p>
-
-                  <ul
-                    aria-label="Trust points"
-                    className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800/90"
-                  >
-                    {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
-                      <li
-                        key={t}
-                        className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
-                        style={{ transitionDelay: `${i * 60}ms` }}
-                      >
-                        <CheckIcon className="h-4 w-4 text-teal-600" /> {t}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
-                    <Link
-                      href="/contact/"
-                      aria-label="Contact us"
-                      className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white
-                                bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400
-                                ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)]
-                                transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]"
-                    >
-                      Contact Us
-                    </Link>
-                    <Link
-                      href="/services/"
-                      className="inline-flex items-center justify-center rounded-full border border-teal-200/70 bg-white/70 px-5 py-3 text-sm font-medium text-teal-900
-                                hover:bg-white/80 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-200/70"
-                    >
-                      Explore services
-                    </Link>
-                  </div>
-                </div>
+                  Contact Us
+                </Link>
+                <Link
+                  href="/services/"
+                  className="inline-flex items-center justify-center rounded-full border border-white/50 bg-white/60 px-5 py-3 text-sm font-medium text-slate-900
+                            hover:bg-white/70 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  Explore services
+                </Link>
               </div>
-            </Reveal>
-          </Container>
-        </section>
+            </div>
+          </div>
+        </Reveal>
+      </Container>
+    </section>
 
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
