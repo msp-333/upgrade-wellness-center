@@ -51,10 +51,17 @@ export default function AboutPage() {
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`
   const appleMapsUrl = `https://maps.apple.com/?q=${mapsQuery}`
 
+  // Reusable styles
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE benefits (UNCHANGED)
+  // Unified gradient buttons (use everywhere)
+  const btnGrad =
+    'inline-flex items-center justify-center rounded-[999px] px-7 py-4 font-semibold text-white shadow-sm ring-1 ring-white/10 bg-[linear-gradient(135deg,#0EA5A6,#14B8A6_55%,#0EA5E9)] transition-transform duration-150 hover:scale-[1.02] active:scale-95 hover:opacity-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20'
+  const btnGradSm =
+    'inline-flex items-center justify-center rounded-[999px] px-4 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-white/10 bg-[linear-gradient(135deg,#0EA5A6,#14B8A6_55%,#0EA5E9)] hover:opacity-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300/40'
+
+  // EE benefits (UNCHANGED copy, visual polish only)
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen',       label: 'Detoxification\nof the Body',               Icon: SparkleIcon },
     { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
@@ -138,15 +145,15 @@ export default function AboutPage() {
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/contact/"
-                className="inline-flex items-center justify-center rounded-full px-7 py-4 bg-[#0D9488] hover:bg-[#0F766E] focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20 transition-transform duration-150 hover:scale-[1.02] active:scale-95"
-                style={{ color: '#F8FAFC', fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)', fontWeight: 700 }}
+                className={btnGrad}
+                style={{ fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)' }}
               >
                 Book an Appointment
               </Link>
               <Link
                 href="/services/"
-                className="inline-flex items-center justify-center rounded-full px-7 py-4 border bg-transparent hover:bg-white/10 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
-                style={{ color: '#F8FAFC', borderColor: 'rgba(255,255,255,.30)', fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)', fontWeight: 700 }}
+                className={btnGrad}
+                style={{ fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)' }}
               >
                 Explore services
               </Link>
@@ -157,14 +164,13 @@ export default function AboutPage() {
 
       {/* ================ HOW YOUR SESSION FLOWS (refined) ================ */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_48rem_at_0%_0%,rgba(124,111,176,0.10),transparent_55%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_48rem_at_0%_0%,rgba(16,185,129,0.10),transparent_55%)]" />
         <Container>
           <Reveal delay={110}>
             <SectionHeader
               kicker="Getting Started"
               title="How your session flows"
               subtitle="Simple, calm steps from arrival to aftercare."
-              tone="lavender"
               align="center"
             />
           </Reveal>
@@ -176,10 +182,10 @@ export default function AboutPage() {
               { step: '3', title: 'Integrate', body: 'Leave with one or two doable actions to extend benefits into your week.' },
             ].map((card, i) => (
               <Reveal key={card.step} delay={150 + i * 90}>
-                <div className="relative overflow-hidden rounded-2xl border border-[#E4DAFF] bg-[linear-gradient(135deg,#FCFBFF,#F3EDFF)] p-6 sm:p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
-                  <div className="pointer-events-none absolute -top-24 -right-16 h-48 w-48 rounded-full bg-[#EADFFF] blur-3xl" />
+                <div className="relative overflow-hidden rounded-2xl border border-emerald-200 bg-[linear-gradient(135deg,#FFFFFF,#ECFDF5_60%)] p-6 sm:p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+                  <div className="pointer-events-none absolute -top-24 -right-16 h-48 w-48 rounded-full bg-emerald-100/70 blur-3xl" />
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#7C6FB0] ring-1 ring-[#7C6FB0]/20">
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-emerald-700 ring-1 ring-emerald-300/30">
                       {card.step}
                     </span>
                     <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
@@ -213,7 +219,7 @@ export default function AboutPage() {
         </div>
 
         {/* soft accents */}
-        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
+        <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-emerald-100/40 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
 
         <Container>
@@ -222,7 +228,6 @@ export default function AboutPage() {
               kicker="Our Approach"
               title="Care that’s practical, kind, and grounded"
               subtitle="Evidence-led methods, human-friendly guidance, and community that helps you stay consistent."
-              tone="lavender"
               align="left"
               onDark
             />
@@ -236,9 +241,9 @@ export default function AboutPage() {
             ].map((c, i) => (
               <Reveal key={c.title} delay={160 + i * 90}>
                 <div className="group relative rounded-[18px] border border-white/20 bg-white/85 backdrop-blur-md p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/40 via-transparent to-emerald-400/40" />
-                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/25">
-                    <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400/40 via-transparent to-emerald-400/40" />
+                  <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-emerald-50 ring-1 ring-emerald-300/25">
+                    <LeafIcon className="h-5 w-5 text-emerald-700" />
                   </div>
                   <h3 className="text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
                   <p className="mt-1 text-sm text-slate-700">{c.body}</p>
@@ -249,7 +254,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* =================== EE SYSTEM BENEFITS (UNCHANGED) =================== */}
+      {/* =================== EE SYSTEM BENEFITS (refined color) =================== */}
       <section
         className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
         id="ee-environment"
@@ -262,13 +267,12 @@ export default function AboutPage() {
               kicker="EE System"
               title="What the EE System supports"
               subtitle="A multi-wave environment designed to encourage whole-body restoration."
-              tone="lavender"
               align="center"
             />
           </Reveal>
 
           <Reveal delay={160}>
-            <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#F3EDFF)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
+            <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] p-[1px] bg-[linear-gradient(135deg,#E9FDF4,#D1FAF5)] shadow-[0_8px_22px_rgba(16,24,40,.10)]">
               <div className="rounded-[23px] sm:rounded-[27px] border border-emerald-600/10 bg-white p-3 sm:p-5">
                 <ul role="list" className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">
                   {eeBenefits.map((b, i) => (
@@ -276,7 +280,7 @@ export default function AboutPage() {
                       <li
                         tabIndex={0}
                         role="group"
-                        className="group relative flex flex-col items-center justify-center gap-2 sm:gap-3 rounded-xl p-2 sm:p-3 outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
+                        className="group relative flex flex-col items-center justify-center gap-2 sm:gap-3 rounded-xl p-2 sm:p-3 outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-emerald-400/30"
                       >
                         <b.Icon aria-hidden className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 text-emerald-700 transition-transform duration-300 group-hover:scale-[1.06] group-hover:drop-shadow" />
                         <p className="whitespace-pre-line text-center text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
@@ -295,14 +299,13 @@ export default function AboutPage() {
       {/* ========================= FEATURED SERVICES ========================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 -z-10 bg-gradient-to-b from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_28rem_at_90%_100%,rgba(124,111,176,0.10),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_28rem_at_90%_100%,rgba(16,185,129,0.08),transparent_60%)]" />
         <Container>
           <Reveal delay={110}>
             <SectionHeader
               kicker="Featured"
               title="Popular ways to restore"
               subtitle="Three simple paths to support recovery and everyday energy."
-              tone="lavender"
               align="center"
             />
           </Reveal>
@@ -343,7 +346,7 @@ export default function AboutPage() {
                       </span>
                       <Link
                         href={`/services/#${s.slug}`}
-                        className="justify-self-end text-sm font-medium text-[#7C6FB0] underline decoration-[#E4DAFF] underline-offset-4 transition-colors hover:text-[#6a60a0]"
+                        className={`${btnGradSm} justify-self-end`}
                         aria-label={`View details for ${s.name}`}
                       >
                         View details
@@ -357,10 +360,10 @@ export default function AboutPage() {
 
           <Reveal delay={340}>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-              <Link href="/services/" className="w-full sm:w-auto rounded-[999px] bg-white px-4 py-2 text-center text-sm font-medium text-slate-800 ring-1 ring-slate-200 transition-colors hover:bg-slate-50">
+              <Link href="/services/" className={btnGradSm + ' w-full sm:w-auto'}>
                 Compare services
               </Link>
-              <Link href="/services/" className="w-full sm:w-auto rounded-[999px] bg-[#7C6FB0] px-4 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-[#6a60a0]">
+              <Link href="/services/" className={btnGradSm + ' w-full sm:w-auto'}>
                 View all services
               </Link>
             </div>
@@ -382,7 +385,6 @@ export default function AboutPage() {
               kicker="Testimonials"
               title="Real stories from the EES community"
               subtitle="Use the arrows to browse the stories."
-              tone="emerald"
               align="center"
             />
           </Reveal>
@@ -441,24 +443,24 @@ export default function AboutPage() {
                 href="https://www.eesystem.com/testimonials-videos"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500"
+                className={btnGradSm}
               >
-                Watch video testimonials
+                Watch Video Testimonials
               </a>
-            
+
               <span className="text-xs text-slate-600">All testimonials are from the Energy Enhancement System.</span>
             </div>
           </div>
         </Container>
       </section>
 
-{/* ============================== VISIT US (dark) ============================== */}
+      {/* ============================== VISIT US (dark) ============================== */}
       <section className={`relative ${sectionY}`} id="visit-us" aria-labelledby="visit">
         {/* dark canvas + vignettes */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-slate-950" />
           <div className="absolute inset-0 bg-[radial-gradient(80rem_40rem_at_0%_100%,rgba(16,185,129,0.16),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(80rem_40rem_at_100%_0%,rgba(124,111,176,0.12),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(80rem_40rem_at_100%_0%,rgba(16,185,129,0.12),transparent_60%)]" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
         </div>
 
@@ -468,7 +470,6 @@ export default function AboutPage() {
               kicker="Downtown"
               title="Visit Us"
               subtitle="Easy to reach, simple to settle in."
-              tone="lavender"
               align="center"
               onDark
             />
@@ -508,7 +509,7 @@ export default function AboutPage() {
               </div>
             </Reveal>
 
-            {/* DETAILS — container removed, text on dark */}
+            {/* DETAILS — no white card, text on dark */}
             <Reveal delay={210}>
               <div className="space-y-4 sm:space-y-5 text-white">
                 <h3 className="text-xl font-semibold text-white">
@@ -539,13 +540,13 @@ export default function AboutPage() {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto rounded-[999px] bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500"
+                    className={btnGradSm + ' w-full sm:w-auto text-center'}
                   >
                     Get Directions
                   </a>
                   <Link
                     href="/contact/"
-                    className="w-full sm:w-auto rounded-[999px] border border-white/40 bg-transparent px-4 py-2 text-center text-sm font-semibold text-white/90 shadow-sm transition-colors hover:text-white hover:border-white"
+                    className={btnGradSm + ' w-full sm:w-auto text-center'}
                   >
                     Contact Us
                   </Link>
@@ -561,7 +562,7 @@ export default function AboutPage() {
         {/* light canvas with gentle tint */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-white" />
-          <div className="absolute inset-0 bg-[radial-gradient(70rem_30rem_at_100%_0%,rgba(124,111,176,0.08),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(70rem_30rem_at_100%_0%,rgba(16,185,129,0.08),transparent_60%)]" />
         </div>
 
         <Container>
@@ -570,7 +571,6 @@ export default function AboutPage() {
               kicker="Videos"
               title="Learn more on YouTube"
               subtitle="Quick tours, how-tos, and community stories."
-              tone="lavender"
               align="center"
             />
           </Reveal>
@@ -593,7 +593,7 @@ export default function AboutPage() {
       <section className={`${sectionY}`} aria-labelledby="cta">
         <Container>
           <Reveal delay={150}>
-            <div className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] border border-[#7C6FB0]/25 bg-[linear-gradient(135deg,#0C8D69,#19B6AE_55%,#7C6FB0)] text-white shadow-[0_8px_22px_rgba(16,24,40,.08)]">
+            <div className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] border border-emerald-300/25 bg-[linear-gradient(135deg,#0C8D69,#19B6AE_55%,#0EA5E9)] text-white shadow-[0_8px_22px_rgba(16,24,40,.08)]">
               <div className="pointer-events-none absolute -top-16 left-10 h-36 w-36 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
               <div className="pointer-events-none absolute -bottom-24 right-10 h-52 w-52 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
               <div className="relative grid gap-4 p-5 sm:grid-cols-[1.5fr,1fr] sm:p-8">
@@ -602,10 +602,10 @@ export default function AboutPage() {
                   <p className="mt-2 text-white/90">A calm, supportive place to recharge.</p>
                 </div>
                 <div className="grid gap-3 sm:justify-end sm:self-center sm:grid-flow-col sm:auto-cols-max">
-                  <Link href="/contact/" className="rounded-[999px] bg-white px-4 py-2 text-center text-sm font-semibold text-slate-900 transition-all hover:-translate-y-0.5 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white">
+                  <Link href="/contact/" className={btnGradSm}>
                     Book a time
                   </Link>
-                  <Link href="/events/" className="rounded-[999px] border border-white/80 px-4 py-2 text-center text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70">
+                  <Link href="/events/" className={btnGradSm}>
                     See events
                   </Link>
                 </div>
@@ -630,17 +630,14 @@ function SectionHeader({
   kicker: string
   title: string
   subtitle?: string
-  tone?: 'emerald' | 'lavender'
+  tone?: 'emerald' // lavender removed
   align?: 'left' | 'center'
   onDark?: boolean
 }) {
   const alignCls = align === 'center' ? 'text-center mx-auto' : ''
-  const pillColor = (() => {
-    if (onDark) return 'bg-white/10 text-white border-white/30'
-    return tone === 'lavender'
-      ? 'bg-white text-[#7C6FB0] border-[#E4DAFF]'
-      : 'bg-white text-emerald-700 border-emerald-600/20'
-  })()
+  const pillColor = onDark
+    ? 'bg-white/10 text-white border-white/30'
+    : 'bg-white text-emerald-700 border-emerald-600/20'
   const titleColor = onDark ? 'text-white' : 'text-slate-900'
   const subColor = onDark ? 'text-white/80' : 'text-slate-700'
 
@@ -686,7 +683,7 @@ function LeafIcon(props: React.SVGProps<SVGSVGElement>) {
 function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83 .26 1.7 .46 2.6 .58A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12 .9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83 .26 1.7 .46 2.6 .58A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.5"/>
     </svg>
   )
 }
