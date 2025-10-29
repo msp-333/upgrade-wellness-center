@@ -55,7 +55,7 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // Gradient buttons (ONLY for primary CTAs + Contact Us)
+  // Gradient buttons (ONLY for primary CTAs + Contact Us + Watch Video Testimonials)
   const btnGrad =
     'inline-flex items-center justify-center rounded-[999px] px-7 py-4 font-semibold text-white shadow-sm ring-1 ring-white/10 bg-[linear-gradient(135deg,#0EA5A6,#14B8A6_55%,#0EA5E9)] transition-transform duration-150 hover:scale-[1.02] active:scale-95 hover:opacity-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20'
   const btnGradSm =
@@ -90,7 +90,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <>
+    <div className="overflow-x-clip">
       {/* ============================== HERO ============================== */}
       <section className="relative isolate min-h-[82vh] md:min-h-[90vh]" aria-labelledby="home-hero-title">
         {/* Background video */}
@@ -346,7 +346,7 @@ export default function AboutPage() {
                       <span className="text-sm text-slate-700">
                         {typeof s.priceFrom === 'number' ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></> : <>&nbsp;</>}
                       </span>
-                      {/* No gradient here: make it a clean text link */}
+                      {/* No gradient here: clean text link */}
                       <Link
                         href={`/services/#${s.slug}`}
                         className="justify-self-end text-sm font-medium text-emerald-700 underline decoration-emerald-200 underline-offset-4 hover:text-emerald-800"
@@ -440,14 +440,14 @@ export default function AboutPage() {
               })}
             </div>
 
-            {/* CTA + attribution stacked (no gradient) */}
+            {/* CTA + attribution stacked (gradient button now) */}
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <a
                 style={{ display: 'inline-block', marginBottom: '10px' }}
                 href="https://www.eesystem.com/testimonials-videos"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={btnOutlineLight}
+                className={btnGradSm}
               >
                 Watch Video Testimonials
               </a>
@@ -594,23 +594,26 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ================================= CTA (WHITE background) ================================ */}
+      {/* ================================= CTA (WHITE section, GRADIENT card) ================================ */}
       <section className={`${sectionY} bg-white`} aria-labelledby="cta">
         <Container>
           <Reveal delay={150}>
-            <div className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] border border-slate-200 bg-white text-slate-900 shadow-[0_8px_22px_rgba(16,24,40,.06)]">
+            {/* Gradient container restored; section stays white */}
+            <div className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] border border-emerald-300/25 bg-[linear-gradient(135deg,#0C8D69,#19B6AE_55%,#0EA5E9)] text-white shadow-[0_8px_22px_rgba(16,24,40,.08)]">
+              <div className="pointer-events-none absolute -top-16 left-10 h-36 w-36 rounded-full bg-white/10 blur-2xl motion-safe:animate-pulse" aria-hidden />
+              <div className="pointer-events-none absolute -bottom-24 right-10 h-52 w-52 rounded-full bg-white/10 blur-3xl motion-safe:animate-pulse" aria-hidden />
               <div className="relative grid gap-4 p-5 sm:grid-cols-[1.5fr,1fr] sm:p-8">
                 <div>
                   <h2 id="cta" className="text-xl sm:text-2xl md:text-3xl">Start your upgrade—personalized wellness, one step at a time.</h2>
-                  <p className="mt-2 text-slate-600">A calm, supportive place to recharge.</p>
+                  <p className="mt-2 text-white/90">A calm, supportive place to recharge.</p>
                 </div>
                 <div className="grid gap-3 sm:justify-end sm:self-center sm:grid-flow-col sm:auto-cols-max">
-                  {/* Primary CTA: gradient */}
+                  {/* Primary CTA: gradient (as rule) */}
                   <Link href="/contact/" className={btnGradSm}>
                     Book a time
                   </Link>
-                  {/* Secondary: outline (no gradient) */}
-                  <Link href="/events/" className={btnOutlineLight}>
+                  {/* Secondary: outline on dark (white outline/text) */}
+                  <Link href="/events/" className={btnOutlineDarkSm}>
                     See events
                   </Link>
                 </div>
@@ -619,7 +622,7 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-    </>
+    </div>
   )
 }
 
