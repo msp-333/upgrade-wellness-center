@@ -126,37 +126,39 @@ export default function AboutPage() {
           <div className="mx-auto max-w-6xl rounded-lg p-[1.25px] bg-[linear-gradient(135deg,rgba(13,148,136,.24),rgba(8,145,178,.18))] ring-1 ring-white/30 shadow-[0_20px_60px_rgba(2,6,23,.22)]">
             <div
               className={[
-                // Glass card: more transparent with blur + slight saturation
-                'rounded-md bg-white/35',
-                'supports-[backdrop-filter:blur(2px)]:bg-white/30 supports-[backdrop-filter:blur(2px)]:backdrop-blur-2xl supports-[backdrop-filter:blur(2px)]:backdrop-saturate-150',
-                // inner hairline for definition
+                // Glass card
+                'rounded-md bg-white/30',
+                'supports-[backdrop-filter:blur(2px)]:bg-white/25 supports-[backdrop-filter:blur(2px)]:backdrop-blur-2xl supports-[backdrop-filter:blur(2px)]:backdrop-saturate-150',
                 'ring-1 ring-white/40',
-                // spacing tuned down a notch
                 'p-5 sm:p-8 md:p-12'
               ].join(' ')}
             >
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-900/80">
+              {/* Kicker */}
+              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-teal-100/90">
                 Holistic • Human • Kind
               </p>
 
+              {/* Title */}
               <h1
                 id="about-hero-title"
-                className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] text-slate-900"
+                className="mt-2 text-balance text-[32px] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] text-white drop-shadow-[0_1px_1px_rgba(0,0,0,.25)]"
               >
                 Time for a{' '}
-                <span className="bg-gradient-to-r from-teal-500 via-teal-400 to-cyan-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-300 via-teal-200 to-white bg-clip-text text-transparent drop-shadow-[0_1px_1px_rgba(0,0,0,.15)]">
                   Recharge
                 </span>
               </h1>
 
-              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-slate-800/90">
+              {/* Body */}
+              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_1px_rgba(0,0,0,.15)]">
                 Hydration, healing, and the harmony of health—blending nature, innovation, and
                 evidence-informed care.
               </p>
 
+              {/* Trust points */}
               <ul
                 aria-label="Trust points"
-                className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-800/90"
+                className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/85"
               >
                 {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t, i) => (
                   <li
@@ -164,17 +166,18 @@ export default function AboutPage() {
                     className="inline-flex items-center gap-2 transition-transform duration-700 will-change-transform hover:-translate-y-0.5"
                     style={{ transitionDelay: `${i * 60}ms` }}
                   >
-                    <CheckIcon className="h-4 w-4 text-teal-500" /> {t}
+                    <CheckIcon className="h-4 w-4 text-teal-200" /> {t}
                   </li>
                 ))}
               </ul>
 
+              {/* CTAs */}
               <div className="mt-7 grid gap-3 sm:auto-cols-max sm:grid-flow-col">
                 <Link
                   href="/contact/"
                   aria-label="Contact us"
                   className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white
-                            bg-gradient-to-r from-teal-600 to-ccyan-500 hover:from-teal-500 hover:to-cyan-400
+                            bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400
                             ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)]
                             transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]"
                 >
@@ -182,8 +185,8 @@ export default function AboutPage() {
                 </Link>
                 <Link
                   href="/services/"
-                  className="inline-flex items-center justify-center rounded-full border border-white/50 bg-white/60 px-5 py-3 text-sm font-medium text-slate-900
-                            hover:bg-white/70 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  className="inline-flex items-center justify-center rounded-full border border-white/60 bg-white/10 px-5 py-3 text-sm font-medium text-white
+                            hover:bg-white/15 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   Explore services
                 </Link>
