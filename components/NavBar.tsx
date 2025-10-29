@@ -164,7 +164,7 @@ export default function NavBar() {
                   key={item.href}
                   href={item.href}
                   className={clsx(
-                    'relative rounded-lg px-3 py-2 text-base transition-colors',
+                    'rounded-lg px-3 py-2 text-base transition-colors',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
                     active
                       ? 'bg-lavender-500/15 text-slate-900 ring-1 ring-lavender-500/30'
