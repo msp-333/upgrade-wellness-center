@@ -1,12 +1,11 @@
-// app/services/[slug]/page.tsx
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Container from '@/components/Container'
 import cards from '@/data/services.json'
 import details from '@/data/service-details.json'
-import * as React from 'react' // types only
+import * as React from 'react'
 
-/** ---------- Types ---------- */
+/* ------------------------------ Types ------------------------------ */
 type Card = {
   id: string
   name: string
@@ -31,7 +30,6 @@ type Detail = {
   sessionFlow?: string[]
   safety?: { notes?: string[] }
   sources?: Source[]
-
   howItWorks?: {
     summary?: string
     details?: string[]
@@ -53,21 +51,19 @@ type Detail = {
   microCopy?: string
   faq?: { q: string; a: string }[]
   media?: {
-    /** NEW: use one of these to show the YouTube player in the right rail */
     youtubeId?: string
     youtubeUrl?: string
     title?: string
     aspect?: '16:9' | '4:3' | '1:1'
-    /** legacy fields like slots are ignored now */
   }
 }
 
-/** ---------- Data ---------- */
+/* ------------------------------ Data ------------------------------ */
 const allCards = cards as Card[]
 const allDetails = details as Detail[]
 const findDetail = (slug: string) => allDetails.find((d) => d.slug === slug)
 
-/** ---------- Build-time params/metadata ---------- */
+/* ----------------------- Static params/metadata -------------------- */
 export async function generateStaticParams() {
   return allCards.map((c) => ({ slug: c.slug }))
 }
@@ -99,7 +95,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-/** ---------- Fallback sources (only if none provided) ---------- */
+/* --------------------------- Fallback sources ---------------------- */
 const PRESET_SOURCES: Record<string, Source[]> = {
   'red-light-therapy': [
     { label: 'Cleveland Clinic — Red Light Therapy overview', href: 'https://my.clevelandclinic.org/health/articles/22114-red-light-therapy' },
@@ -111,13 +107,13 @@ const PRESET_SOURCES: Record<string, Source[]> = {
     { label: 'Pharmaceuticals (2023) — Meta-analysis: HRW & blood lipid profiles', href: 'https://www.mdpi.com/1424-8247/16/2/142' },
   ],
   'energy-enhancement-system': [
-    { label: 'FTC — Health Products Compliance Guidance (claims must be substantiated)', href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf' },
-    { label: 'NCCIH — Know the Science: Finding reliable health info online', href: 'https://www.nccih.nih.gov/health/know-science/finding-and-evaluating-online-resources/finding-health-information-online/introduction' },
-    { label: 'FDA — Warning Letters database (how FDA enforces claims)', href: 'https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters' },
+    { label: 'FTC — Health Products Compliance Guidance', href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf' },
+    { label: 'NCCIH — Finding reliable health info online', href: 'https://www.nccih.nih.gov/health/know-science/finding-and-evaluating-online-resources/finding-health-information-online/introduction' },
+    { label: 'FDA — Warning Letters (claims enforcement)', href: 'https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/compliance-actions-and-activities/warning-letters' },
   ],
 }
 
-/** ---------- Small UI helpers ---------- */
+/* ------------------------------ UI bits --------------------------- */
 function Pill({
   children,
   tone = 'emerald',
@@ -140,7 +136,7 @@ function Pill({
 
 function SectionHeader({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h3 id={id} className="mt-8 scroll-mt-24 text-base font-semibold text-slate-900">
+    <h3 id={id} className="mt-8 scroll-mt-28 text-base font-semibold text-slate-900">
       {children}
     </h3>
   )
@@ -159,11 +155,16 @@ function DotList({ items }: { items: string[] }) {
   )
 }
 
-function NumList({ items }: { items: string[] }) {
+function TimelineList({ items }: { items: string[] }) {
   return (
-    <ol className="mt-2 list-decimal space-y-2 pl-5 text-slate-700">
-      {items.map((s) => (
-        <li key={s}>{s}</li>
+    <ol className="relative mt-3 space-y-5 border-l border-slate-200 pl-5">
+      {items.map((s, i) => (
+        <li key={s} className="relative">
+          <span className="absolute -left-2.5 top-0 inline-flex h-5 w-5 items-center justify-center rounded-full border border-emerald-300 bg-white text-[11px] font-semibold text-emerald-800">
+            {i + 1}
+          </span>
+          <p className="text-slate-700">{s}</p>
+        </li>
       ))}
     </ol>
   )
@@ -171,20 +172,14 @@ function NumList({ items }: { items: string[] }) {
 
 function InfoCallout({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
+    <div className="mt-6 rounded-xl border border-amber-300/70 bg-amber-50 p-4 text-amber-900">
       <p className="font-semibold">{title}</p>
       <div className="mt-2 text-sm/6">{children}</div>
     </div>
   )
 }
 
-function Accordion({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
+function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <details className="group mt-4 rounded-xl border border-slate-200 bg-white/70 p-4 open:bg-white">
       <summary className="cursor-pointer select-none text-sm font-semibold text-slate-900 outline-none">
@@ -210,7 +205,7 @@ function Breadcrumbs({ name }: { name: string }) {
   )
 }
 
-/** ---------- New: Video rail (replaces attachments/images) ---------- */
+/* ------------------------- Right rail helpers ---------------------- */
 function parseYouTubeId(url: string): string | null {
   try {
     const u = new URL(url)
@@ -226,52 +221,85 @@ function parseYouTubeId(url: string): string | null {
   }
 }
 
-function VideoRail({
+function RightRail({
   media,
   hero,
   microCopy,
+  toc,
+  card,
 }: {
   media?: Detail['media']
   hero?: string
   microCopy?: string
+  toc: { id: string; label: string }[]
+  card: Card
 }) {
-  // Prefer YouTube if provided; otherwise fall back to hero image; otherwise nothing.
   const id = media?.youtubeId ?? (media?.youtubeUrl ? parseYouTubeId(media.youtubeUrl) : null)
   const aspect = media?.aspect ?? '16:9'
-  const pad =
-    aspect === '1:1' ? 'pt-[100%]' : aspect === '4:3' ? 'pt-[75%]' : 'pt-[56.25%]' // 16:9 default
+  const pad = aspect === '1:1' ? 'pt-[100%]' : aspect === '4:3' ? 'pt-[75%]' : 'pt-[56.25%]'
   const title = media?.title ?? 'Video'
-
-  if (!id && !hero && !microCopy) return null
 
   return (
     <aside className="order-1 md:order-2 md:col-span-4">
       <div className="sticky top-20 space-y-4">
-        {id ? (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-black/5">
-            <div className={`relative ${pad}`}>
-              <iframe
-                className="absolute inset-0 h-full w-full rounded-2xl"
-                src={`https://www.youtube-nocookie.com/embed/${id}`}
-                title={title}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
+        {/* Video card */}
+        {(id || hero) && (
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            {id ? (
+              <div className={`relative ${pad}`}>
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${id}`}
+                  title={title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <figure className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={prefixAsset(hero!)} alt="" className="w-full" />
+              </figure>
+            )}
           </div>
-        ) : hero ? (
-          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={prefixAsset(hero)} alt="" className="w-full" />
-          </figure>
-        ) : null}
+        )}
 
-        {microCopy ? (
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
-            {microCopy}
+        {/* Book session */}
+        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-4">
+          <p className="text-sm font-semibold text-emerald-900">Ready to book?</p>
+          <ul className="mt-2 space-y-1.5 text-sm text-emerald-900/90">
+            {card.duration && <li>⏱ Duration: <span className="font-medium">{card.duration}</span></li>}
+            {card.intensity && <li>🎚 Intensity: <span className="font-medium">{card.intensity}</span></li>}
+          </ul>
+          <div className="mt-3">
+            <a
+              href="/contact"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:from-emerald-700 hover:to-teal-600"
+            >
+              Book a Session ↗
+            </a>
           </div>
-        ) : null}
+          {microCopy ? <p className="mt-2 text-xs text-emerald-900/80">{microCopy}</p> : null}
+        </div>
+
+        {/* On this page */}
+        {toc.length > 0 && (
+          <nav aria-label="On this page" className="rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">On this page</p>
+            <ul className="mt-2 space-y-1.5 text-sm">
+              {toc.map((t) => (
+                <li key={t.id}>
+                  <a href={`#${t.id}`} className="text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900">
+                    {t.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
     </aside>
   )
@@ -305,7 +333,7 @@ function PrevNext({ slug }: { slug: string }) {
   )
 }
 
-/** ---------- Utils ---------- */
+/* ------------------------------- Utils ---------------------------- */
 function prefixAsset(p?: string) {
   if (!p) return ''
   if (/^https?:\/\//i.test(p)) return p
@@ -313,7 +341,7 @@ function prefixAsset(p?: string) {
   return `${base}${p}`
 }
 
-/** ---------- Page ---------- */
+/* -------------------------------- Page ---------------------------- */
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
   const data = findDetail(params.slug)
   const card = allCards.find((c) => c.slug === params.slug)
@@ -345,7 +373,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       <section className="relative isolate">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-emerald-50 via-white to-white" />
         <Container className="pt-10 md:pt-14 pb-6">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
             <Breadcrumbs name={data.name} />
 
             <div>
@@ -354,6 +382,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 {data.name}
               </h1>
 
+              {/* Badges */}
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 {(data.badges ?? []).map((b) => <Pill key={b}>{b}</Pill>)}
                 {card.intensity && <Pill tone="sky">🎚 {card.intensity}</Pill>}
@@ -361,6 +390,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </div>
             </div>
 
+            {/* At a glance */}
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/services"
@@ -368,26 +398,27 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               >
                 ← Back to services
               </Link>
-              <Link
+              <a
                 href="/contact"
-                className="inline-flex items-center rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-3 py-2 text-sm font-semibold text-white hover:from-emerald-700 hover:to-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
               >
-                Contact us
-              </Link>
+                Book a Session ↗
+              </a>
             </div>
-            
           </div>
         </Container>
       </section>
 
-      {/* Body — 2-column: content + video rail */}
+      {/* Body — two columns */}
       <section className="py-8 md:py-10">
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
             {/* Main content */}
             <article className="order-2 md:order-1 md:col-span-8">
               <div className="mx-auto rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
-                <h2 id="overview" className="text-lg font-semibold text-slate-900 scroll-mt-24">Overview</h2>
+                <h2 id="overview" className="text-lg font-semibold text-slate-900 scroll-mt-28">Overview</h2>
                 <p className="mt-2 text-slate-700">{data.overview}</p>
 
                 <SectionHeader id="what-it-is">What it is</SectionHeader>
@@ -416,7 +447,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 {data.sessionFlow?.length ? (
                   <>
                     <SectionHeader id="session-flow">Session flow (what to expect)</SectionHeader>
-                    <NumList items={data.sessionFlow} />
+                    <TimelineList items={data.sessionFlow} />
                   </>
                 ) : null}
 
@@ -477,6 +508,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                   </>
                 ) : null}
 
+                {/* Sources */}
                 <div className="mt-6">
                   <SectionHeader id="sources">Sources & references</SectionHeader>
                   <ul className="mt-2 space-y-1">
@@ -506,8 +538,8 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </div>
             </article>
 
-            {/* Right column video rail */}
-            <VideoRail media={data.media} hero={data.heroImage} microCopy={data.microCopy} />
+            {/* Right column */}
+            <RightRail media={data.media} hero={data.heroImage} microCopy={data.microCopy} toc={toc} card={card} />
           </div>
 
           {/* Footer actions */}
@@ -518,12 +550,14 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             >
               ← Back to services
             </Link>
-            <Link
+            <a
               href="/contact"
-              className="inline-flex items-center rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-3 py-2 text-sm font-semibold text-white hover:from-emerald-700 hover:to-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
             >
-              Contact us
-            </Link>
+              Book a Session ↗
+            </a>
           </div>
         </Container>
       </section>
