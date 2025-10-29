@@ -84,7 +84,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <section
+        <section
         className="relative isolate min-h-[80vh] md:min-h-[90vh]"
         aria-labelledby="home-hero-title"
       >
@@ -133,67 +133,71 @@ export default function AboutPage() {
           style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}
         >
           <div className="max-w-[62rem] text-left">
-            {/* Eyebrow (muted white) */}
-            <p
-              className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/70"
-              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
-            >
+            {/* Eyebrow — muted off-white */}
+            <p className="uppercase tracking-[0.18em] text-white/80 text-[0.95rem] md:text-base">
               HOLISTIC • HUMAN • KIND
             </p>
 
-            {/* H1 — all white */}
+            {/* H1 — larger, near-white, *very* subtle shadow */}
             <h1
               id="home-hero-title"
-              className="mt-3 font-extrabold leading-[1.05] text-white"
+              className="mt-4 text-balance font-extrabold leading-[1.03] tracking-tight"
               style={{
-                fontSize: 'clamp(2.25rem, 6vw, 4.75rem)',
-                textShadow: '0 2px 4px rgba(0,0,0,.55)',
+                color: '#F8FAFC',                                 // near-white
+                fontSize: 'clamp(3rem, 8vw, 6.25rem)',            // ~48 → 100px
+                textShadow: '0 1px 1px rgba(0,0,0,.16)',          // super subtle
               }}
             >
-              Time for a <span className="text-white">Recharge</span>
+              Time for a Recharge?
             </h1>
 
-            {/* Subhead (softer white) */}
+            {/* Subhead — softer off-white */}
             <p
-              className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-white/90"
-              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
+              className="mt-5 max-w-4xl leading-relaxed"
+              style={{
+                color: '#F1F5F9',                                 // softer white
+                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',         // ~18 → 24px
+              }}
             >
               One serene space for hydration, recovery, and whole-body restoration.
             </p>
 
-            {/* Claims (no pills; white tones) */}
+            {/* Claims — clean white with slight mute */}
             <ul
               aria-label="Trust points"
-              className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90"
-              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
+              className="mt-6 flex flex-wrap gap-x-8 gap-y-3"
+              style={{ color: 'rgba(255,255,255,.90)', fontSize: 'clamp(1rem, 1.6vw, 1.125rem)' }}
             >
               {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
-                <li key={t} className="inline-flex items-center gap-2">
-                  <CheckIcon className="h-4 w-4 text-white/90" />
-                  <span className="text-white/90">{t}</span>
+                <li key={t} className="inline-flex items-center gap-2.5">
+                  <CheckIcon className="h-5 w-5" style={{ color: 'rgba(255,255,255,.90)' }} />
+                  <span>{t}</span>
                 </li>
               ))}
             </ul>
 
-            {/* CTAs (button text stays pure white) */}
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* CTAs — text uses the same near-white as H1 for consistency */}
+            <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/contact/"
-                className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
-                          text-white bg-[#0D9488] hover:bg-[#0F766E]
-                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
-                          focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
+                className="inline-flex items-center justify-center rounded-full px-7 py-4 bg-[#0D9488] hover:bg-[#0F766E]
+                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
                           transition-transform duration-150 hover:scale-[1.02] active:scale-95"
+                style={{ color: '#F8FAFC', fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)', fontWeight: 700 }}
               >
                 Book an Appointment
               </Link>
 
               <Link
                 href="/services/"
-                className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
-                          text-white border border-white/30 bg-transparent hover:bg-white/10
-                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
-                          focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
+                className="inline-flex items-center justify-center rounded-full px-7 py-4 border bg-transparent hover:bg-white/10
+                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
+                style={{
+                  color: '#F8FAFC',
+                  borderColor: 'rgba(255,255,255,.30)',
+                  fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)',
+                  fontWeight: 700,
+                }}
               >
                 Explore services
               </Link>
@@ -201,6 +205,7 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
