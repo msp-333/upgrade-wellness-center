@@ -14,30 +14,25 @@ const NAV_ITEMS = [
   { href: '/faqs/', label: 'FAQs' },
 ];
 
-// Gradient pill CTA (matches your screenshot)
+// Larger type, no shadow
 const CTA_BTN =
-  'inline-flex items-center justify-center rounded-pill px-5 py-2.5 text-sm font-semibold text-white ' +
+  'inline-flex items-center justify-center rounded-pill px-5 md:px-6 py-2.5 md:py-3 text-base md:text-lg font-semibold text-white ' +
   'bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400 ' +
-  'ring-1 ring-white/20 shadow-[0_10px_20px_rgba(13,148,136,.35)] ' +
-  'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]';
+  'ring-1 ring-white/20 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 active:scale-[.98]';
 
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [elevated, setElevated] = useState(false);
 
-  // Prefix assets for GH Pages subpath
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`;
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-  // Normalize pathname (strip base path in GH Pages)
   const normPath =
     base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
 
-  // Close drawer on route change
   useEffect(() => setOpen(false), [normPath]);
 
-  // Header elevation on scroll
   useEffect(() => {
     const onScroll = () => setElevated(window.scrollY > 8);
     onScroll();
@@ -45,7 +40,6 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close on Esc
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
@@ -64,7 +58,6 @@ export default function NavBar() {
         elevated && 'shadow-soft'
       )}
     >
-      {/* Skip link */}
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-pill focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow-soft"
@@ -72,14 +65,13 @@ export default function NavBar() {
         Skip to content
       </a>
 
-      {/* Taller by default; compacts when scrolled */}
       <Container
         className={clsx(
           'flex items-center justify-between transition-[min-height] duration-300',
           elevated ? 'min-h-[72px] md:min-h-[84px]' : 'min-h-[88px] md:min-h-[104px]'
         )}
       >
-        {/* Logo — bigger + responsive, shrinks on scroll */}
+        {/* Logo */}
         <Link href="/" aria-label="Upgrade Wellness home" className="flex items-center gap-2">
           <img
             src={asset('/images/logo.png')}
@@ -95,8 +87,8 @@ export default function NavBar() {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav (larger font) */}
+        <nav aria-label="Primary" className="hidden items-center gap-2 md:flex">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
             return (
@@ -105,7 +97,7 @@ export default function NavBar() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={clsx(
-                  'relative rounded-full px-3 py-2 text-sm font-medium transition-colors',
+                  'relative rounded-full px-3.5 py-2.5 text-base md:text-lg font-medium transition-colors',
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
                   active
                     ? 'text-slate-900 bg-lavender-500/15 ring-1 ring-lavender-500/30 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.02)]'
@@ -118,7 +110,7 @@ export default function NavBar() {
           })}
         </nav>
 
-        {/* Desktop CTA (gradient pill) */}
+        {/* Desktop CTA (no shadow, bigger text) */}
         <div className="hidden md:block">
           <Link href="/contact/" className={CTA_BTN}>
             Contact Us
@@ -164,7 +156,7 @@ export default function NavBar() {
                   key={item.href}
                   href={item.href}
                   className={clsx(
-                    'rounded-lg px-3 py-2 text-base transition-colors',
+                    'rounded-lg px-3 py-2 text-lg transition-colors',
                     'focus:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500',
                     active
                       ? 'bg-lavender-500/15 text-slate-900 ring-1 ring-lavender-500/30'
@@ -176,7 +168,7 @@ export default function NavBar() {
               );
             })}
 
-            {/* Mobile CTA (full-width gradient pill) */}
+            {/* Mobile CTA (no shadow, larger) */}
             <Link href="/contact/" className={clsx('mt-2 w-full', CTA_BTN)}>
               Contact Us
             </Link>
