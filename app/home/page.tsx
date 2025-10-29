@@ -11,6 +11,7 @@ export const metadata = {
     'Hydration, healing, and the harmony of health—calm, evidence-informed care that fits real life.',
 }
 
+/* ------------------------------ Types ------------------------------ */
 type Service = {
   id: string
   name: string
@@ -25,27 +26,22 @@ type Service = {
 }
 
 type Testimonial = { quote: string; author: string }
-const testimonials = testimonialsRaw as Testimonial[] // if TS complains, enable "resolveJsonModule": true in tsconfig
+const testimonials = testimonialsRaw as Testimonial[] // ensure tsconfig "resolveJsonModule": true
 
+/* ------------------------------ Page ------------------------------ */
 export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
   const asset = (p: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${p}`
 
-  // Shared vertical spacing to keep sections aligned
+  // Shared vertical rhythm
   const sectionY = 'py-16 sm:py-20 md:py-24'
 
-  // Hero background video (under /public)
+  // Assets
   const HERO_MP4 = '/videos/home-hero.mp4'
   const HERO_POSTER = '/images/home-hero-poster.png'
-
-  // Other assets
   const MAP = '/images/map-downtown.jpg'
-
-  // Background video for "Why Upgrade"
   const VIDEO_MP4 = '/videos/ees.mp4'
   const VIDEO_POSTER = '/images/home-ees.jpg'
-
-  // YouTube video IDs (swap with your own)
   const YT_IDS = ['dQHg_k9hNfU', 'iCHI28vZ7kA', 'QBznjFbkDE4'] as const
 
   const addressLine = '123 Oak Street, Suite 204, City, PR 12345'
@@ -58,7 +54,7 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE benefits (same list as before) — UNCHANGED
+  // EE benefits (UNCHANGED)
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen',       label: 'Detoxification\nof the Body',               Icon: SparkleIcon },
     { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
@@ -78,22 +74,11 @@ export default function AboutPage() {
     { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
   ]
 
-  // (Restored) square-tile variant backgrounds — kept for future use
-  const iconBgVariants = [
-    'bg-emerald-50 ring-emerald-600/10',
-    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
-    'bg-teal-50 ring-teal-600/10',
-    'bg-[#F3EDFF] ring-[#7C6FB0]/10',
-  ] as const
-
   return (
     <>
-      {/* ===== HERO ====================================================== */}
-      <section
-        className="relative isolate min-h-[80vh] md:min-h-[90vh]"
-        aria-labelledby="home-hero-title"
-      >
-        {/* Background video (decorative) */}
+      {/* ============================== HERO ============================== */}
+      <section className="relative isolate min-h-[82vh] md:min-h-[90vh]" aria-labelledby="home-hero-title">
+        {/* Background video */}
         <div className="absolute inset-0 -z-30 pointer-events-none" aria-hidden="true">
           <video
             className="h-full w-full object-cover motion-reduce:hidden"
@@ -116,64 +101,31 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Dark left→right scrim (over image, under text) */}
+        {/* Scrims */}
         <div
           className="absolute inset-0 -z-20"
           aria-hidden="true"
           style={{
-            background:
-              'linear-gradient(90deg, rgba(2,10,10,.96) 0%, rgba(7,32,33,.86) 42%, rgba(7,32,33,.52) 64%, rgba(7,32,33,0) 82%)',
+            background: 'linear-gradient(90deg, rgba(2,10,10,.96) 0%, rgba(7,32,33,.86) 42%, rgba(7,32,33,.52) 64%, rgba(7,32,33,0) 82%)',
           }}
         />
+        <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0) 62%, rgba(0,0,0,.42) 100%)' }} />
 
-        {/* Bottom vignette for extra contrast */}
-        <div
-          className="absolute inset-0 -z-10 pointer-events-none"
-          aria-hidden="true"
-          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0) 64%, rgba(0,0,0,.40) 100%)' }}
-        />
-
-        <Container
-          className="relative flex min-h-[80vh] md:min-h-[90vh] items-end md:items-center pb-20 sm:pb-28 md:pb-32"
-          style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}
-        >
-          {/* shifted slightly left */}
-          <div className="max-w-[62rem] text-left -ml-2 sm:-ml-4 lg:-ml-6">
-            {/* Eyebrow — muted off-white */}
-            <p className="uppercase tracking-[0.18em] text-white/80 text-[0.95rem] md:text-base">
-              HOLISTIC • HUMAN • KIND
-            </p>
-
-            {/* H1 — larger, near-white, very subtle shadow */}
+        <Container className="relative flex min-h-[82vh] md:min-h-[90vh] items-end md:items-center pb-20 sm:pb-28 md:pb-32" style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}>
+          <div className="max-w-[62rem] text-left -ml-3 sm:-ml-6 lg:-ml-8">
+            <p className="uppercase tracking-[0.18em] text-white/80 text-[0.95rem] md:text-base">HOLISTIC • HUMAN • KIND</p>
             <h1
               id="home-hero-title"
               className="mt-4 text-balance font-extrabold leading-[1.03] tracking-tight"
-              style={{
-                color: '#F8FAFC',
-                fontSize: 'clamp(3rem, 8vw, 6.25rem)',
-                textShadow: '0 1px 1px rgba(0,0,0,.16)',
-              }}
+              style={{ color: '#F8FAFC', fontSize: 'clamp(3rem, 8vw, 6.25rem)', textShadow: '0 1px 1px rgba(0,0,0,.16)' }}
             >
               Time for a Recharge?
             </h1>
-
-            {/* Subhead — softer off-white */}
-            <p
-              className="mt-5 max-w-4xl leading-relaxed"
-              style={{
-                color: '#F1F5F9',
-                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
-              }}
-            >
+            <p className="mt-5 max-w-4xl leading-relaxed" style={{ color: '#F1F5F9', fontSize: 'clamp(1.125rem, 2vw, 1.5rem)' }}>
               One serene space for hydration, recovery, and whole-body restoration.
             </p>
 
-            {/* Claims */}
-            <ul
-              aria-label="Trust points"
-              className="mt-6 flex flex-wrap gap-x-8 gap-y-3"
-              style={{ color: 'rgba(255,255,255,.90)', fontSize: 'clamp(1rem, 1.6vw, 1.125rem)' }}
-            >
+            <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-x-8 gap-y-3" style={{ color: 'rgba(255,255,255,.90)', fontSize: 'clamp(1rem, 1.6vw, 1.125rem)' }}>
               {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
                 <li key={t} className="inline-flex items-center gap-2.5">
                   <CheckIcon className="h-5 w-5" style={{ color: 'rgba(255,255,255,.90)' }} />
@@ -182,28 +134,18 @@ export default function AboutPage() {
               ))}
             </ul>
 
-            {/* CTAs */}
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/contact/"
-                className="inline-flex items-center justify-center rounded-full px-7 py-4 bg-[#0D9488] hover:bg-[#0F766E]
-                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
-                          transition-transform duration-150 hover:scale-[1.02] active:scale-95"
+                className="inline-flex items-center justify-center rounded-full px-7 py-4 bg-[#0D9488] hover:bg-[#0F766E] focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20 transition-transform duration-150 hover:scale-[1.02] active:scale-95"
                 style={{ color: '#F8FAFC', fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)', fontWeight: 700 }}
               >
                 Book an Appointment
               </Link>
-
               <Link
                 href="/services/"
-                className="inline-flex items-center justify-center rounded-full px-7 py-4 border bg-transparent hover:bg-white/10
-                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
-                style={{
-                  color: '#F8FAFC',
-                  borderColor: 'rgba(255,255,255,.30)',
-                  fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)',
-                  fontWeight: 700,
-                }}
+                className="inline-flex items-center justify-center rounded-full px-7 py-4 border bg-transparent hover:bg-white/10 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
+                style={{ color: '#F8FAFC', borderColor: 'rgba(255,255,255,.30)', fontSize: 'clamp(1.0625rem, 1.8vw, 1.1875rem)', fontWeight: 700 }}
               >
                 Explore services
               </Link>
@@ -212,35 +154,36 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
+      {/* ================ HOW YOUR SESSION FLOWS (refined) ================ */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(80rem_48rem_at_0%_0%,rgba(124,111,176,0.10),transparent_55%)]" />
         <Container>
           <Reveal delay={110}>
             <SectionHeader
               kicker="Getting Started"
               title="How your session flows"
-              subtitle="Simple steps that keep things clear and calm."
-              tone="emerald"
+              subtitle="Simple, calm steps from arrival to aftercare."
+              tone="lavender"
               align="center"
             />
           </Reveal>
 
-          <div className="mt-8 grid gap-5 sm:gap-6 md:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:gap-7 md:grid-cols-3">
             {[
               { step: '1', title: 'Arrive & settle', body: 'Check in, sip water, and set a gentle intention for your time here.' },
               { step: '2', title: 'Restore', body: 'Unwind while your body does its best healing work—no effort required.' },
               { step: '3', title: 'Integrate', body: 'Leave with one or two doable actions to extend benefits into your week.' },
             ].map((card, i) => (
               <Reveal key={card.step} delay={150 + i * 90}>
-                <div className="relative overflow-hidden rounded-[18px] sm:rounded-[22px] border border-[#E4DAFF] bg-[linear-gradient(135deg,#FCFBFF,#F3EDFF)] p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
+                <div className="relative overflow-hidden rounded-2xl border border-[#E4DAFF] bg-[linear-gradient(135deg,#FCFBFF,#F3EDFF)] p-6 sm:p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                   <div className="pointer-events-none absolute -top-24 -right-16 h-48 w-48 rounded-full bg-[#EADFFF] blur-3xl" />
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white text-xs sm:text-sm font-semibold text-[#7C6FB0] ring-1 ring-[#7C6FB0]/20">
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-semibold text-[#7C6FB0] ring-1 ring-[#7C6FB0]/20">
                       {card.step}
                     </span>
-                    <h3 className="text-base sm:text-lg font-semibold text-slate-900">{card.title}</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
                   </div>
-                  <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-slate-700">{card.body}</p>
+                  <p className="mt-3 text-[15px] leading-relaxed text-slate-700">{card.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -248,38 +191,27 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== WHY UPGRADE — section with background video ============== */}
+      {/* ========== WHY UPGRADE (video bg, stronger readability) ========= */}
       <section className={`relative overflow-hidden ${sectionY}`} aria-labelledby="pillars">
         <div className="absolute inset-0 -z-20 pointer-events-none">
-          <img
-            src={asset(VIDEO_POSTER)}
-            alt=""
-            aria-hidden
-            className="hidden h-full w-full object-cover motion-reduce:block"
-          />
+          <img src={asset(VIDEO_POSTER)} alt="" aria-hidden className="hidden h-full w-full object-cover motion-reduce:block" />
           <video
             key="why-upgrade-bg"
             className="h-full w-full object-cover motion-reduce:hidden"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={asset(VIDEO_POSTER)}
-            aria-hidden
+            autoPlay muted loop playsInline preload="metadata" poster={asset(VIDEO_POSTER)} aria-hidden
           >
             <source src={asset(VIDEO_MP4)} type="video/mp4" />
           </video>
         </div>
 
-        {/* Lightened scrim so footage reads, content stays legible */}
+        {/* stronger scrim for text clarity */}
         <div className="absolute inset-0 -z-10" aria-hidden>
-          <div className="absolute inset-0 bg-slate-950/30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-900/15 to-slate-950/30" />
-          <div className="absolute inset-0 bg-black/10 [mask-image:radial-gradient(120%_90%_at_50%_40%,#000_40%,transparent_85%)]" />
+          <div className="absolute inset-0 bg-slate-950/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/25 to-slate-950/50" />
+          <div className="absolute inset-0 bg-black/15 [mask-image:radial-gradient(110%_85%_at_50%_40%,#000_45%,transparent_85%)]" />
         </div>
 
-        {/* Soft accents */}
+        {/* soft accents */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-56 w-56 rounded-full bg-[#F3EDFF]/40 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-emerald-100/40 blur-3xl" />
 
@@ -302,12 +234,12 @@ export default function AboutPage() {
               { title: 'Community & accountability', body: 'Events, groups, and gentle check-ins to keep momentum going.' },
             ].map((c, i) => (
               <Reveal key={c.title} delay={160 + i * 90}>
-                <div className="group relative rounded-[18px] border border-white/20 bg-white/85 backdrop-blur-md p-5 sm:p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
+                <div className="group relative rounded-[18px] border border-white/20 bg-white/85 backdrop-blur-md p-6 shadow-[0_14px_28px_rgba(2,6,23,0.25)] transition-all duration-500 hover:-translate-y-1">
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#7C6FB0]/40 via-transparent to-emerald-400/40" />
                   <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F3EDFF] ring-1 ring-[#7C6FB0]/25">
                     <LeafIcon className="h-5 w-5 text-[#7C6FB0]" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
+                  <h3 className="text-lg font-semibold leading-snug text-slate-900">{c.title}</h3>
                   <p className="mt-1 text-sm text-slate-700">{c.body}</p>
                 </div>
               </Reveal>
@@ -316,7 +248,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== EE SYSTEM BENEFITS (UNTOUCHED) ============================ */}
+      {/* =================== EE SYSTEM BENEFITS (UNCHANGED) =================== */}
       <section
         className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
         id="ee-environment"
@@ -345,11 +277,7 @@ export default function AboutPage() {
                         role="group"
                         className="group relative flex flex-col items-center justify-center gap-2 sm:gap-3 rounded-xl p-2 sm:p-3 outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C6FB0]/30"
                       >
-                        {/* Bigger icon, no background tile */}
-                        <b.Icon
-                          aria-hidden
-                          className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 text-emerald-700 transition-transform duration-300 group-hover:scale-[1.06] group-hover:drop-shadow"
-                        />
+                        <b.Icon aria-hidden className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 text-emerald-700 transition-transform duration-300 group-hover:scale-[1.06] group-hover:drop-shadow" />
                         <p className="whitespace-pre-line text-center text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-medium leading-snug text-slate-800">
                           {b.label}
                         </p>
@@ -363,10 +291,10 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== FEATURED SERVICES ========================================= */}
+      {/* ========================= FEATURED SERVICES ========================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 -z-10 bg-gradient-to-b from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(50rem_30rem_at_100%_100%,rgba(124,111,176,0.10),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 -z-10 bg-[radial-gradient(60rem_28rem_at_90%_100%,rgba(124,111,176,0.10),transparent_60%)]" />
         <Container>
           <Reveal delay={110}>
             <SectionHeader
@@ -387,7 +315,7 @@ export default function AboutPage() {
                     aria-labelledby={headingId}
                     className="group relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white p-4 sm:p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]"
                   >
-                    <div className="relative h-36 sm:h-44 w-full overflow-hidden rounded-[14px] sm:rounded-[16px] ring-1 ring-inset ring-slate-200">
+                    <div className="relative h-40 sm:h-48 w-full overflow-hidden rounded-[14px] sm:rounded-[16px] ring-1 ring-inset ring-slate-200">
                       <img
                         src={asset(s.image ?? '/images/service-fallback.jpg')}
                         alt={s.name}
@@ -399,7 +327,7 @@ export default function AboutPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent" aria-hidden />
                     </div>
 
-                    <h3 id={headingId} className="mt-4 text-base sm:text-lg font-semibold text-slate-900">{s.name}</h3>
+                    <h3 id={headingId} className="mt-4 text-lg font-semibold text-slate-900">{s.name}</h3>
                     <p className="mt-1 text-sm text-slate-700">{s.tagline ?? 'Support, recovery, and steady energy.'}</p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -410,13 +338,12 @@ export default function AboutPage() {
 
                     <div className="mt-4 grid grid-cols-2 items-center gap-3 sm:flex sm:justify-between">
                       <span className="text-sm text-slate-700">
-                        {typeof s.priceFrom === 'number'
-                          ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></>
-                          : <>&nbsp;</>}
+                        {typeof s.priceFrom === 'number' ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></> : <>&nbsp;</>}
                       </span>
                       <Link
                         href={`/services/#${s.slug}`}
                         className="justify-self-end text-sm font-medium text-[#7C6FB0] underline decoration-[#E4DAFF] underline-offset-4 transition-colors hover:text-[#6a60a0]"
+                        aria-label={`View details for ${s.name}`}
                       >
                         View details
                       </Link>
@@ -440,16 +367,12 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== TESTIMONIALS (light teal, arrows, local JSON) ================= */}
-      <section
-        className={`relative bg-teal-50 ${sectionY}`}
-        id="testimonials"
-        aria-labelledby="testimonials-title"
-      >
+      {/* ========= TESTIMONIALS (single arrow pair, centered, refined) ========= */}
+      <section className={`relative bg-teal-50 ${sectionY}`} id="testimonials" aria-labelledby="testimonials-title">
         {/* soft accents */}
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-emerald-200/40 blur-3xl" />
-          <div className="absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-teal-200/40 blur-3xl" />
+          <div className="absolute -top-28 -left-24 h-64 w-64 rounded-full bg-emerald-200/40 blur-3xl" />
+          <div className="absolute -bottom-28 -right-24 h-72 w-72 rounded-full bg-teal-200/40 blur-3xl" />
         </div>
 
         <Container>
@@ -457,77 +380,58 @@ export default function AboutPage() {
             <SectionHeader
               kicker="Testimonials"
               title="Real stories from the EES community"
-              subtitle="Swipe/scroll the cards or use the arrows to browse."
+              subtitle="Use the arrows to browse the stories."
               tone="emerald"
               align="center"
             />
           </Reveal>
 
-          {/* Slider: CSS-only scroll-snap + anchor-based arrows (no JS) */}
-          <div className="mt-8">
-            <div
-              id="testimonials-track"
-              className="relative flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth
-                         [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {testimonials.map((t, i) => {
-                const prevId = i === 0 ? testimonials.length : i
-                const nextId = i + 2 > testimonials.length ? 1 : i + 2
-                return (
-                  <figure
-                    key={i}
-                    id={`t${i + 1}`}
-                    className="snap-start min-w-[86%] sm:min-w-[70%] md:min-w-[56%] lg:min-w-[48%]
-                               relative overflow-hidden rounded-3xl border border-teal-700/20
-                               bg-gradient-to-br from-[#0D9488] to-[#0F766E] p-6 sm:p-10 text-center
-                               shadow-[0_16px_40px_rgba(13,148,136,0.25)]"
-                  >
-                    {/* Quote */}
-                    <blockquote className="mx-auto max-w-2xl text-left sm:text-center text-white/90 text-base sm:text-lg leading-relaxed">
+          {/* Radio-based carousel (Server Component friendly) */}
+          <div className="relative mx-auto mt-8 max-w-3xl">
+            {testimonials.map((t, i) => {
+              const id = `s${i + 1}`
+              const prev = `s${i === 0 ? testimonials.length : i}`
+              const next = `s${i + 2 > testimonials.length ? 1 : i + 2}`
+              return (
+                <div key={id} className="relative">
+                  <input id={id} type="radio" name="t-carousel" defaultChecked={i === 0} className="peer sr-only" />
+                  <figure className="hidden peer-checked:block overflow-hidden rounded-3xl border border-teal-700/15 bg-white p-7 sm:p-10 text-center shadow-[0_16px_40px_rgba(13,148,136,0.18)]">
+                    <QuoteMark className="pointer-events-none mx-auto mb-4 h-10 w-10 text-emerald-200" />
+                    <blockquote className="mx-auto max-w-2xl text-slate-800 text-lg sm:text-xl leading-relaxed">
                       &ldquo;{t.quote}&rdquo;
                     </blockquote>
-
-                    {/* Author */}
-                    <figcaption className="mt-5 text-white font-semibold">
-                      — {t.author}
-                    </figcaption>
-
-                    {/* Arrow buttons (anchor to slide IDs) */}
-                    <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 sm:px-3">
-                      <a
-                        href={`#t${prevId}`}
-                        aria-label="Previous testimonial"
-                        className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full
-                                   bg-white/90 ring-1 ring-teal-900/10 shadow hover:bg-white focus:outline-none
-                                   focus-visible:ring-2 focus-visible:ring-emerald-300 transition"
-                      >
-                        <ChevronLeft className="h-5 w-5 text-teal-800" />
-                      </a>
-                      <a
-                        href={`#t${nextId}`}
-                        aria-label="Next testimonial"
-                        className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full
-                                   bg-white/90 ring-1 ring-teal-900/10 shadow hover:bg-white focus:outline-none
-                                   focus-visible:ring-2 focus-visible:ring-emerald-300 transition"
-                      >
-                        <ChevronRight className="h-5 w-5 text-teal-800" />
-                      </a>
-                    </div>
+                    <figcaption className="mt-6 text-slate-900 font-semibold">— {t.author}</figcaption>
                   </figure>
+
+                  {/* one visible arrow pair (only for the active slide) */}
+                  <div className="pointer-events-none absolute inset-y-0 left-0 right-0 hidden items-center justify-between px-2 sm:px-3 peer-checked:flex">
+                    <label
+                      htmlFor={prev}
+                      aria-label="Previous testimonial"
+                      className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-white ring-1 ring-teal-900/10 shadow hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition"
+                    >
+                      <ChevronLeft className="h-5 w-5 text-teal-800" />
+                    </label>
+                    <label
+                      htmlFor={next}
+                      aria-label="Next testimonial"
+                      className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-white ring-1 ring-teal-900/10 shadow hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition"
+                    >
+                      <ChevronRight className="h-5 w-5 text-teal-800" />
+                    </label>
+                  </div>
+                </div>
+              )
+            })}
+
+            {/* Dots */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              {testimonials.map((_, i) => {
+                const id = `s${i + 1}`
+                return (
+                  <label key={id} htmlFor={id} aria-label={`Go to testimonial ${i + 1}`} className="h-2.5 w-2.5 cursor-pointer rounded-full bg-teal-900/25 hover:bg-teal-900/40" />
                 )
               })}
-            </div>
-
-            {/* Dots (anchor links) */}
-            <div className="mt-5 flex items-center justify-center gap-2">
-              {testimonials.map((_, i) => (
-                <a
-                  key={i}
-                  href={`#t${i + 1}`}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  className="h-2.5 w-2.5 rounded-full bg-teal-900/20 hover:bg-teal-900/30 outline-none ring-2 ring-transparent focus-visible:ring-emerald-300"
-                />
-              ))}
             </div>
 
             {/* CTA + attribution */}
@@ -540,26 +444,18 @@ export default function AboutPage() {
               >
                 Watch video testimonials
               </a>
-              <span className="text-xs text-slate-600">
-                All testimonials are from the Energy Enhancement System.
-              </span>
+              <span className="text-xs text-slate-600">All testimonials are from the Energy Enhancement System.</span>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ===== VISIT US =================================================== */}
+      {/* ============================== VISIT US ============================= */}
       <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70rem_30rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
         <Container>
           <Reveal delay={110}>
-            <SectionHeader
-              kicker="Downtown"
-              title="Visit Us"
-              subtitle="Easy to reach, simple to settle in."
-              tone="emerald"
-              align="center"
-            />
+            <SectionHeader kicker="Downtown" title="Visit Us" subtitle="Easy to reach, simple to settle in." tone="emerald" align="center" />
           </Reveal>
 
           <div className="mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
@@ -569,7 +465,7 @@ export default function AboutPage() {
                   src={asset(MAP)}
                   width={960}
                   height={640}
-                  alt="Map near 123 Oak Street Downtown"
+                  alt="Map showing location of Upgrade Wellness Center Downtown"
                   className="h-56 sm:h-72 md:h-80 w-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -588,7 +484,7 @@ export default function AboutPage() {
             <Reveal delay={210}>
               <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
                 <div className="pointer-events-none absolute -top-16 -right-12 h-36 w-36 rounded-full bg-[#EAFBF4] blur-3xl" />
-                <h3 className="text-base sm:text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Upgrade Wellness Center – Downtown</h3>
                 <p className="mt-1 text-sm text-slate-700">{addressLine}</p>
 
                 <div className="mt-4 sm:mt-5 grid gap-3 text-sm sm:flex sm:items-center sm:gap-6">
@@ -614,23 +510,31 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== YouTube Embeds — before the final CTA ===================== */}
+      {/* ===================== YOUTUBE (darker background) ==================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="yt-title">
+        {/* dark canvas + vignettes */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-slate-950" />
+          <div className="absolute inset-0 bg-[radial-gradient(90rem_60rem_at_50%_-10%,rgba(16,185,129,0.15),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(80rem_50rem_at_100%_100%,rgba(59,130,246,0.10),transparent_60%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/65 via-transparent to-slate-900/65" />
+        </div>
+
         <Container>
           <Reveal delay={110}>
-            <SectionHeader
-              kicker="Videos"
-              title="Learn more on YouTube"
-              subtitle="Quick tours, how-tos, and community stories."
-              tone="lavender"
-              align="center"
-            />
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="inline-block rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90">
+                Videos
+              </span>
+              <h2 id="yt-title" className="mt-3 text-2xl sm:text-3xl font-semibold text-white">Learn more on YouTube</h2>
+              <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-white/80">Quick tours, how-tos, and community stories.</p>
+            </div>
           </Reveal>
 
           <div className="mt-8 grid gap-5 sm:gap-6 lg:grid-cols-3">
             {YT_IDS.map((id, i) => (
               <Reveal key={id} delay={140 + i * 90}>
-                <article className="overflow-hidden rounded-[16px] border border-slate-200 bg-white shadow-sm">
+                <article className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur-sm">
                   <div className="relative aspect-[16/9]">
                     <YouTubeFrame id={id} title={`YouTube video ${i + 1}`} />
                   </div>
@@ -641,7 +545,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===== CTA ======================================================== */}
+      {/* ================================= CTA ================================ */}
       <section className={`${sectionY}`} aria-labelledby="cta">
         <Container>
           <Reveal delay={150}>
@@ -687,23 +591,19 @@ function SectionHeader({
   onDark?: boolean
 }) {
   const alignCls = align === 'center' ? 'text-center mx-auto' : ''
-
   const pillColor = (() => {
     if (onDark) return 'bg-white/10 text-white border-white/30'
     return tone === 'lavender'
       ? 'bg-white text-[#7C6FB0] border-[#E4DAFF]'
       : 'bg-white text-emerald-700 border-emerald-600/20'
   })()
-
   const titleColor = onDark ? 'text-white' : 'text-slate-900'
   const subColor = onDark ? 'text-white/80' : 'text-slate-700'
 
   return (
     <div className={`max-w-3xl ${alignCls}`}>
-      <span className={`inline-block rounded-full border px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider ${pillColor}`}>
-        {kicker}
-      </span>
-      <h2 className={`mt-3 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight ${titleColor}`}>{title}</h2>
+      <span className={`inline-block rounded-full border px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider ${pillColor}`}>{kicker}</span>
+      <h2 className={`mt-3 text-2xl sm:text-3xl font-semibold leading-tight ${titleColor}`}>{title}</h2>
       {subtitle && <p className={`mt-2 text-sm sm:text-[15px] leading-relaxed ${subColor}`}>{subtitle}</p>}
     </div>
   )
@@ -893,6 +793,13 @@ function ChevronRight(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+function QuoteMark(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden {...props}>
+      <path d="M18 10C11 14 8 18.667 8 24c0 3.333 1.333 6 4 8s5.333 3 8 3c-2 2.667-4.667 4-8 4-3.333 0-6.333-1.333-9-4C1.333 32 0 28.667 0 24c0-4.667 1.333-8.667 4-12s6.667-6 12-8v6Zm26 0c-7 4-10 8.667-10 14 0 3.333 1.333 6 4 8s5.333 3 8 3c-2 2.667-4.667 4-8 4-3.333 0-6.333-1.333-9-4-2.667-2.667-4-6-4-10 0-4.667 1.333-8.667 4-12s6.667-6 12-8v6Z" fill="currentColor" />
     </svg>
   )
 }
