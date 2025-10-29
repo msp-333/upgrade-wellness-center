@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Container from '@/components/Container'
 import services from '@/data/services.json'
 import Reveal from '@/components/Reveal'
-import testimonialsRaw from '@/data/testimonials.json' // ← local JSON
+import testimonialsRaw from '@/data/testimonials.json' // local JSON: [{ "quote": "...", "author": "..." }, ...]
 
 export const metadata = {
   title: 'Home | Upgrade Wellness Center',
@@ -112,6 +112,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0) 62%, rgba(0,0,0,.42) 100%)' }} />
 
         <Container className="relative flex min-h-[82vh] md:min-h-[90vh] items-end md:items-center pb-20 sm:pb-28 md:pb-32" style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}>
+          {/* Slightly left-shifted content */}
           <div className="max-w-[62rem] text-left -ml-3 sm:-ml-6 lg:-ml-8">
             <p className="uppercase tracking-[0.18em] text-white/80 text-[0.95rem] md:text-base">HOLISTIC • HUMAN • KIND</p>
             <h1
@@ -367,7 +368,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ========= TESTIMONIALS (single arrow pair, centered, refined) ========= */}
+      {/* ========= TESTIMONIALS (light teal, centered, single arrows) ========= */}
       <section className={`relative bg-teal-50 ${sectionY}`} id="testimonials" aria-labelledby="testimonials-title">
         {/* soft accents */}
         <div className="pointer-events-none absolute inset-0 -z-10">
@@ -396,8 +397,7 @@ export default function AboutPage() {
                 <div key={id} className="relative">
                   <input id={id} type="radio" name="t-carousel" defaultChecked={i === 0} className="peer sr-only" />
                   <figure className="hidden peer-checked:block overflow-hidden rounded-3xl border border-teal-700/15 bg-white p-7 sm:p-10 text-center shadow-[0_16px_40px_rgba(13,148,136,0.18)]">
-                    <QuoteMark className="pointer-events-none mx-auto mb-4 h-10 w-10 text-emerald-200" />
-                    <blockquote className="mx-auto max-w-2xl text-slate-800 text-lg sm:text-xl leading-relaxed">
+                    <blockquote className="mx-auto max-w-2xl text-slate-800 text-lg sm:text-xl leading-relaxed italic">
                       &ldquo;{t.quote}&rdquo;
                     </blockquote>
                     <figcaption className="mt-6 text-slate-900 font-semibold">— {t.author}</figcaption>
@@ -434,8 +434,8 @@ export default function AboutPage() {
               })}
             </div>
 
-            {/* CTA + attribution */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            {/* CTA + attribution stacked */}
+            <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <a
                 href="https://www.eesystem.com/testimonials-videos"
                 target="_blank"
@@ -450,12 +450,26 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ============================== VISIT US ============================= */}
-      <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70rem_30rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
+      {/* ============================== VISIT US (dark) ============================== */}
+      <section className={`relative ${sectionY}`} id="visit-us" aria-labelledby="visit">
+        {/* dark canvas + vignettes */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-slate-950" />
+          <div className="absolute inset-0 bg-[radial-gradient(80rem_40rem_at_0%_100%,rgba(16,185,129,0.16),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(80rem_40rem_at_100%_0%,rgba(124,111,176,0.12),transparent_60%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+        </div>
+
         <Container>
           <Reveal delay={110}>
-            <SectionHeader kicker="Downtown" title="Visit Us" subtitle="Easy to reach, simple to settle in." tone="emerald" align="center" />
+            <SectionHeader
+              kicker="Downtown"
+              title="Visit Us"
+              subtitle="Easy to reach, simple to settle in."
+              tone="lavender"
+              align="center"
+              onDark
+            />
           </Reveal>
 
           <div className="mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
@@ -510,31 +524,29 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* ===================== YOUTUBE (darker background) ==================== */}
+      {/* ===================== YOUTUBE (light background) ==================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="yt-title">
-        {/* dark canvas + vignettes */}
+        {/* light canvas with gentle tint */}
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-slate-950" />
-          <div className="absolute inset-0 bg-[radial-gradient(90rem_60rem_at_50%_-10%,rgba(16,185,129,0.15),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(80rem_50rem_at_100%_100%,rgba(59,130,246,0.10),transparent_60%)]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/65 via-transparent to-slate-900/65" />
+          <div className="absolute inset-0 bg-white" />
+          <div className="absolute inset-0 bg-[radial-gradient(70rem_30rem_at_100%_0%,rgba(124,111,176,0.08),transparent_60%)]" />
         </div>
 
         <Container>
           <Reveal delay={110}>
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="inline-block rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90">
-                Videos
-              </span>
-              <h2 id="yt-title" className="mt-3 text-2xl sm:text-3xl font-semibold text-white">Learn more on YouTube</h2>
-              <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-white/80">Quick tours, how-tos, and community stories.</p>
-            </div>
+            <SectionHeader
+              kicker="Videos"
+              title="Learn more on YouTube"
+              subtitle="Quick tours, how-tos, and community stories."
+              tone="lavender"
+              align="center"
+            />
           </Reveal>
 
           <div className="mt-8 grid gap-5 sm:gap-6 lg:grid-cols-3">
             {YT_IDS.map((id, i) => (
               <Reveal key={id} delay={140 + i * 90}>
-                <article className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur-sm">
+                <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                   <div className="relative aspect-[16/9]">
                     <YouTubeFrame id={id} title={`YouTube video ${i + 1}`} />
                   </div>
@@ -793,13 +805,6 @@ function ChevronRight(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-function QuoteMark(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" aria-hidden {...props}>
-      <path d="M18 10C11 14 8 18.667 8 24c0 3.333 1.333 6 4 8s5.333 3 8 3c-2 2.667-4.667 4-8 4-3.333 0-6.333-1.333-9-4C1.333 32 0 28.667 0 24c0-4.667 1.333-8.667 4-12s6.667-6 12-8v6Zm26 0c-7 4-10 8.667-10 14 0 3.333 1.333 6 4 8s5.333 3 8 3c-2 2.667-4.667 4-8 4-3.333 0-6.333-1.333-9-4-2.667-2.667-4-6-4-10 0-4.667 1.333-8.667 4-12s6.667-6 12-8v6Z" fill="currentColor" />
     </svg>
   )
 }
