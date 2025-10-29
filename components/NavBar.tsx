@@ -16,7 +16,7 @@ const NAV_ITEMS = [
 
 // Less rounded CTA (no shadow), color-only nav states
 const CTA_BTN =
-  'inline-flex items-center justify-center rounded-lg px-5 md:px-6 py-2.5 md:py-3 text-base md:text-lg font-semibold text-white ' +
+  'inline-flex items-center justify-center rounded-pill px-5 md:px-6 py-2.5 md:py-3 text-base md:text-lg font-semibold text-white ' +
   'bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-500 hover:to-cyan-400 ' +
   'transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 active:scale-[.98]';
 
