@@ -91,7 +91,7 @@ export default function AboutPage() {
         {/* Background video (decorative) */}
         <div className="absolute inset-0 -z-30 pointer-events-none" aria-hidden="true">
           <video
-            className="h-full w-full object-cover motion-reduce:hidden [@media_(prefers-reduced-data:reduce)]:hidden"
+            className="h-full w-full object-cover motion-reduce:hidden"
             autoPlay
             muted
             loop
@@ -100,104 +100,105 @@ export default function AboutPage() {
             poster={asset(HERO_POSTER)}
             aria-hidden="true"
           >
-            {/* If you add a WebM variant later, put it above MP4:
-              <source src={asset(HERO_WEBM)} type="video/webm" /> */}
             <source src={asset(HERO_MP4)} type="video/mp4" />
           </video>
-
-          {/* Reduced-motion / reduced-data fallback */}
           <img
             src={asset(HERO_POSTER)}
             alt=""
-            className="hidden h-full w-full object-cover motion-reduce:block [@media_(prefers-reduced-data:reduce)]:block"
+            className="hidden h-full w-full object-cover motion-reduce:block"
             loading="eager"
             decoding="async"
           />
         </div>
 
-        {/* Left→right dark-teal scrim (over image, under text) */}
+        {/* Dark left→right scrim (over image, under text) */}
         <div
-          className="absolute inset-0 -z-20
-                    [background:linear-gradient(90deg,rgba(7,32,33,.84)_0%,rgba(7,32,33,.60)_42%,rgba(7,32,33,0)_76%)]
-                    sm:[background:linear-gradient(90deg,rgba(7,32,33,.80)_0%,rgba(7,32,33,.55)_40%,rgba(7,32,33,0)_75%)]"
+          className="absolute inset-0 -z-20"
           aria-hidden="true"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(2,10,10,.96) 0%, rgba(7,32,33,.86) 42%, rgba(7,32,33,.52) 64%, rgba(7,32,33,0) 82%)',
+          }}
         />
 
-        {/* Subtle bottom vignette to preserve contrast on bright frames */}
+        {/* Bottom vignette for extra contrast */}
         <div
-          className="absolute inset-0 -z-10 pointer-events-none
-                    [mask-image:linear-gradient(to_bottom,black_80%,transparent)]"
+          className="absolute inset-0 -z-10 pointer-events-none"
           aria-hidden="true"
+          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0) 64%, rgba(0,0,0,.40) 100%)' }}
         />
 
         <Container
-          className="relative flex min-h-[80vh] md:min-h-[90vh] items-end md:items-center
-                    pb-20 sm:pb-28 md:pb-32 pt-[max(5rem,env(safe-area-inset-top))]"
+          className="relative flex min-h-[80vh] md:min-h-[90vh] items-end md:items-center pb-20 sm:pb-28 md:pb-32"
+          style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}
         >
-          <Reveal delay={80}>
-            <div className="max-w-[62rem] text-left">
-              {/* Eyebrow */}
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#94A3B8]">
-                HOLISTIC • HUMAN • KIND
-              </p>
+          <div className="max-w-[62rem] text-left">
+            {/* Eyebrow (muted white) */}
+            <p
+              className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/70"
+              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
+            >
+              HOLISTIC • HUMAN • KIND
+            </p>
 
-              {/* H1 with fluid type + aqua gradient word */}
-              <h1
-                id="home-hero-title"
-                className="mt-3 text-balance font-extrabold leading-[1.05] text-[#F8FAFC]
-                          text-[clamp(2.25rem,6vw,4.75rem)]"
+            {/* H1 — all white */}
+            <h1
+              id="home-hero-title"
+              className="mt-3 font-extrabold leading-[1.05] text-white"
+              style={{
+                fontSize: 'clamp(2.25rem, 6vw, 4.75rem)',
+                textShadow: '0 2px 4px rgba(0,0,0,.55)',
+              }}
+            >
+              Time for a <span className="text-white">Recharge</span>
+            </h1>
+
+            {/* Subhead (softer white) */}
+            <p
+              className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-white/90"
+              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
+            >
+              One serene space for hydration, recovery, and whole-body restoration.
+            </p>
+
+            {/* Claims (no pills; white tones) */}
+            <ul
+              aria-label="Trust points"
+              className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/90"
+              style={{ textShadow: '0 1px 2px rgba(0,0,0,.55)' }}
+            >
+              {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
+                <li key={t} className="inline-flex items-center gap-2">
+                  <CheckIcon className="h-4 w-4 text-white/90" />
+                  <span className="text-white/90">{t}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTAs (button text stays pure white) */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/contact/"
+                className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
+                          text-white bg-[#0D9488] hover:bg-[#0F766E]
+                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
+                          focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
+                          transition-transform duration-150 hover:scale-[1.02] active:scale-95"
               >
-                Time for a{' '}
-                <span className="bg-[linear-gradient(90deg,#5EEAD4,#22D3EE)] bg-clip-text text-transparent [-webkit-text-fill-color:transparent]">
-                  Recharge
-                </span>
-              </h1>
+                Book an Appointment
+              </Link>
 
-              {/* Subhead */}
-              <p className="mt-4 max-w-3xl text-base md:text-lg leading-relaxed text-[#E2E8F0] text-pretty">
-                One serene space for hydration, recovery, and whole-body restoration.
-              </p>
-
-              {/* Trust pills */}
-              <ul aria-label="Trust points" className="mt-6 flex flex-wrap gap-3">
-                {['Family-friendly', 'Evidence-informed', 'Licensed practitioners'].map((t) => (
-                  <li
-                    key={t}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/26 bg-white/7
-                              px-3.5 py-2 text-sm font-medium text-[#F8FAFC]/92"
-                  >
-                    <CheckIcon className="h-4 w-4 text-[#5EEAD4]" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTAs */}
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href="/contact/"
-                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
-                            text-white bg-[#0D9488] hover:bg-[#0F766E]
-                            focus:outline-none focus-visible:ring-4 focus-visible:ring-white/35
-                            focus-visible:ring-offset-2 focus-visible:ring-offset-black/20
-                            transition-transform duration-150 hover:scale-[1.02] active:scale-[.99]"
-                >
-                  Book an Appointment
-                </Link>
-
-                <Link
-                  href="/services/"
-                  className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
-                            text-[#F8FAFC] border border-[rgba(255,255,255,.24)] bg-transparent
-                            hover:bg-[rgba(255,255,255,.08)]
-                            focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
-                            focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
-                >
-                  Explore services
-                </Link>
-              </div>
+              <Link
+                href="/services/"
+                className="inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold
+                          text-white border border-white/30 bg-transparent hover:bg-white/10
+                          focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30
+                          focus-visible:ring-offset-2 focus-visible:ring-offset-black/20"
+              >
+                Explore services
+              </Link>
             </div>
-          </Reveal>
+          </div>
         </Container>
       </section>
 
