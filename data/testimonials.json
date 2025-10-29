@@ -1,25 +1,47 @@
 [
   {
-    "id": "t-01",
-    "name": "Sam H.",
-    "role": "Teacher",
-    "quote": "Small habits, big impact. I sleep better and have more energy."
+    "id": "t-1",
+    "author": "Aaron Schultz",
+    "quote": "My cube has created such a positive energy throughout the home. It's great to sit with it in meditation or to just simply relax."
   },
   {
-    "id": "t-02",
-    "name": "Priya K.",
-    "role": "Project Manager",
-    "quote": "The workshops are practical, friendly, and effective."
+    "id": "t-2",
+    "author": "Jen Rubenstein",
+    "quote": "An incredibly warm, welcoming, and healing environment has been created by Rachel and Megan. I have been 4 times and hope to do an overnight soon; so far I feel rejuvenated and more centered with each 2 hour session. I trust this is an integral part of my healing journey and will continue to come for sessions. I cannot imagine a more professional, caring, or accommodating atmosphere. I look forward to continued healing!"
   },
   {
-    "id": "t-03",
-    "name": "Marcus A.",
-    "role": "Designer",
-    "quote": "I finally built a morning routine I can keep."
+    "id": "t-3",
+    "author": "Jacqueline Nolan",
+    "quote": "I initially did a 2hr session and an overnight. I felt completely relaxed, rejuvenated and more mentally clear than I had been in a long time. I had a lot going on when I started coming and the EE sessions helped me focus, and after my first overnight session my thinking was so clear, I knew the direction I should go in regarding a situation. I love my sessions and would recommend it as a way of disconnecting from the outside world and reconnecting with your inner self."
   },
   {
-    "id": "t-04",
-    "name": "Ava L.",
-    "quote": "The community aspect kept me going. Highly recommend!"
+    "id": "t-4",
+    "author": "Polly",
+    "quote": "I came to The Recharge Room to support my overall health and reduce stress. Since starting sessions, I sleep better, feel more energized, and haven't gotten sick once. The peaceful space make it an amazing experience. I leave every session feeling refreshed and balanced. Highly recommend!"
+  },
+  {
+    "id": "t-5",
+    "author": "Rita Willing",
+    "quote": "I visited Battersea park clinic, very nice staff, my first visit I received 2 hours of EE treatment. Afterwards I felt relaxed and energised."
+  },
+  {
+    "id": "t-6",
+    "author": "Joanna Lee",
+    "quote": "Just had 6 hours of the EES over 3 days. It gives such a wonderful sense of wellbeing. The usual inflammatory pain I have in my back and neck has gone! The owners are lovely people too. I think this is the future of healthcare."
+  },
+  {
+    "id": "t-7",
+    "author": "Maryluz Leek",
+    "quote": "What a wonderful experience I had at Flowmotion Energy Center in Hilversum! I attended an EE session there. Lie down for 2 hours and not have to do anything else. The welcome was friendly and warm. Starting with a cup of tea and a good explanation of how the EE session would work. After the session I experienced a lot of relaxation in my body and in my head. Highly recommended if you really want to relax."
+  },
+  {
+    "id": "t-8",
+    "author": "April Werla",
+    "quote": "Brian and I went to Healthy Body Healthy Soul LA this weekend... Yesterday, Brian and I snuggled on the couch and I was leaning on his right shoulder (the one he doesn't like anything to touch and doesn't want to move.) NO issues."
+  },
+  {
+    "id": "t-9",
+    "author": "Corinne",
+    "quote": "Fabulous experience, invited to discover Pure Vitality, I did a rejuvenating bath during the 2 hours: calm, softness, more energy, more aligned since then, a clear state of mind, detox of the body... I highly recommend. Looking forward to experiencing other immersions!"
   }
 ]

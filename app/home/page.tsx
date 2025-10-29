@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Container from '@/components/Container'
 import services from '@/data/services.json'
 import Reveal from '@/components/Reveal'
+import testimonialsRaw from '@/data/testimonials.json' // ← local JSON
 
 export const metadata = {
   title: 'Home | Upgrade Wellness Center',
@@ -22,6 +23,9 @@ type Service = {
   priceFrom?: number
   image?: string
 }
+
+type Testimonial = { quote: string; author: string }
+const testimonials = testimonialsRaw as Testimonial[] // if TS complains, enable "resolveJsonModule": true in tsconfig
 
 export default function AboutPage() {
   const list = (services as Service[]).slice(0, 3)
@@ -54,7 +58,7 @@ export default function AboutPage() {
   const pill =
     'inline-flex items-center gap-2 rounded-[999px] border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm backdrop-blur'
 
-  // EE benefits (same list as before)
+  // EE benefits (same list as before) — UNCHANGED
   const eeBenefits: { id: string; label: string; Icon: (p: React.SVGProps<SVGSVGElement>) => JSX.Element }[] = [
     { id: 'regen',       label: 'Detoxification\nof the Body',               Icon: SparkleIcon },
     { id: 'inflam',      label: 'Reduces Inflammation',                      Icon: InflammationIcon },
@@ -74,7 +78,7 @@ export default function AboutPage() {
     { id: 'brain',       label: 'Improved Self-Awareness',                   Icon: BrainIcon },
   ]
 
-  // (Restored) square-tile variant backgrounds
+  // (Restored) square-tile variant backgrounds — kept for future use
   const iconBgVariants = [
     'bg-emerald-50 ring-emerald-600/10',
     'bg-[#F3EDFF] ring-[#7C6FB0]/10',
@@ -84,7 +88,8 @@ export default function AboutPage() {
 
   return (
     <>
-        <section
+      {/* ===== HERO ====================================================== */}
+      <section
         className="relative isolate min-h-[80vh] md:min-h-[90vh]"
         aria-labelledby="home-hero-title"
       >
@@ -132,20 +137,21 @@ export default function AboutPage() {
           className="relative flex min-h-[80vh] md:min-h-[90vh] items-end md:items-center pb-20 sm:pb-28 md:pb-32"
           style={{ paddingTop: 'max(5rem, env(safe-area-inset-top))' }}
         >
-          <div className="max-w-[62rem] text-left">
+          {/* shifted slightly left */}
+          <div className="max-w-[62rem] text-left -ml-2 sm:-ml-4 lg:-ml-6">
             {/* Eyebrow — muted off-white */}
             <p className="uppercase tracking-[0.18em] text-white/80 text-[0.95rem] md:text-base">
               HOLISTIC • HUMAN • KIND
             </p>
 
-            {/* H1 — larger, near-white, *very* subtle shadow */}
+            {/* H1 — larger, near-white, very subtle shadow */}
             <h1
               id="home-hero-title"
               className="mt-4 text-balance font-extrabold leading-[1.03] tracking-tight"
               style={{
-                color: '#F8FAFC',                                 // near-white
-                fontSize: 'clamp(3rem, 8vw, 6.25rem)',            // ~48 → 100px
-                textShadow: '0 1px 1px rgba(0,0,0,.16)',          // super subtle
+                color: '#F8FAFC',
+                fontSize: 'clamp(3rem, 8vw, 6.25rem)',
+                textShadow: '0 1px 1px rgba(0,0,0,.16)',
               }}
             >
               Time for a Recharge?
@@ -155,14 +161,14 @@ export default function AboutPage() {
             <p
               className="mt-5 max-w-4xl leading-relaxed"
               style={{
-                color: '#F1F5F9',                                 // softer white
-                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',         // ~18 → 24px
+                color: '#F1F5F9',
+                fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
               }}
             >
               One serene space for hydration, recovery, and whole-body restoration.
             </p>
 
-            {/* Claims — clean white with slight mute */}
+            {/* Claims */}
             <ul
               aria-label="Trust points"
               className="mt-6 flex flex-wrap gap-x-8 gap-y-3"
@@ -176,7 +182,7 @@ export default function AboutPage() {
               ))}
             </ul>
 
-            {/* CTAs — text uses the same near-white as H1 for consistency */}
+            {/* CTAs */}
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/contact/"
@@ -206,6 +212,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <SectionDivider label="How it works" tone="emerald" />
 
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
@@ -242,6 +249,8 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      <SectionDivider label="Why Upgrade" tone="lavender" />
 
       {/* ===== WHY UPGRADE — section with background video ============== */}
       <section className={`relative overflow-hidden ${sectionY}`} aria-labelledby="pillars">
@@ -311,8 +320,9 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <SectionDivider label="EE System" tone="emerald" />
 
-      {/* ===== EE SYSTEM BENEFITS ======================================== */}
+      {/* ===== EE SYSTEM BENEFITS (UNTOUCHED) ============================ */}
       <section
         className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
         id="ee-environment"
@@ -358,6 +368,8 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
+
+      <SectionDivider label="Featured services" tone="lavender" />
 
       {/* ===== FEATURED SERVICES ========================================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
@@ -406,9 +418,14 @@ export default function AboutPage() {
 
                     <div className="mt-4 grid grid-cols-2 items-center gap-3 sm:flex sm:justify-between">
                       <span className="text-sm text-slate-700">
-                        {typeof s.priceFrom === 'number' ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></> : <>&nbsp;</>}
+                        {typeof s.priceFrom === 'number'
+                          ? <>From <strong className="text-slate-900">${s.priceFrom}</strong></>
+                          : <>&nbsp;</>}
                       </span>
-                      <Link href={`/services/#${s.slug}`} className="justify-self-end text-sm font-medium text-[#7C6FB0] underline decoration-[#E4DAFF] underline-offset-4 transition-colors hover:text-[#6a60a0]">
+                      <Link
+                        href={`/services/#${s.slug}`}
+                        className="justify-self-end text-sm font-medium text-[#7C6FB0] underline decoration-[#E4DAFF] underline-offset-4 transition-colors hover:text-[#6a60a0]"
+                      >
                         View details
                       </Link>
                     </div>
@@ -431,6 +448,71 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <SectionDivider label="Testimonials" tone="emerald" />
+
+      {/* ===== TESTIMONIALS (uses local JSON) ============================ */}
+      <section className={`relative ${sectionY}`} id="testimonials" aria-labelledby="testimonials-title">
+        <Container>
+          <Reveal delay={110}>
+            <SectionHeader
+              kicker="Testimonials"
+              title="Real stories from the EES community"
+              subtitle="Swipe/scroll to browse. Tap the button to watch more video stories."
+              tone="emerald"
+              align="center"
+            />
+          </Reveal>
+
+          {/* Slider: CSS-only scroll-snap so it works in a Server Component */}
+          <div className="mt-8">
+            <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {testimonials.map((t, i) => (
+                <figure
+                  key={i}
+                  id={`t${i + 1}`}
+                  className="snap-start min-w-[86%] sm:min-w-[70%] md:min-w-[56%] lg:min-w-[48%]
+                             rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+                >
+                  <blockquote className="text-slate-800 text-base sm:text-lg leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm font-semibold text-slate-900">— {t.author}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            {/* Dots (anchor links) */}
+            <div className="mt-5 flex items-center justify-center gap-2">
+              {testimonials.map((_, i) => (
+                <a
+                  key={i}
+                  href={`#t${i + 1}`}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  className="h-2.5 w-2.5 rounded-full bg-slate-300 hover:bg-slate-400 outline-none ring-2 ring-transparent focus-visible:ring-emerald-300"
+                />
+              ))}
+            </div>
+
+            {/* CTA + note */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="https://www.eesystem.com/testimonials-videos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-[999px] bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition-colors hover:bg-emerald-500"
+              >
+                Watch video testimonials
+              </a>
+              <span className="text-xs text-slate-500">
+                All testimonials are from the Energy Enhancement System.
+              </span>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <SectionDivider label="Visit us" tone="emerald" />
+
       {/* ===== VISIT US =================================================== */}
       <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70rem_30rem_at_0%_100%,rgba(25,182,174,0.10),transparent_60%)]" />
@@ -450,8 +532,8 @@ export default function AboutPage() {
               <div className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(16,24,40,.10)]">
                 <img
                   src={asset(MAP)}
-                  width="960"
-                  height="640"
+                  width={960}
+                  height={640}
                   alt="Map near 123 Oak Street Downtown"
                   className="h-56 sm:h-72 md:h-80 w-full object-cover"
                   loading="lazy"
@@ -497,6 +579,8 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <SectionDivider label="Videos" tone="lavender" />
+
       {/* ===== YouTube Embeds — before the final CTA ===================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="yt-title">
         <Container>
@@ -523,6 +607,8 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      <SectionDivider label="Get started" tone="emerald" />
 
       {/* ===== CTA ======================================================== */}
       <section className={`${sectionY}`} aria-labelledby="cta">
@@ -643,7 +729,7 @@ function LeafIcon(props: React.SVGProps<SVGSVGElement>) {
 function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83.26 1.7.46 2.6.58A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.58 2.6a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.48-1.14a2 2 0 0 1 2.11-.45c.83 .26 1.7 .46 2.6 .58A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.5"/>
     </svg>
   )
 }
