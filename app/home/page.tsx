@@ -212,8 +212,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SectionDivider label="How it works" tone="emerald" />
-
       {/* ===== HOW YOUR SESSION FLOWS ==================================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="how-title">
         <Container>
@@ -249,8 +247,6 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
-
-      <SectionDivider label="Why Upgrade" tone="lavender" />
 
       {/* ===== WHY UPGRADE — section with background video ============== */}
       <section className={`relative overflow-hidden ${sectionY}`} aria-labelledby="pillars">
@@ -320,8 +316,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SectionDivider label="EE System" tone="emerald" />
-
       {/* ===== EE SYSTEM BENEFITS (UNTOUCHED) ============================ */}
       <section
         className="relative bg-[var(--surface)] py-14 sm:py-16 md:py-20"
@@ -368,8 +362,6 @@ export default function AboutPage() {
           </Reveal>
         </Container>
       </section>
-
-      <SectionDivider label="Featured services" tone="lavender" />
 
       {/* ===== FEATURED SERVICES ========================================= */}
       <section className={`relative ${sectionY}`} id="featured-services" aria-labelledby="featured">
@@ -448,37 +440,82 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SectionDivider label="Testimonials" tone="emerald" />
+      {/* ===== TESTIMONIALS (light teal, arrows, local JSON) ================= */}
+      <section
+        className={`relative bg-teal-50 ${sectionY}`}
+        id="testimonials"
+        aria-labelledby="testimonials-title"
+      >
+        {/* soft accents */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute -top-24 -left-24 h-56 w-56 rounded-full bg-emerald-200/40 blur-3xl" />
+          <div className="absolute -bottom-28 -right-24 h-64 w-64 rounded-full bg-teal-200/40 blur-3xl" />
+        </div>
 
-      {/* ===== TESTIMONIALS (uses local JSON) ============================ */}
-      <section className={`relative ${sectionY}`} id="testimonials" aria-labelledby="testimonials-title">
         <Container>
           <Reveal delay={110}>
             <SectionHeader
               kicker="Testimonials"
               title="Real stories from the EES community"
-              subtitle="Swipe/scroll to browse. Tap the button to watch more video stories."
+              subtitle="Swipe/scroll the cards or use the arrows to browse."
               tone="emerald"
               align="center"
             />
           </Reveal>
 
-          {/* Slider: CSS-only scroll-snap so it works in a Server Component */}
+          {/* Slider: CSS-only scroll-snap + anchor-based arrows (no JS) */}
           <div className="mt-8">
-            <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {testimonials.map((t, i) => (
-                <figure
-                  key={i}
-                  id={`t${i + 1}`}
-                  className="snap-start min-w-[86%] sm:min-w-[70%] md:min-w-[56%] lg:min-w-[48%]
-                             rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
-                >
-                  <blockquote className="text-slate-800 text-base sm:text-lg leading-relaxed">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className="mt-4 text-sm font-semibold text-slate-900">— {t.author}</figcaption>
-                </figure>
-              ))}
+            <div
+              id="testimonials-track"
+              className="relative flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth
+                         [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {testimonials.map((t, i) => {
+                const prevId = i === 0 ? testimonials.length : i
+                const nextId = i + 2 > testimonials.length ? 1 : i + 2
+                return (
+                  <figure
+                    key={i}
+                    id={`t${i + 1}`}
+                    className="snap-start min-w-[86%] sm:min-w-[70%] md:min-w-[56%] lg:min-w-[48%]
+                               relative overflow-hidden rounded-3xl border border-teal-700/20
+                               bg-gradient-to-br from-[#0D9488] to-[#0F766E] p-6 sm:p-10 text-center
+                               shadow-[0_16px_40px_rgba(13,148,136,0.25)]"
+                  >
+                    {/* Quote */}
+                    <blockquote className="mx-auto max-w-2xl text-left sm:text-center text-white/90 text-base sm:text-lg leading-relaxed">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+
+                    {/* Author */}
+                    <figcaption className="mt-5 text-white font-semibold">
+                      — {t.author}
+                    </figcaption>
+
+                    {/* Arrow buttons (anchor to slide IDs) */}
+                    <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 sm:px-3">
+                      <a
+                        href={`#t${prevId}`}
+                        aria-label="Previous testimonial"
+                        className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full
+                                   bg-white/90 ring-1 ring-teal-900/10 shadow hover:bg-white focus:outline-none
+                                   focus-visible:ring-2 focus-visible:ring-emerald-300 transition"
+                      >
+                        <ChevronLeft className="h-5 w-5 text-teal-800" />
+                      </a>
+                      <a
+                        href={`#t${nextId}`}
+                        aria-label="Next testimonial"
+                        className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full
+                                   bg-white/90 ring-1 ring-teal-900/10 shadow hover:bg-white focus:outline-none
+                                   focus-visible:ring-2 focus-visible:ring-emerald-300 transition"
+                      >
+                        <ChevronRight className="h-5 w-5 text-teal-800" />
+                      </a>
+                    </div>
+                  </figure>
+                )
+              })}
             </div>
 
             {/* Dots (anchor links) */}
@@ -488,12 +525,12 @@ export default function AboutPage() {
                   key={i}
                   href={`#t${i + 1}`}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className="h-2.5 w-2.5 rounded-full bg-slate-300 hover:bg-slate-400 outline-none ring-2 ring-transparent focus-visible:ring-emerald-300"
+                  className="h-2.5 w-2.5 rounded-full bg-teal-900/20 hover:bg-teal-900/30 outline-none ring-2 ring-transparent focus-visible:ring-emerald-300"
                 />
               ))}
             </div>
 
-            {/* CTA + note */}
+            {/* CTA + attribution */}
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://www.eesystem.com/testimonials-videos"
@@ -503,15 +540,13 @@ export default function AboutPage() {
               >
                 Watch video testimonials
               </a>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-slate-600">
                 All testimonials are from the Energy Enhancement System.
               </span>
             </div>
           </div>
         </Container>
       </section>
-
-      <SectionDivider label="Visit us" tone="emerald" />
 
       {/* ===== VISIT US =================================================== */}
       <section className={`relative bg-[var(--surface)] ${sectionY}`} id="visit-us" aria-labelledby="visit">
@@ -579,8 +614,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SectionDivider label="Videos" tone="lavender" />
-
       {/* ===== YouTube Embeds — before the final CTA ===================== */}
       <section className={`relative ${sectionY}`} aria-labelledby="yt-title">
         <Container>
@@ -607,8 +640,6 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
-
-      <SectionDivider label="Get started" tone="emerald" />
 
       {/* ===== CTA ======================================================== */}
       <section className={`${sectionY}`} aria-labelledby="cta">
@@ -674,24 +705,6 @@ function SectionHeader({
       </span>
       <h2 className={`mt-3 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight ${titleColor}`}>{title}</h2>
       {subtitle && <p className={`mt-2 text-sm sm:text-[15px] leading-relaxed ${subColor}`}>{subtitle}</p>}
-    </div>
-  )
-}
-
-function SectionDivider({ label, tone = 'emerald' }: { label: string; tone?: 'emerald' | 'lavender' }) {
-  const line =
-    tone === 'lavender'
-      ? 'from-[#7C6FB0]/30 via-transparent to-[#7C6FB0]/30'
-      : 'from-emerald-500/30 via-transparent to-emerald-500/30'
-  return (
-    <div className="py-8">
-      <Container>
-        <div className="mx-auto flex max-w-3xl items-center gap-3 sm:gap-4 px-1">
-          <span className={`hidden sm:block h-px w-10 bg-gradient-to-r ${line}`} />
-          <span className="text-[10px] sm:text-xs font-medium uppercase tracking-widest text-slate-500">{label}</span>
-          <span className={`h-px flex-1 bg-gradient-to-r ${line}`} />
-        </div>
-      </Container>
     </div>
   )
 }
@@ -866,6 +879,20 @@ function BoltIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path d="M13 2L6 14h5l-1 8 7-12h-5l1-8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+function ChevronLeft(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M15 19L8 12l7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+function ChevronRight(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
