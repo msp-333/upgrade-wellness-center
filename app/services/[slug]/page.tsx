@@ -116,14 +116,16 @@ const PRESET_SOURCES: Record<string, Source[]> = {
 /* ------------------------------ UI bits --------------------------- */
 function Pill({
   children,
-  tone = 'emerald',
+  tone = 'brand',
 }: {
   children: React.ReactNode
-  tone?: 'emerald' | 'slate' | 'amber' | 'sky'
+  tone?: 'brand' | 'slate' | 'amber' | 'sky'
 }) {
+  // Brand palette (from project memory)
+  // Ceil Blue #6592E1, Pastel Blue #81B1E6, Dark Blue #001130, White #FCFDFE
   const tones = {
-    emerald: 'border-emerald-200 bg-emerald-50 text-emerald-900',
-    slate: 'border-slate-200 bg-white text-slate-700',
+    brand: 'border-[#BFD0F6] bg-[#EBF2FF] text-[#001130]',
+    slate: 'border-slate-200 bg-white text-[#001130]',
     amber: 'border-amber-300 bg-amber-50 text-amber-900',
     sky: 'border-sky-200 bg-sky-50 text-sky-900',
   } as const
@@ -136,7 +138,7 @@ function Pill({
 
 function SectionHeader({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h3 id={id} className="mt-12 scroll-mt-28 text-xl font-semibold text-slate-900 md:text-2xl">
+    <h3 id={id} className="mt-12 scroll-mt-28 text-2xl font-semibold text-[#001130] md:text-[28px]">
       {children}
     </h3>
   )
@@ -144,10 +146,10 @@ function SectionHeader({ id, children }: { id: string; children: React.ReactNode
 
 function DotList({ items }: { items: string[] }) {
   return (
-    <ul className="mt-4 space-y-3 text-[17px]/8 text-slate-700">
+    <ul className="mt-4 space-y-3 text-[18px]/8 text-slate-700 md:text-[19px]">
       {items.map((b) => (
         <li key={b} className="flex gap-3">
-          <span className="mt-2 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500" />
+          <span className="mt-2 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[#6592E1]" />
           <span>{b}</span>
         </li>
       ))}
@@ -157,13 +159,13 @@ function DotList({ items }: { items: string[] }) {
 
 function TimelineList({ items }: { items: string[] }) {
   return (
-    <ol className="relative mt-4 space-y-6 border-l border-slate-200 pl-6">
+    <ol className="relative mt-4 space-y-6 border-l border-[#D6E4FF] pl-6">
       {items.map((s, i) => (
         <li key={s} className="relative">
-          <span className="absolute -left-3 top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-emerald-300 bg-white text-[11px] font-semibold text-emerald-800">
+          <span className="absolute -left-3 top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[#BFD0F6] bg-white text-[11px] font-semibold text-[#001130]">
             {i + 1}
           </span>
-          <p className="text-[17px]/8 text-slate-700">{s}</p>
+          <p className="text-[18px]/8 text-slate-700 md:text-[19px]">{s}</p>
         </li>
       ))}
     </ol>
@@ -172,21 +174,21 @@ function TimelineList({ items }: { items: string[] }) {
 
 function InfoCallout({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-6 rounded-2xl border border-amber-300/70 bg-amber-50 p-5 text-amber-900">
-      <p className="text-[15px]/6 font-semibold">{title}</p>
-      <div className="mt-2 text-[15px]/7">{children}</div>
+    <div className="mt-6 rounded-2xl border border-amber-300/70 bg-amber-50 p-6 text-amber-900">
+      <p className="text-[16px]/6 font-semibold">{title}</p>
+      <div className="mt-2 text-[16px]/7">{children}</div>
     </div>
   )
 }
 
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <details className="group mt-4 rounded-2xl border border-slate-200 bg-white/80 p-5 open:bg-white">
-      <summary className="cursor-pointer select-none text-[15px] font-semibold text-slate-900 outline-none">
+    <details className="group mt-4 rounded-2xl border border-[#E6EEFF] bg-white/95 p-6 open:bg-white">
+      <summary className="cursor-pointer select-none text-[16px] font-semibold text-[#001130] outline-none">
         {title}
         <span className="ml-2 text-slate-400 transition group-open:rotate-180">▾</span>
       </summary>
-      <div className="mt-3 text-[16px]/7 text-slate-700">{children}</div>
+      <div className="mt-3 text-[17px]/7 text-slate-700">{children}</div>
     </details>
   )
 }
@@ -247,11 +249,11 @@ function PrevNext({ slug }: { slug: string }) {
   const next = allCards[idx + 1]
   if (!prev && !next) return null
   return (
-    <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+    <div className="mt-12 flex flex-wrap items-center justify-between gap-3">
       {prev ? (
         <Link
           href={`/services/${prev.slug}`}
-          className="inline-flex items-center rounded-xl border border-slate-200 px-4 py-2 text-[15px] text-slate-700 hover:bg-white"
+          className="inline-flex items-center rounded-xl border border-[#BFD0F6] px-5 py-2.5 text-[16px] text-[#001130] hover:bg-[#EBF2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/40"
         >
           ← {prev.name}
         </Link>
@@ -259,7 +261,7 @@ function PrevNext({ slug }: { slug: string }) {
       {next ? (
         <Link
           href={`/services/${next.slug}`}
-          className="inline-flex items-center rounded-xl border border-slate-200 px-4 py-2 text-[15px] text-slate-700 hover:bg-white"
+          className="inline-flex items-center rounded-xl border border-[#BFD0F6] px-5 py-2.5 text-[16px] text-[#001130] hover:bg-[#EBF2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/40"
         >
           {next.name} →
         </Link>
@@ -302,42 +304,43 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
   return (
     <>
-      {/* Editorial hero (full-bleed bg, content centered) */}
+      {/* Editorial hero (complementary ghost + primary CTA) */}
       <section className="relative isolate">
         <div className="absolute inset-0 -z-10">
           {data.heroImage ? (
             <div className="h-full w-full overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={prefixAsset(data.heroImage)} alt="" className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-white/0" />
+              {/* Deep navy scrim for readability */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#001130]/80 via-[#001130]/55 to-[#001130]/0" />
             </div>
           ) : (
-            <div className="h-full w-full bg-gradient-to-b from-emerald-50 via-white to-white" />
+            <div className="h-full w-full bg-gradient-to-b from-[#EBF2FF] via-white to-white" />
           )}
         </div>
 
         <Container className="pt-12 md:pt-16 pb-8">
           <Breadcrumbs name={data.name} />
-          <div className="mt-6 max-w-4xl">
-            <p className="text-[12px] uppercase tracking-[0.22em] text-emerald-200/90 md:text-[13px]">Service</p>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight text-white md:text-5xl">{data.name}</h1>
+          <div className="mt-6 max-w-6xl">
+            <p className="text-[12px] uppercase tracking-[0.22em] text-[#EBF2FF]/90 md:text-[13px]">Service</p>
+            <h1 className="mt-2 text-5xl font-semibold tracking-tight text-white md:text-6xl">{data.name}</h1>
 
             {card.tagline ? (
-              <p className="mt-3 text-[18px]/8 text-slate-200 md:text-[19px]">{card.tagline}</p>
+              <p className="mt-3 text-[19px]/8 text-slate-100 md:text-[20px]">{card.tagline}</p>
             ) : null}
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {(data.badges ?? []).map((b) => <Pill key={b} tone="slate">{b}</Pill>)}
               {card.intensity && <Pill tone="sky">🎚 {card.intensity}</Pill>}
-              {card.duration && <Pill tone="emerald">⏱ {card.duration}</Pill>}
+              {card.duration && <Pill tone="brand">⏱ {card.duration}</Pill>}
               <span className="ml-1 text-[13px] text-slate-200/90">· ~{readMins} min read</span>
             </div>
 
-            {/* Primary CTAs */}
+            {/* CTAs: ghost on dark (white text) + brand gradient (white text) */}
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 href="/services"
-                className="inline-flex items-center rounded-xl border border-white/40 bg-white/10 px-4 py-2 text-[15px] text-white backdrop-blur hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                className="inline-flex items-center rounded-xl border border-[#BFD0F6]/60 bg-[#001130]/30 px-5 py-2.5 text-[16px] text-[#EBF2FF] backdrop-blur hover:bg-[#001130]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#81B1E6]/50"
               >
                 ← Back to services
               </Link>
@@ -345,7 +348,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 href="/contact"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-4 py-2 text-[15px] font-semibold text-white hover:from-emerald-700 hover:to-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                className="inline-flex items-center rounded-xl bg-gradient-to-r from-[#6592E1] to-[#81B1E6] px-5 py-2.5 text-[16px] font-semibold text-[#FCFDFE] shadow-sm hover:from-[#547FD3] hover:to-[#6FA0EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/50"
               >
                 Book a Session ↗
               </a>
@@ -354,7 +357,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
           {/* Wide YouTube embed under hero */}
           {ytId ? (
-            <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200/60 bg-black/10 backdrop-blur">
+            <div className="mt-8 overflow-hidden rounded-2xl border border-[#E6EEFF] bg-[#001130]/10 backdrop-blur">
               <div className={`relative ${pad}`}>
                 <iframe
                   className="absolute inset-0 h-full w-full"
@@ -375,32 +378,32 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         </Container>
       </section>
 
-      {/* Single-column body */}
+      {/* Single-column body (wider measure + complementary text) */}
       <section className="py-10 md:py-12">
         <Container>
-          <article className="mx-auto max-w-3xl rounded-3xl border border-slate-200/80 bg-white/90 p-6 shadow-sm backdrop-blur md:p-8">
+          <article className="mx-auto max-w-4xl rounded-3xl border border-[#E6EEFF] bg-white p-6 shadow-sm md:max-w-5xl md:p-10">
             {/* Optional lead image if there’s no video */}
             {!ytId && data.heroImage ? (
-              <figure className="mb-6 overflow-hidden rounded-2xl border border-slate-200">
+              <figure className="mb-8 overflow-hidden rounded-2xl border border-[#E6EEFF]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={prefixAsset(data.heroImage)} alt="" className="w-full object-cover" />
               </figure>
             ) : null}
 
-            <h2 id="overview" className="mt-2 scroll-mt-28 text-2xl font-semibold text-slate-900 md:text-[28px]">Overview</h2>
-            <p className="mt-3 text-[17px]/8 text-slate-700 md:text-[18px]">{data.overview}</p>
+            <h2 id="overview" className="mt-2 scroll-mt-28 text-3xl font-semibold text-[#001130] md:text-[32px]">Overview</h2>
+            <p className="mt-4 text-[18px]/8 text-slate-700 md:text-[19px]">{data.overview}</p>
 
             <SectionHeader id="what-it-is">What it is</SectionHeader>
-            <p className="mt-3 text-[17px]/8 text-slate-700 md:text-[18px]">{data.whatItIs}</p>
+            <p className="mt-4 text-[18px]/8 text-slate-700 md:text-[19px]">{data.whatItIs}</p>
 
             {(data.howItWorks?.summary || data.howItWorks?.details?.length || data.howItWorks?.plainLanguage) && (
               <>
                 <SectionHeader id="how-it-works">How it works</SectionHeader>
-                {data.howItWorks?.summary && <p className="mt-3 text-[17px]/8 text-slate-700 md:text-[18px]">{data.howItWorks.summary}</p>}
+                {data.howItWorks?.summary && <p className="mt-4 text-[18px]/8 text-slate-700 md:text-[19px]">{data.howItWorks.summary}</p>}
                 {data.howItWorks?.details?.length ? <DotList items={data.howItWorks.details} /> : null}
                 {data.howItWorks?.plainLanguage && (
                   <InfoCallout title="In plain language">
-                    <p className="text-[16px]/7">{data.howItWorks.plainLanguage}</p>
+                    <p className="text-[17px]/7">{data.howItWorks.plainLanguage}</p>
                   </InfoCallout>
                 )}
               </>
@@ -450,7 +453,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               <>
                 <SectionHeader id="safety">Safety notes</SectionHeader>
                 <InfoCallout title="Please read">
-                  <ul className="list-disc pl-5 text-[16px]/7">{data.safety.notes.map((n) => <li key={n}>{n}</li>)}</ul>
+                  <ul className="list-disc pl-5 text-[17px]/7">{data.safety.notes.map((n) => <li key={n}>{n}</li>)}</ul>
                 </InfoCallout>
               </>
             ) : null}
@@ -458,14 +461,14 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             {data.faq?.length ? (
               <>
                 <SectionHeader id="faqs">FAQs</SectionHeader>
-                <div className="mt-3 space-y-3">
+                <div className="mt-4 space-y-3">
                   {data.faq.map((f) => (
-                    <details key={f.q} className="group rounded-2xl border border-slate-200 bg-white/80 p-5 open:bg-white">
-                      <summary className="cursor-pointer select-none text-[16px] font-semibold text-slate-900 outline-none">
+                    <details key={f.q} className="group rounded-2xl border border-[#E6EEFF] bg-white/95 p-6 open:bg-white">
+                      <summary className="cursor-pointer select-none text-[17px] font-semibold text-[#001130] outline-none">
                         {f.q}
                         <span className="ml-2 text-slate-400 transition group-open:rotate-180">▾</span>
                       </summary>
-                      <div className="mt-3 text-[16px]/7 text-slate-700"><p>{f.a}</p></div>
+                      <div className="mt-3 text-[17px]/7 text-slate-700"><p>{f.a}</p></div>
                     </details>
                   ))}
                 </div>
@@ -473,9 +476,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             ) : null}
 
             {/* Sources */}
-            <div className="mt-10">
+            <div className="mt-12">
               <SectionHeader id="sources">Sources & references</SectionHeader>
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-4 space-y-2">
                 {(sources ?? []).map((s) => (
                   <li key={s.label} className="flex items-start gap-2">
                     <span aria-hidden className="mt-[0.45rem] inline-block h-1.5 w-1.5 rounded-full bg-slate-400" />
@@ -483,14 +486,14 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                       href={s.href}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="text-[16px]/7 text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
+                      className="text-[17px]/7 text-slate-700 underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
                     >
                       {s.label}<span aria-hidden className="ml-1">↗</span>
                     </a>
                   </li>
                 ))}
                 {(!sources || sources.length === 0) && (
-                  <li className="text-slate-500 text-[15px]">We’ll add independent sources here soon.</li>
+                  <li className="text-slate-500 text-[16px]">We’ll add independent sources here soon.</li>
                 )}
               </ul>
               <p className="mt-4 text-[12px] text-slate-500">
@@ -498,11 +501,11 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </p>
             </div>
 
-            {/* Footer actions */}
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* Footer actions: complementary on light background */}
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href="/services"
-                className="inline-flex items-center rounded-xl border border-slate-200 px-4 py-2 text-[15px] text-slate-700 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                className="inline-flex items-center rounded-xl border border-[#BFD0F6] px-5 py-2.5 text-[16px] text-[#001130] hover:bg-[#EBF2FF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/40"
               >
                 ← Back to services
               </Link>
@@ -510,7 +513,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 href="/contact"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-4 py-2 text-[15px] font-semibold text-white hover:from-emerald-700 hover:to-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                className="inline-flex items-center rounded-xl bg-gradient-to-r from-[#6592E1] to-[#81B1E6] px-5 py-2.5 text-[16px] font-semibold text-[#FCFDFE] hover:from-[#547FD3] hover:to-[#6FA0EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/50"
               >
                 Book a Session ↗
               </a>
