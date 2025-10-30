@@ -64,7 +64,7 @@ const allDetails = details as Detail[]
 const findDetail = (slug: string) => allDetails.find((d) => d.slug === slug)
 
 /* ------------------------- Editorial Overrides -------------------- */
-/** Expert, factual, concise copy for specific slugs. No placeholders. */
+/** Clean, factual copy (no placeholders). Also inject per-slug video URLs. */
 const OVERRIDES: Record<
   string,
   {
@@ -72,7 +72,7 @@ const OVERRIDES: Record<
     metaDescription?: string
     alt?: string[]
     ctaLabel?: string
-    // Section content mapped into the Detail shape
+    youtubeUrl?: string
     overview?: string
     whatItIs?: string
     howItWorksSummary?: string
@@ -84,7 +84,6 @@ const OVERRIDES: Record<
     safetyNotes?: string[]
     faqs?: { q: string; a: string }[]
     sources?: Source[]
-    // Optional device/parameter block reused via helmet810 section title
     devicesBlock?: {
       title: string
       deviceSpecs?: string[]
@@ -103,6 +102,8 @@ const OVERRIDES: Record<
     metaTitle: 'Energy Enhancement System (EES) Lounge | Upgrade Wellness',
     metaDescription:
       'Quiet, screen-free lounge sessions (1–3 hours) for general relaxation. Learn what to expect, how to prepare, and safety notes.',
+    youtubeUrl:
+      'https://www.youtube.com/watch?v=CI7VBhg9m88&list=PLsttX-t5ZzrTxuXFRYkT2sAVInwFr_-hP&index=6',
     alt: [
       'Quiet lounge with soft lighting and recliners in a circular layout',
       'Guest resting with eyes closed in a calm lounge',
@@ -144,14 +145,8 @@ const OVERRIDES: Record<
       { q: 'Can I eat during the session?', a: 'Water only in the lounge. Save food for before or after.' },
     ],
     sources: [
-      {
-        label: 'FDA — General Wellness: Policy for Low Risk Devices',
-        href: 'https://www.fda.gov/media/90652/download',
-      },
-      {
-        label: 'FTC — Health Products Compliance Guidance',
-        href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf',
-      },
+      { label: 'FDA — General Wellness: Policy for Low Risk Devices', href: 'https://www.fda.gov/media/90652/download' },
+      { label: 'FTC — Health Products Compliance Guidance', href: 'https://www.ftc.gov/system/files/ftc_gov/pdf/Health-Products-Compliance-Guidance.pdf' },
     ],
   },
 
@@ -160,6 +155,7 @@ const OVERRIDES: Record<
     metaTitle: 'Hydrogen-Rich Water (H₂) | Upgrade Wellness',
     metaDescription:
       'Chilled water infused with dissolved hydrogen (H₂), served fresh. Research is mixed. See timing, safety, and sources.',
+    youtubeUrl: 'https://www.youtube.com/watch?v=bfEFFaeiTRo',
     alt: [
       'Chilled glass of clear water on a counter',
       'Pouring water into a reusable cup at the bar',
@@ -170,11 +166,7 @@ const OVERRIDES: Record<
     whatItIs:
       'Prepared on site and poured promptly to help retain dissolved H₂. Served chilled and still.',
     benefits: ['Pairs naturally with daily hydration', 'Research on outcomes is emerging and mixed'],
-    howItWorksSummary: undefined,
-    howItWorksDetails: undefined,
-    howItWorksPlain: undefined,
     sessionFlow: ['We serve a single chilled portion.', 'Drink soon after pouring.'],
-    howToPrepare: undefined,
     safetyNotes: [
       'Generally well tolerated in human studies to date.',
       'Follow clinician guidance if you track fluids or have restrictions.',
@@ -184,10 +176,7 @@ const OVERRIDES: Record<
       { q: 'What does it taste like?', a: 'Like chilled still water. H₂ itself is tasteless.' },
       { q: 'Is it carbonated?', a: 'No. Dissolved H₂ does not make water fizzy.' },
       { q: 'How soon should I drink it?', a: 'Soon after serving, as dissolved H₂ can dissipate.' },
-      {
-        q: 'Can I store it?',
-        a: 'Fresh is best. If saving, keep sealed and cold; potency may decline.',
-      },
+      { q: 'Can I store it?', a: 'Fresh is best. If saving, keep sealed and cold; potency may decline.' },
     ],
     moreAboutH2: {
       mechanismSnapshot: [
@@ -198,15 +187,8 @@ const OVERRIDES: Record<
       storageAndPrep: ['If saving, keep sealed and cold.'],
     },
     sources: [
-      {
-        label:
-          'Pharmaceuticals (2023) — Systematic review/meta-analysis of hydrogen-rich water and blood lipids',
-        href: 'https://www.mdpi.com/1424-8247/16/2/142',
-      },
-      {
-        label: 'IJMS (2024) — Hydrogen Water: Extra Healthy or a Hoax? Systematic Review',
-        href: 'https://www.mdpi.com/1422-0067/25/2/973',
-      },
+      { label: 'Pharmaceuticals (2023) — Systematic review/meta-analysis (lipids)', href: 'https://www.mdpi.com/1424-8247/16/2/142' },
+      { label: 'IJMS (2024) — Hydrogen water review (evidence mixed)', href: 'https://www.mdpi.com/1422-0067/25/2/973' },
     ],
   },
 
@@ -215,6 +197,7 @@ const OVERRIDES: Record<
     metaTitle: 'Red Light Therapy (PBM) | Upgrade Wellness',
     metaDescription:
       'Non-invasive red and near-infrared light. Sessions ~10–20 minutes. What to expect, parameters, safety, and sources.',
+    youtubeUrl: 'https://www.youtube.com/watch?v=PlLeI0Rgifg',
     alt: [
       'Person seated near a red-light panel wearing goggles',
       'Close-up of an LED array on a red/NIR panel',
@@ -249,35 +232,15 @@ const OVERRIDES: Record<
     ],
     faqs: [
       { q: 'Will I feel anything?', a: 'Mostly gentle warmth. Some people feel nothing during the session.' },
-      {
-        q: 'How close should I be?',
-        a: 'Distance affects intensity. Staff set and note a measured distance for consistency.',
-      },
-      {
-        q: 'How many sessions do I need?',
-        a: 'It varies by goal and tolerance. Track how the area feels over time.',
-      },
+      { q: 'How close should I be?', a: 'Distance affects intensity. Staff set and note a measured distance for consistency.' },
+      { q: 'How many sessions do I need?', a: 'It varies by goal and tolerance. Track how the area feels over time.' },
       { q: 'Is it safe for eyes?', a: 'Do not look into emitters. Use provided goggles near the eyes.' },
     ],
     sources: [
-      {
-        label: 'JAAD (2025) — Evidence-based consensus on clinical application of PBM',
-        href: 'https://www.jaad.org/article/S0190-9622%2825%2900659-0/abstract',
-      },
-      {
-        label:
-          'Mechanisms overview — cytochrome c oxidase and PBM debate (Europe PMC review)',
-        href: 'https://europepmc.org/article/MED/32716711',
-      },
-      {
-        label: 'Photobiomodulation — cellular, molecular, and clinical aspects (review)',
-        href: 'https://www.sciencedirect.com/science/article/pii/S2666469023000386',
-      },
-      {
-        label:
-          'Ocular considerations with LED/NIR photobiomodulation (retina/ophthalmology review)',
-        href: 'https://www.dovepress.com/photobiomodulation-using-light-emitting-diode-led-for-treatment-of-ret-peer-reviewed-fulltext-article-OPTH',
-      },
+      { label: 'JAAD (2025) — Consensus on PBM application/parameters', href: 'https://www.jaad.org/article/S0190-9622%2825%2900659-0/abstract' },
+      { label: 'PBM mechanisms overview (review)', href: 'https://europepmc.org/article/MED/32716711' },
+      { label: 'Photobiomodulation — cellular/molecular/clinical (review)', href: 'https://www.sciencedirect.com/science/article/pii/S2666469023000386' },
+      { label: 'Ocular considerations with LED/NIR PBM (review)', href: 'https://www.dovepress.com/photobiomodulation-using-light-emitting-diode-led-for-treatment-of-ret-peer-reviewed-fulltext-article-OPTH' },
     ],
   },
 }
@@ -326,7 +289,6 @@ function Pill({
   children: React.ReactNode
   tone?: 'brand' | 'slate' | 'amber' | 'sky'
 }) {
-  // Brand palette (project memory)
   const tones = {
     brand: 'border-[#BFD0F6] bg-[#EBF2FF] text-[#001130]',
     slate: 'border-slate-200 bg-white text-[#001130]',
@@ -362,13 +324,14 @@ function DotList({ items }: { items: string[] }) {
   )
 }
 
+/** New, aligned timeline with consistent marker column (fixes clipped first letters). */
 function TimelineList({ items }: { items: string[] }) {
   if (!items?.length) return null
   return (
-    <ol className="relative mt-4 space-y-6 border-l border-[#D6E4FF] pl-6">
+    <ol className="mt-4 space-y-4 border-l border-[#D6E4FF] pl-6">
       {items.map((s, i) => (
-        <li key={s} className="relative">
-          <span className="absolute -left-3 top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[#BFD0F6] bg-white text-[11px] font-semibold text-[#001130]">
+        <li key={s} className="grid grid-cols-[2rem_1fr] items-start gap-3">
+          <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full border border-[#BFD0F6] bg-white text-[11px] font-semibold text-[#001130]">
             {i + 1}
           </span>
           <p className="text-[18px]/8 text-slate-700 md:text-[19px]">{s}</p>
@@ -482,10 +445,17 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   const card = allCards.find((c) => c.slug === params.slug)
   if (!raw || !card) return notFound()
 
-  // Apply editorial overrides (no placeholders)
   const ov = OVERRIDES[params.slug]
+
+  // Merge overrides (no placeholders) + inject per-slug YouTube URL
+  const mergedMedia = {
+    ...(raw.media ?? {}),
+    ...(ov?.youtubeUrl ? { youtubeUrl: ov.youtubeUrl } : {}),
+  }
+
   const data: Detail = {
     ...raw,
+    media: mergedMedia,
     overview: ov?.overview ?? raw.overview,
     whatItIs: ov?.whatItIs ?? raw.whatItIs,
     howItWorks: {
@@ -512,7 +482,6 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   }
 
   const sources = data.sources ?? []
-
   const ytId =
     data.media?.youtubeId ?? (data.media?.youtubeUrl ? parseYouTubeId(data.media.youtubeUrl) : null)
   const ytUrl = data.media?.youtubeUrl || (ytId ? `https://www.youtube.com/watch?v=${ytId}` : undefined)
@@ -590,7 +559,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             </div>
           </div>
 
-          {/* Optional wide YouTube */}
+          {/* Wide YouTube (now filled per slug) */}
           {ytId ? (
             <div className="mt-8 overflow-hidden rounded-2xl border border-[#E6EEFF] bg-[#001130]/10 backdrop-blur">
               <div className={`relative ${pad}`}>
@@ -667,7 +636,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </>
             ) : null}
 
-            {/* Session flow */}
+            {/* What to expect */}
             {data.sessionFlow?.length ? (
               <>
                 <SectionHeader id="session-flow">What to expect</SectionHeader>
@@ -745,7 +714,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             <div className="mt-12">
               <SectionHeader id="sources">Sources</SectionHeader>
               <ul className="mt-4 space-y-2">
-                {sources.map((s) => (
+                {(data.sources ?? []).map((s) => (
                   <li key={s.label} className="flex items-start gap-2">
                     <span aria-hidden className="mt-[0.45rem] inline-block h-1.5 w-1.5 rounded-full bg-slate-400" />
                     <a
@@ -758,12 +727,11 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                     </a>
                   </li>
                 ))}
-                {!sources.length && (
+                {!(data.sources ?? []).length && (
                   <li className="text-slate-500 text-[16px]">Sources will be added soon.</li>
                 )}
               </ul>
 
-              {/* Global disclaimer */}
               <p className="mt-4 text-[12px] text-slate-500">
                 General wellness information only; not medical advice.
               </p>
@@ -783,7 +751,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 rel="noreferrer noopener"
                 className="inline-flex items-center rounded-xl bg-gradient-to-r from-[#6592E1] to-[#81B1E6] px-5 py-2.5 text-[16px] font-semibold text-[#FCFDFE] hover:from-[#547FD3] hover:to-[#6FA0EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6592E1]/50"
               >
-                {primaryCta} ↗
+                {ov?.ctaLabel ?? 'Book a Session'} ↗
               </a>
             </div>
 
