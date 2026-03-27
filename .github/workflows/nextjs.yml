@@ -1,4 +1,3 @@
-# .github/workflows/nextjs.yml
 name: Deploy Next.js site to GitHub Pages
 
 on:
@@ -18,12 +17,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_BASE_PATH: "/${{ github.event.repository.name }}"
-      CI: "true"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,8 +34,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build static site (no export)
+      - name: Build static site
         run: npx next build
+        env:
+          CI: "true"
 
       - name: Add .nojekyll
         run: |
@@ -43,7 +45,7 @@ jobs:
           touch out/.nojekyll
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
@@ -53,6 +55,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
